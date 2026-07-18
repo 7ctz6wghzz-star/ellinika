@@ -58,6 +58,9 @@
   .back .exg{font-size:18px;font-weight:600}
   .back .exr{font-size:14px;color:var(--muted);margin-top:3px}
   .controls{padding:6px 16px calc(14px + env(safe-area-inset-bottom));position:relative;z-index:2;background:var(--bg)}
+  .topctrls,.botctrls{position:relative;z-index:2;background:var(--bg)}
+  .topctrls{padding:2px 16px 0}
+  .botctrls{padding:4px 16px calc(12px + env(safe-area-inset-bottom))}
   .row{display:flex;align-items:center;gap:10px;justify-content:center;margin-top:10px}
   .btn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);
     font-size:15px;font-weight:700;padding:13px 18px;border-radius:16px;cursor:pointer;box-shadow:var(--shadow)}
@@ -96,6 +99,17 @@
   <button id="mRev">🇷🇺 перевод → греч</button>
 </div>
 
+<div class="topctrls" id="topctrls">
+  <div class="row">
+    <button class="btn ghost" id="hideToggle">Скрывать выученные: выкл</button>
+    <button class="btn ghost" id="reset">Сбросить прогресс</button>
+  </div>
+  <div class="row">
+    <button class="btn big know" id="know">✓ Знаю</button>
+    <button class="btn big" id="shuffle">🔀 Перемешать</button>
+  </div>
+</div>
+
 <div class="stage">
   <div class="scene" id="scene">
     <div class="card" id="card">
@@ -120,19 +134,11 @@
   </div>
 </div>
 
-<div class="controls" id="controls">
+<div class="botctrls" id="botctrls">
   <div class="navrow">
     <button class="btn" id="prev">‹ Назад</button>
     <span class="counter" id="counter"></span>
     <button class="btn" id="next">Вперёд ›</button>
-  </div>
-  <div class="row">
-    <button class="btn big know" id="know">✓ Знаю</button>
-    <button class="btn big" id="shuffle">🔀 Перемешать</button>
-  </div>
-  <div class="row">
-    <button class="btn ghost" id="hideToggle">Скрывать выученные: выкл</button>
-    <button class="btn ghost" id="reset">Сбросить прогресс</button>
   </div>
 </div>
 <div class="foot"><a href="greek-all.html">← все материалы</a> · прогресс сохраняется на этом устройстве</div>
@@ -159,7 +165,8 @@ function render(){
   const list = visible();
   $('done').style.display = (hideLearned && list.length===0) ? 'flex':'none';
   $('scene').style.display = (hideLearned && list.length===0) ? 'none':'block';
-  $('controls').style.visibility = (hideLearned && list.length===0) ? 'hidden':'visible';
+  $('topctrls').style.visibility = (hideLearned && list.length===0) ? 'hidden':'visible';
+  $('botctrls').style.visibility = (hideLearned && list.length===0) ? 'hidden':'visible';
   $('prog').textContent = learned.size + ' / ' + N;
   if(list.length===0) return;
   if(pos>=list.length) pos=0; if(pos<0) pos=list.length-1;
