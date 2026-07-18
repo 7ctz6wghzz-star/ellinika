@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Приветствия и вежливые фразы — новогреческий</title>
+<style>
+  :root{
+    --bg:#f6f4ee; --bg2:#fffdf8; --card:#ffffff; --ink:#20242b; --muted:#6b7280;
+    --line:#e6e1d6; --accent:#1466b3; --accent2:#0f4f8a; --gr:#b8862b; --gr-bg:#fbf4e2;
+    --ph-bg:#eef4fb; --ok:#2e7d5b; --shadow:0 1px 2px rgba(30,40,60,.05),0 8px 24px rgba(30,40,60,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#12151a; --bg2:#171b22; --card:#1b2029; --ink:#e7eaf0; --muted:#9aa3b2;
+      --line:#2a313d; --accent:#5aa9f0; --accent2:#8ec3f7; --gr:#e0b458; --gr-bg:#241f14;
+      --ph-bg:#18222f; --ok:#5fd0a0; --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:linear-gradient(180deg,var(--bg),var(--bg2));
+    color:var(--ink); font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5; -webkit-text-size-adjust:100%; padding-bottom:60px;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:22px 18px 0}
+  header.top{padding:14px 2px 4px}
+  h1{font-size:clamp(24px,4.5vw,34px);margin:0 0 6px;letter-spacing:-.01em}
+  h1 .gk{color:var(--gr)}
+  .sub{color:var(--muted);font-size:15px;margin:0 0 16px;max-width:70ch}
+  .nav{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 14px}
+  .nav a{font-size:13.5px;text-decoration:none;color:var(--accent2);background:var(--card);
+    border:1px solid var(--line);padding:6px 12px;border-radius:999px;box-shadow:var(--shadow)}
+  .nav a.cur{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .legend{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:12px 14px;font-size:13.5px;color:var(--muted);box-shadow:var(--shadow);margin-bottom:16px;
+  }
+  .legend b{color:var(--ink)}
+  .legend .stress{border-bottom:2px solid var(--accent);color:var(--ink);font-weight:600}
+  .controls{
+    display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+    position:sticky;top:0;z-index:20;padding:12px 0 14px;margin-bottom:6px;
+    background:linear-gradient(180deg,var(--bg) 70%,transparent);
+  }
+  .btn{
+    appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);
+    font-size:14px;font-weight:600;padding:9px 15px;border-radius:999px;cursor:pointer;
+    box-shadow:var(--shadow);transition:transform .05s ease,border-color .15s;
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .hint{font-size:12.5px;color:var(--muted);margin-left:2px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-top:4px}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    box-shadow:var(--shadow);display:flex;flex-direction:column;
+  }
+  .chead{padding:16px 18px 12px;border-bottom:1px dashed var(--line);cursor:pointer;position:relative}
+  .root{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .root .g{font-size:22px;font-weight:700;color:var(--accent2)}
+  .root .tr{font-size:13px;color:var(--muted)}
+  .root .mean{font-size:15px;font-weight:600;color:var(--gr)}
+  .hook{margin-top:7px;font-size:13px;color:var(--muted)}
+  .hook b{color:var(--gr)}
+  .chev{position:absolute;right:16px;top:16px;color:var(--muted);transition:transform .2s;font-size:13px}
+  .card.collapsed .chev{transform:rotate(-90deg)}
+  .card.collapsed .cbody{display:none}
+  .shuf{position:absolute;right:40px;top:12px;border:1px solid var(--line);background:var(--bg2);
+    color:var(--muted);border-radius:8px;padding:2px 7px;font-size:14px;cursor:pointer;line-height:1.3}
+  .shuf:hover{color:var(--ink);border-color:var(--accent)}
+  .shuf:active{transform:translateY(1px)}
+  .cbody{padding:6px 10px 12px}
+  .w{display:flex;align-items:baseline;gap:10px;padding:8px 8px;border-radius:10px;cursor:pointer}
+  .w:hover{background:var(--bg2)}
+  .w .g{font-weight:600;color:var(--ink)}
+  .w .tr{font-size:12px;color:var(--muted);white-space:nowrap}
+  .w .ru{margin-left:auto;text-align:right;color:var(--ink);font-size:14px}
+  .phrases{margin:6px 8px 2px;padding:12px 14px;background:var(--ph-bg);border-radius:12px}
+  .phrases .plabel{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:7px}
+  .ph{padding:5px 0}
+  .ph .ru{font-size:13.5px;color:var(--muted)}
+  body.test .ru{filter:blur(6px);opacity:.65;transition:filter .12s,opacity .12s;user-select:none;border-radius:5px}
+  body.test .revealed .ru{filter:none;opacity:1;user-select:auto}
+  body.test .w .ru{cursor:pointer}
+  .stress{border-bottom:2px solid var(--accent);padding-bottom:1px}
+  footer{max-width:1080px;margin:26px auto 0;padding:16px 20px;color:var(--muted);font-size:13px;text-align:center}
+  .tip{margin-top:10px;font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>Приветствия и вежливые фразы <span class="gk">·</span> χαιρετισμοί</h1>
+    <nav class="nav">
+      <a href="greek-roots.html">① Корни</a>
+      <a href="greek-prefixes.html">② Приставки</a>
+      <a href="greek-verbs.html">③ Глаголы</a>
+      <a href="greek-spelling.html">④ Правописание [и]</a>
+      <a href="greek-greetings.html" class="cur">⑤ Приветствия</a>
+      <a href="greek-all.html">📱 Всё на одной странице</a>
+    </nav>
+    <p class="sub">Готовые фразы на каждый день — поздороваться, поблагодарить, извиниться, заказать кофе, попросить повторить. Выучи их целыми блоками: так они сразу идут в речь. В заметках — где нужна вежливая форма, а где дружеская.</p>
+    <div class="legend">
+      <b>Как читать:</b> ударный слог подчёркнут <span class="stress">во́т так</span>.
+      <b>γ</b> перед ε/и-звуком — как «й» (γεια ≈ «я»); <b>χ</b> — «х»; <b>ð</b> — англ. <i>th</i> в <i>this</i>; <b>θ</b> — англ. <i>th</i> в <i>think</i>.
+      <b>Вежливость:</b> «ты» → σου / -εις, «вы» (и многим) → σας / -ετε. С незнакомыми и старшими — форма на σας.
+    </div>
+  </header>
+
+  <div class="controls">
+    <button class="btn" id="testBtn">🙈 Режим самопроверки</button>
+    <button class="btn" id="expandBtn">Свернуть всё</button>
+    <button class="btn" id="shuffleAllBtn">🔀 Перемешать всё</button>
+    <span class="hint" id="hintText">Кликни по фразе, чтобы открыть перевод.</span>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</div>
+
+<footer>
+  Страница 5 из 5 · разговорные фразы. Прогресс не сохраняется между открытиями — это тренажёр для повторения.
+  <div class="tip">Совет: включи самопроверку, перемешай фразы 🔀 и произноси вслух — с фраз речь запускается быстрее всего.</div>
+</footer>
+
+<script>
+const NESTS = [
+  {
+    g:"Приветствия", mean:"Γεια!",
+    hook:"Первое при встрече — выбирай по времени суток и вежливости.",
+    words:[
+      ["Γεια σου!","[йа су]","Привет! (одному, неформально)"],
+      ["Γεια σας!","[йа сас]","Здравствуйте! (вежливо / многим)"],
+      ["Καλημέρα","[калим|э|ра]","Доброе утро / добрый день"],
+      ["Καλησπέρα","[калисп|э|ра]","Добрый вечер"],
+      ["Καλώς ήρθες / ήρθατε","[кал|о|с |и|рθес / |и|рθате]","Добро пожаловать (ты / вы)"]
+    ],
+    phrases:[["Заметка","γεια = «здоровье». По-дружески и одному — γεια σου; вежливо или многим — γεια σας."]]
+  },
+  {
+    g:"Прощания", mean:"Αντίο",
+    hook:"Как попрощаться — от дружеского до вечернего.",
+    words:[
+      ["Γεια! / Γεια χαρά!","[йа / йа хар|а|]","Пока!"],
+      ["Αντίο","[анд|и|о]","Прощай, до свидания"],
+      ["Καληνύχτα","[калин|и|хта]","Спокойной ночи"],
+      ["Τα λέμε!","[та л|э|ме]","Ещё увидимся / до связи"],
+      ["Καλό βράδυ","[кал|о| вр|а|ði]","Хорошего вечера"]
+    ],
+    phrases:[["Заметка","Αντίο звучит более «окончательно». Для «пока, скоро увидимся» — Γεια или Τα λέμε."]]
+  },
+  {
+    g:"«Волшебные слова»", mean:"Ευχαριστώ",
+    hook:"Спасибо, пожалуйста, извините — самое нужное.",
+    words:[
+      ["Παρακαλώ","[паракал|о|]","Пожалуйста; не за что"],
+      ["Ευχαριστώ","[эфхарист|о|]","Спасибо"],
+      ["Ευχαριστώ πολύ","[эфхарист|о| пол|и|]","Большое спасибо"],
+      ["Συγγνώμη","[сигн|о|ми]","Извините, простите"],
+      ["Τίποτα","[т|и|пота]","Не за что (досл. «ничего»)"]
+    ],
+    phrases:[["Заметка","Παρακαλώ универсально: и просьба «пожалуйста», и ответ на «спасибо», и «прошу» (подавая что-то)."]]
+  },
+  {
+    g:"Знакомство", mean:"Χαίρω πολύ",
+    hook:"Представиться и спросить, как дела.",
+    words:[
+      ["Πώς σε λένε;","[пос се л|э|не]","Как тебя зовут?"],
+      ["Με λένε…","[ме л|э|не]","Меня зовут…"],
+      ["Χαίρω πολύ","[х|э|ро пол|и|]","Очень приятно"],
+      ["Τι κάνεις; / Τι κάνετε;","[ти к|а|нис / к|а|нете]","Как дела? (ты / вы)"],
+      ["Καλά, ευχαριστώ","[кал|а|, эфхарист|о|]","Хорошо, спасибо"]
+    ],
+    phrases:[["Заметка","Неформально — σε и -εις; вежливо/многим — σας и -ετε. С незнакомыми и старшими бери форму на σας."]]
+  },
+  {
+    g:"Да, нет, ок", mean:"Ναι / Όχι",
+    hook:"База согласия — и главная ловушка для русскоговорящих.",
+    words:[
+      ["Ναι","[нэ]","Да (звучит как рус. «нет», но значит ДА!)"],
+      ["Όχι","[|о|хи]","Нет"],
+      ["Εντάξει","[энд|а|кси]","Хорошо, ладно, ок"],
+      ["Ίσως","[|и|сос]","Может быть"],
+      ["Βεβαίως","[вев|э|ос]","Конечно"]
+    ],
+    phrases:[["Заметка","Запомни отдельно: Ναι = ДА, Όχι = НЕТ. Звучание Ναι обманчиво похоже на русское «нет»."]]
+  },
+  {
+    g:"В кафе и магазине", mean:"Παρακαλώ",
+    hook:"Заказать, спросить цену, попросить счёт.",
+    words:[
+      ["Έναν καφέ, παρακαλώ","[|э|нан каф|э|, паракал|о|]","Один кофе, пожалуйста"],
+      ["Θα ήθελα…","[θа |и|θела]","Я бы хотел…"],
+      ["Πόσο κάνει;","[п|о|со к|а|ни]","Сколько стоит?"],
+      ["Τον λογαριασμό, παρακαλώ","[тон логарьясм|о|, паракал|о|]","Счёт, пожалуйста"],
+      ["Έχετε…;","[|э|хете]","У вас есть…?"]
+    ],
+    phrases:[["Заметка","Вежливее сказать θα ήθελα «я бы хотел», чем θέλω «хочу»."]]
+  },
+  {
+    g:"Если не понял", mean:"Δεν καταλαβαίνω",
+    hook:"Попросить повторить, помедленнее, по-английски.",
+    words:[
+      ["Δεν καταλαβαίνω","[ðен каталав|э|но]","Я не понимаю"],
+      ["Μιλάτε αγγλικά;","[мил|а|те англик|а|]","Вы говорите по-английски?"],
+      ["Πιο αργά, παρακαλώ","[пьо арг|а|, паракал|о|]","Помедленнее, пожалуйста"],
+      ["Μιλάω λίγα ελληνικά","[мил|а|о л|и|га элиник|а|]","Я немного говорю по-гречески"],
+      ["Τι σημαίνει αυτό;","[ти сим|э|ни афт|о|]","Что это значит?"]
+    ],
+    phrases:[["Заметка","Знакомые корни: καταλαβαίνω (κατα-) и σημαίνει (σημ-) — из первых страниц набора."]]
+  },
+  {
+    g:"Пожелания и тосты", mean:"Καλή όρεξη!",
+    hook:"Пожелать хорошего — за столом и в дорогу.",
+    words:[
+      ["Καλή όρεξη!","[кал|и| |о|рекси]","Приятного аппетита!"],
+      ["Γεια μας! / Στην υγειά μας!","[йа мас / стин ий|а| мас]","За нас! / За здоровье! (тост)"],
+      ["Καλή τύχη!","[кал|и| т|и|хи]","Удачи!"],
+      ["Περαστικά!","[перастик|а|]","Выздоравливай(те)!"],
+      ["Καλό ταξίδι!","[кал|о| такс|и|ði]","Счастливого пути!"]
+    ],
+    phrases:[["Заметка","Тост: Γεια μας! (за нас) или Στην υγειά μας! (за наше здоровье)."]]
+  },
+  {
+    g:"Мелкие любезности", mean:"Ορίστε;",
+    hook:"Универсальные ответы на каждый день.",
+    words:[
+      ["Ορίστε;","[ор|и|сте]","Вот, пожалуйста; простите, что?; слушаю"],
+      ["Με συγχωρείτε","[ме синхор|и|те]","Извините (привлечь внимание / пройти)"],
+      ["Δεν πειράζει","[ðен пир|а|зи]","Ничего страшного"],
+      ["Παρακαλώ;","[паракал|о|]","Алло? / Да? (в ответ)"],
+      ["Καλή συνέχεια!","[кал|и| син|э|хья]","Хорошего дня дальше!"]
+    ],
+    phrases:[["Заметка","Ορίστε — палочка-выручалочка: и «держите», и «простите, не расслышал», и «слушаю вас»."]]
+  }
+];
+
+const grid = document.getElementById('grid');
+function stressify(tr){ return tr.replace(/\|([^|]+)\|/g, '<span class="stress">$1</span>'); }
+NESTS.forEach((n)=>{
+  const card = document.createElement('div');
+  card.className = 'card';
+  let words = n.words.map(w=>`
+    <div class="w" onclick="this.classList.toggle('revealed')">
+      <span class="g">${w[0]}</span>
+      <span class="tr">${stressify(w[1])}</span>
+      <span class="ru">${w[2]}</span>
+    </div>`).join('');
+  let phrases = n.phrases.map(p=>`
+    <div class="ph"><span class="ru">${p[1]}</span></div>`).join('');
+  card.innerHTML = `
+    <div class="chead" onclick="this.parentNode.classList.toggle('collapsed')">
+      <button class="shuf" title="Перемешать фразы" onclick="event.stopPropagation(); shuffleCard(this)">🔀</button>
+      <span class="chev">▾</span>
+      <div class="root">
+        <span class="g">${n.g}</span>
+        <span class="mean">${n.mean}</span>
+      </div>
+      <div class="hook">${n.hook}</div>
+    </div>
+    <div class="cbody">
+      <div class="words">${words}</div>
+      <div class="phrases">
+        <div class="plabel">Заметка</div>
+        ${phrases}
+      </div>
+    </div>`;
+  grid.appendChild(card);
+});
+
+function shuffle(el){
+  const items = Array.from(el.children);
+  for(let i=items.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [items[i],items[j]]=[items[j],items[i]]; }
+  items.forEach(it=>el.appendChild(it));
+}
+function shuffleCard(btn){
+  const c=btn.closest('.card'); const w=c && c.querySelector('.words'); if(w) shuffle(w);
+}
+
+const testBtn = document.getElementById('testBtn');
+const hintText = document.getElementById('hintText');
+testBtn.addEventListener('click', ()=>{
+  const on = document.body.classList.toggle('test');
+  testBtn.classList.toggle('on', on);
+  testBtn.textContent = on ? '👁 Показать переводы' : '🙈 Режим самопроверки';
+  hintText.textContent = on
+    ? 'Вспомни перевод — потом кликни, чтобы проверить.'
+    : 'Кликни по фразе, чтобы открыть перевод.';
+  if(!on){ document.querySelectorAll('.w.revealed').forEach(el=>el.classList.remove('revealed')); }
+});
+const expandBtn = document.getElementById('expandBtn');
+let collapsed = false;
+expandBtn.addEventListener('click', ()=>{
+  collapsed = !collapsed;
+  document.querySelectorAll('.card').forEach(c=>c.classList.toggle('collapsed', collapsed));
+  expandBtn.textContent = collapsed ? 'Развернуть всё' : 'Свернуть всё';
+});
+document.getElementById('shuffleAllBtn').addEventListener('click', ()=>{
+  document.querySelectorAll('.words').forEach(shuffle);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Какую [и] писать — новогреческий (итакизм)</title>
+<style>
+  :root{
+    --bg:#f6f4ee; --bg2:#fffdf8; --card:#ffffff; --ink:#20242b; --muted:#6b7280;
+    --line:#e6e1d6; --accent:#1466b3; --accent2:#0f4f8a; --gr:#b8862b; --gr-bg:#fbf4e2;
+    --ph-bg:#eef4fb; --ok:#2e7d5b; --shadow:0 1px 2px rgba(30,40,60,.05),0 8px 24px rgba(30,40,60,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#12151a; --bg2:#171b22; --card:#1b2029; --ink:#e7eaf0; --muted:#9aa3b2;
+      --line:#2a313d; --accent:#5aa9f0; --accent2:#8ec3f7; --gr:#e0b458; --gr-bg:#241f14;
+      --ph-bg:#18222f; --ok:#5fd0a0; --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:linear-gradient(180deg,var(--bg),var(--bg2));
+    color:var(--ink); font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5; -webkit-text-size-adjust:100%; padding-bottom:60px;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:22px 18px 0}
+  header.top{padding:14px 2px 4px}
+  h1{font-size:clamp(24px,4.5vw,34px);margin:0 0 6px;letter-spacing:-.01em}
+  h1 .gk{color:var(--gr)}
+  .sub{color:var(--muted);font-size:15px;margin:0 0 16px;max-width:70ch}
+  .nav{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 14px}
+  .nav a{font-size:13.5px;text-decoration:none;color:var(--accent2);background:var(--card);
+    border:1px solid var(--line);padding:6px 12px;border-radius:999px;box-shadow:var(--shadow)}
+  .nav a.cur{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .legend{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:12px 14px;font-size:13.5px;color:var(--muted);box-shadow:var(--shadow);margin-bottom:16px;
+  }
+  .legend b{color:var(--ink)}
+  .legend .stress{border-bottom:2px solid var(--accent);color:var(--ink);font-weight:600}
+  .controls{
+    display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+    position:sticky;top:0;z-index:20;padding:12px 0 14px;margin-bottom:6px;
+    background:linear-gradient(180deg,var(--bg) 70%,transparent);
+  }
+  .btn{
+    appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);
+    font-size:14px;font-weight:600;padding:9px 15px;border-radius:999px;cursor:pointer;
+    box-shadow:var(--shadow);transition:transform .05s ease,border-color .15s;
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .hint{font-size:12.5px;color:var(--muted);margin-left:2px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-top:4px}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    box-shadow:var(--shadow);display:flex;flex-direction:column;
+  }
+  .chead{padding:16px 18px 12px;border-bottom:1px dashed var(--line);cursor:pointer;position:relative}
+  .root{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .root .g{font-size:26px;font-weight:700;color:var(--accent2)}
+  .root .tr{font-size:13px;color:var(--muted)}
+  .root .mean{font-size:15px;font-weight:600}
+  .hook{margin-top:7px;font-size:13px;color:var(--muted)}
+  .hook b{color:var(--gr)}
+  .chev{position:absolute;right:16px;top:16px;color:var(--muted);transition:transform .2s;font-size:13px}
+  .card.collapsed .chev{transform:rotate(-90deg)}
+  .card.collapsed .cbody{display:none}
+  .shuf{position:absolute;right:40px;top:12px;border:1px solid var(--line);background:var(--bg2);
+    color:var(--muted);border-radius:8px;padding:2px 7px;font-size:14px;cursor:pointer;line-height:1.3}
+  .shuf:hover{color:var(--ink);border-color:var(--accent)}
+  .shuf:active{transform:translateY(1px)}
+  .cbody{padding:6px 10px 12px}
+  .w{display:flex;align-items:baseline;gap:10px;padding:8px 8px;border-radius:10px;cursor:pointer}
+  .w:hover{background:var(--bg2)}
+  .w .g{font-weight:600;color:var(--ink);white-space:nowrap}
+  .w .tr{font-size:12px;color:var(--muted);white-space:nowrap}
+  .w .ru{margin-left:auto;text-align:right;color:var(--ink);font-size:14px}
+  .phrases{margin:6px 8px 2px;padding:12px 14px;background:var(--ph-bg);border-radius:12px}
+  .phrases .plabel{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:7px}
+  .ph{padding:5px 0;cursor:pointer}
+  .ph .g{font-weight:600;color:var(--accent2)}
+  .ph .ru{display:block;font-size:13.5px;color:var(--muted);margin-top:1px}
+  body.test .ru{filter:blur(6px);opacity:.65;transition:filter .12s,opacity .12s;user-select:none;border-radius:5px}
+  body.test .revealed .ru{filter:none;opacity:1;user-select:auto}
+  body.test .w .ru,body.test .ph .ru{cursor:pointer}
+  .stress{border-bottom:2px solid var(--accent);padding-bottom:1px}
+  .letter{color:var(--accent);font-weight:700}
+  /* quiz */
+  .qtitle{font-size:21px;margin:32px 2px 4px}
+  .qintro{color:var(--muted);font-size:14px;margin:0 2px 12px;max-width:72ch}
+  .qbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
+  .qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;
+     box-shadow:var(--shadow);cursor:pointer}
+  .q .qru{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
+  .q .qword{font-size:19px;font-weight:600;color:var(--ink)}
+  .q .blank{display:inline-block;min-width:20px;text-align:center;color:var(--accent);
+     border-bottom:2px solid var(--accent);font-weight:700;margin:0 1px}
+  .q .qans{display:none;margin-top:8px;font-size:16px;color:var(--ok);font-weight:600}
+  .q.revealed .qans{display:block}
+  .q.revealed .qword{opacity:.5}
+  footer{max-width:1080px;margin:26px auto 0;padding:16px 20px;color:var(--muted);font-size:13px;text-align:center}
+  .tip{margin-top:10px;font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>Какую <span class="gk">[и]</span> писать · η, ι, υ, ει, οι</h1>
+    <nav class="nav">
+      <a href="greek-roots.html">① Корни</a>
+      <a href="greek-prefixes.html">② Приставки</a>
+      <a href="greek-verbs.html">③ Глаголы</a>
+      <a href="greek-spelling.html" class="cur">④ Правописание [и]</a>
+      <a href="greek-greetings.html">⑤ Приветствия</a>
+      <a href="greek-all.html">📱 Всё на одной странице</a>
+    </nav>
+    <p class="sub">Пять букв и буквосочетаний звучат одинаково — [и] (итакизм). На слух выбрать нельзя, но большинство случаев берётся правилом. Приём один: сначала смотри на <b>окончание</b> (это грамматика), потом на <b>корень</b> (это этимология). Внизу — мини-тренажёр.</p>
+    <div class="legend">
+      <b>Главная идея:</b> раздели слово на окончание и корень.
+      <span class="stress">Окончание</span> почти всегда диктует букву по правилу;
+      <span class="stress">корень</span> подсказывает этимология (особенно <b>υ</b> = «y/и» в интернациональных словах).
+      Остаток — простой <b>ι</b> против <b>η</b> в корне — учится вместе со словом.
+    </div>
+  </header>
+
+  <div class="controls">
+    <button class="btn" id="testBtn">🙈 Режим самопроверки</button>
+    <button class="btn" id="expandBtn">Свернуть всё</button>
+    <button class="btn" id="shuffleAllBtn">🔀 Перемешать всё</button>
+    <span class="hint" id="hintText">Кликни по строке, чтобы открыть перевод.</span>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <h2 class="qtitle">Мини-тренажёр: какую [и]?</h2>
+  <p class="qintro">Вставь пропущенную букву мысленно, потом кликни по карточке — проверь себя. Варианты: <b class="letter">η</b> · <b class="letter">ι</b> · <b class="letter">υ</b> · <b class="letter">ει</b> · <b class="letter">οι</b>.</p>
+  <div class="qbar">
+    <button class="btn" id="quizShuffle">🔀 Новый порядок</button>
+    <button class="btn" id="quizReveal">👁 Показать все ответы</button>
+  </div>
+  <div class="qgrid" id="quiz"></div>
+</div>
+
+<footer>
+  Страница 4 из 4 · правила + тренажёр. Прогресс не сохраняется между открытиями — это тренажёр для повторения.
+  <div class="tip">Совет: сомневаешься между простым ι и η в корне? Запоминай слово написанным и держись гнёзд из первых трёх страниц.</div>
+</footer>
+
+<script>
+const NESTS = [
+  {
+    g:"-η", tr:"[и]", mean:"женский род, ед. число",
+    hook:"Женское «она» → пиши <b>η</b> (и артикль ж.р. — тоже η).",
+    words:[
+      ["η φωνή","[фон|и|]","голос (ж.р.)"],
+      ["η αγάπη","[аг|а|пи]","любовь"],
+      ["η καλή φίλη","[кал|и| ф|и|ли]","хорошая подруга"],
+      ["η κρίση","[кр|и|си]","кризис (корень κρισ- + окончание -η)"],
+      ["η νίκη","[н|и|ки]","победа"]
+    ],
+    phrases:[
+      ["Правило","Слышишь [и] в конце слова женского рода → это -η."],
+      ["Проверка","Во мн. числе -η → -ες: η νίκη → οι νίκες."]
+    ]
+  },
+  {
+    g:"-ι", tr:"[и]", mean:"средний род (часто уменьшительное)",
+    hook:"«Маленькое» среднее слово (артикль <b>το</b>) → <b>ι</b>.",
+    words:[
+      ["το παιδί","[паиð|и|]","ребёнок"],
+      ["το σπίτι","[сп|и|ти]","дом"],
+      ["το κορίτσι","[кор|и|тси]","девочка"],
+      ["το ψωμί","[псом|и|]","хлеб"],
+      ["το κλειδί","[клиð|и|]","ключ"]
+    ],
+    phrases:[
+      ["Правило","Средний род на [и] → -ι (артикль το)."],
+      ["Память","Το + маленькая буква ι: το παιδί, το κλειδί."]
+    ]
+  },
+  {
+    g:"-ει", tr:"[и]", mean:"глагол: «он/она делает»",
+    hook:"3-е лицо ед.ч. настоящего → <b>-ει</b>; «ты» → -εις.",
+    words:[
+      ["γράφει","[гр|а|фи]","он пишет"],
+      ["θέλει","[θ|э|ли]","он хочет"],
+      ["μπορεί","[бор|и|]","он может; можно"],
+      ["γράφεις","[гр|а|фис]","ты пишешь"],
+      ["η εικόνα","[ик|о|на]","икона (ει и в корне: εικ-)"]
+    ],
+    phrases:[
+      ["Правило","Глагол в форме «он …» → окончание -ει."],
+      ["Бонус","Корень εικ- (εικόνα — икона) тоже с ει."]
+    ]
+  },
+  {
+    g:"-οι", tr:"[и]", mean:"множ. число муж. рода",
+    hook:"«Мальчики», мн.ч. м.р. и артикль <b>οι</b>.",
+    words:[
+      ["οι φίλοι","[и ф|и|ли]","друзья"],
+      ["οι άνθρωποι","[и |а|нθропи]","люди"],
+      ["οι δρόμοι","[и ðр|о|ми]","улицы, дороги"],
+      ["οι δάσκαλοι","[и ð|а|скали]","учителя"],
+      ["οικο- → эко-","[ико]","οικονομία, οικολογία"]
+    ],
+    phrases:[
+      ["Правило","Мн.ч. м.р.: -ος → -οι (ο φίλος → οι φίλοι)."],
+      ["Корень","οικ- = «эко-»: οικονομία (экономика)."]
+    ]
+  },
+  {
+    g:"υ", tr:"[и]", mean:"корни «умных» слов (греч. y)",
+    hook:"В интернац. слове стоит <b>y/и</b> → в греческом <b>υ</b>.",
+    words:[
+      ["το σύστημα","[с|и|стима]","система (system)"],
+      ["το σύμβολο","[с|и|мволо]","символ (symbol)"],
+      ["η ψυχολογία","[психолой|и|а]","психология"],
+      ["ο μύθος","[м|и|θос]","миф (myth)"],
+      ["η φυσική","[фисик|и|]","физика (physics)"]
+    ],
+    phrases:[
+      ["Правило","English «y» в греко-слове → υ: type → τύπος, system → σύστημα."],
+      ["Ещё","τύπος (тип), μυστικό (секрет), γυμναστήριο (гимнастика)."]
+    ]
+  },
+  {
+    g:"Итого", tr:"шпаргалка", mean:"как выбрать [и]",
+    hook:"Сначала спроси про <b>окончание</b>, потом про <b>корень</b>.",
+    words:[
+      ["ж.р., ед.ч.","→","-η (η νίκη)"],
+      ["ср.р., «малыш»","→","-ι (το παιδί)"],
+      ["глагол «он …»","→","-ει (γράφει)"],
+      ["мн.ч. м.р.","→","-οι (οι φίλοι)"],
+      ["y/и в интернац.","→","υ (σύστημα)"]
+    ],
+    phrases:[
+      ["Остаток","«Простой» ι против η в корне — учи со словом: смотри написанным, пиши рукой, держись гнёзд."]
+    ]
+  }
+];
+
+// [перевод, часть до пропуска, часть после, правильная буква, полное слово]
+const QUIZ = [
+  ["голос","η φων","","η","η φωνή"],
+  ["ребёнок","το παιδ","","ι","το παιδί"],
+  ["экономика","η οικονομ","α","ι","η οικονομία"],
+  ["система","το σ","στημα","υ","το σύστημα"],
+  ["икона","η ε","κόνα","ει","η εικόνα"],
+  ["он пишет","γράφ","","ει","γράφει"],
+  ["психология","η ψυχολογ","α","ι","η ψυχολογία"],
+  ["миф","ο μ","θος","υ","ο μύθος"],
+  ["дом","το σπίτ","","ι","το σπίτι"],
+  ["кризис","η κρίσ","","η","η κρίση"],
+  ["друзья","οι φίλ","","οι","οι φίλοι"],
+  ["физика","η φ","σική","υ","η φυσική"],
+  ["музыка","η μουσ","κή","ι","η μουσική"],
+  ["символ","το σ","μβολο","υ","το σύμβολο"],
+  ["он может","μπορ","","ει","μπορεί"]
+];
+
+const grid = document.getElementById('grid');
+function stressify(tr){ return tr.replace(/\|([^|]+)\|/g, '<span class="stress">$1</span>'); }
+NESTS.forEach((n)=>{
+  const card = document.createElement('div');
+  card.className = 'card';
+  let words = n.words.map(w=>`
+    <div class="w" onclick="this.classList.toggle('revealed')">
+      <span class="g">${w[0]}</span>
+      <span class="tr">${stressify(w[1])}</span>
+      <span class="ru">${w[2]}</span>
+    </div>`).join('');
+  let phrases = n.phrases.map(p=>`
+    <div class="ph" onclick="this.classList.toggle('revealed')">
+      <span class="g">${p[0]}</span>
+      <span class="ru">${p[1]}</span>
+    </div>`).join('');
+  card.innerHTML = `
+    <div class="chead" onclick="this.parentNode.classList.toggle('collapsed')">
+      <button class="shuf" title="Перемешать примеры" onclick="event.stopPropagation(); shuffleCard(this)">🔀</button>
+      <span class="chev">▾</span>
+      <div class="root">
+        <span class="g">${n.g}</span>
+        <span class="tr">${n.tr}</span>
+        <span class="mean">${n.mean}</span>
+      </div>
+      <div class="hook">${n.hook}</div>
+    </div>
+    <div class="cbody">
+      <div class="words">${words}</div>
+      <div class="phrases">
+        <div class="plabel">Подсказка</div>
+        ${phrases}
+      </div>
+    </div>`;
+  grid.appendChild(card);
+});
+
+const quiz = document.getElementById('quiz');
+function renderQuiz(){
+  quiz.innerHTML = QUIZ.map(q=>`
+    <div class="q" onclick="this.classList.toggle('revealed')">
+      <span class="qru">${q[0]}</span>
+      <span class="qword">${q[1]}<b class="blank">▢</b>${q[2]}</span>
+      <span class="qans">${q[4]} · <b class="letter">${q[3]}</b></span>
+    </div>`).join('');
+}
+renderQuiz();
+
+function shuffle(el){
+  const items = Array.from(el.children);
+  for(let i=items.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [items[i],items[j]]=[items[j],items[i]]; }
+  items.forEach(it=>el.appendChild(it));
+}
+function shuffleCard(btn){
+  const c=btn.closest('.card'); const w=c && c.querySelector('.words'); if(w) shuffle(w);
+}
+
+const testBtn = document.getElementById('testBtn');
+const hintText = document.getElementById('hintText');
+testBtn.addEventListener('click', ()=>{
+  const on = document.body.classList.toggle('test');
+  testBtn.classList.toggle('on', on);
+  testBtn.textContent = on ? '👁 Показать переводы' : '🙈 Режим самопроверки';
+  hintText.textContent = on
+    ? 'Вспомни правило — потом кликни, чтобы проверить.'
+    : 'Кликни по строке, чтобы открыть перевод.';
+  if(!on){ document.querySelectorAll('.w.revealed, .ph.revealed').forEach(el=>el.classList.remove('revealed')); }
+});
+const expandBtn = document.getElementById('expandBtn');
+let collapsed = false;
+expandBtn.addEventListener('click', ()=>{
+  collapsed = !collapsed;
+  document.querySelectorAll('.card').forEach(c=>c.classList.toggle('collapsed', collapsed));
+  expandBtn.textContent = collapsed ? 'Развернуть всё' : 'Свернуть всё';
+});
+document.getElementById('shuffleAllBtn').addEventListener('click', ()=>{
+  document.querySelectorAll('.words').forEach(shuffle);
+});
+
+document.getElementById('quizShuffle').addEventListener('click', ()=>{ shuffle(quiz); });
+let quizShown = false;
+document.getElementById('quizReveal').addEventListener('click', (e)=>{
+  quizShown = !quizShown;
+  document.querySelectorAll('.q').forEach(q=>q.classList.toggle('revealed', quizShown));
+  e.target.textContent = quizShown ? '🙈 Скрыть ответы' : '👁 Показать все ответы';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Греческие глаголы — гнёзда частотных глаголов</title>
+<style>
+  :root{
+    --bg:#f6f4ee; --bg2:#fffdf8; --card:#ffffff; --ink:#20242b; --muted:#6b7280;
+    --line:#e6e1d6; --accent:#1466b3; --accent2:#0f4f8a; --gr:#b8862b; --gr-bg:#fbf4e2;
+    --ph-bg:#eef4fb; --ok:#2e7d5b; --shadow:0 1px 2px rgba(30,40,60,.05),0 8px 24px rgba(30,40,60,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#12151a; --bg2:#171b22; --card:#1b2029; --ink:#e7eaf0; --muted:#9aa3b2;
+      --line:#2a313d; --accent:#5aa9f0; --accent2:#8ec3f7; --gr:#e0b458; --gr-bg:#241f14;
+      --ph-bg:#18222f; --ok:#5fd0a0; --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:linear-gradient(180deg,var(--bg),var(--bg2));
+    color:var(--ink); font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5; -webkit-text-size-adjust:100%; padding-bottom:60px;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:22px 18px 0}
+  header.top{padding:14px 2px 4px}
+  h1{font-size:clamp(24px,4.5vw,34px);margin:0 0 6px;letter-spacing:-.01em}
+  h1 .gk{color:var(--gr)}
+  .sub{color:var(--muted);font-size:15px;margin:0 0 16px;max-width:70ch}
+  .nav{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 14px}
+  .nav a{font-size:13.5px;text-decoration:none;color:var(--accent2);background:var(--card);
+    border:1px solid var(--line);padding:6px 12px;border-radius:999px;box-shadow:var(--shadow)}
+  .nav a.cur{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .legend{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:12px 14px;font-size:13.5px;color:var(--muted);box-shadow:var(--shadow);margin-bottom:16px;
+  }
+  .legend b{color:var(--ink)}
+  .legend .stress{border-bottom:2px solid var(--accent);color:var(--ink);font-weight:600}
+  .controls{
+    display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+    position:sticky;top:0;z-index:20;padding:12px 0 14px;margin-bottom:6px;
+    background:linear-gradient(180deg,var(--bg) 70%,transparent);
+  }
+  .btn{
+    appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);
+    font-size:14px;font-weight:600;padding:9px 15px;border-radius:999px;cursor:pointer;
+    box-shadow:var(--shadow);transition:transform .05s ease,border-color .15s;
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .hint{font-size:12.5px;color:var(--muted);margin-left:2px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-top:4px}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    box-shadow:var(--shadow);display:flex;flex-direction:column;
+  }
+  .chead{padding:16px 18px 12px;border-bottom:1px dashed var(--line);cursor:pointer;position:relative}
+  .root{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .root .g{font-size:26px;font-weight:700;color:var(--accent2)}
+  .root .tr{font-size:13px;color:var(--muted)}
+  .root .mean{font-size:15px;font-weight:600}
+  .hook{margin-top:7px;font-size:13px;color:var(--muted)}
+  .hook b{color:var(--gr)}
+  .chev{position:absolute;right:16px;top:16px;color:var(--muted);transition:transform .2s;font-size:13px}
+  .card.collapsed .chev{transform:rotate(-90deg)}
+  .card.collapsed .cbody{display:none}
+  .shuf{position:absolute;right:40px;top:12px;border:1px solid var(--line);background:var(--bg2);
+    color:var(--muted);border-radius:8px;padding:2px 7px;font-size:14px;cursor:pointer;line-height:1.3}
+  .shuf:hover{color:var(--ink);border-color:var(--accent)}
+  .shuf:active{transform:translateY(1px)}
+  .cbody{padding:6px 10px 12px}
+  .w{display:flex;align-items:baseline;gap:10px;padding:8px 8px;border-radius:10px;cursor:pointer}
+  .w:hover{background:var(--bg2)}
+  .w .g{font-weight:600;color:var(--ink);white-space:nowrap}
+  .w .tr{font-size:12px;color:var(--muted);white-space:nowrap}
+  .w .ru{margin-left:auto;text-align:right;color:var(--ink);font-size:14px}
+  .phrases{margin:6px 8px 2px;padding:12px 14px;background:var(--ph-bg);border-radius:12px}
+  .phrases .plabel{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:7px}
+  .ph{padding:5px 0;cursor:pointer}
+  .ph .g{font-weight:600;color:var(--accent2)}
+  .ph .ru{display:block;font-size:13.5px;color:var(--muted);margin-top:1px}
+  body.test .ru{filter:blur(6px);opacity:.65;transition:filter .12s,opacity .12s;user-select:none;border-radius:5px}
+  body.test .revealed .ru{filter:none;opacity:1;user-select:auto}
+  body.test .w .ru,body.test .ph .ru{cursor:pointer}
+  .stress{border-bottom:2px solid var(--accent);padding-bottom:1px}
+  footer{max-width:1080px;margin:26px auto 0;padding:16px 20px;color:var(--muted);font-size:13px;text-align:center}
+  .tip{margin-top:10px;font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>Греческие глаголы <span class="gk">·</span> 12 глаголов на каждый день</h1>
+    <nav class="nav">
+      <a href="greek-roots.html">① Корни</a>
+      <a href="greek-prefixes.html">② Приставки</a>
+      <a href="greek-verbs.html" class="cur">③ Глаголы</a>
+      <a href="greek-spelling.html">④ Правописание [и]</a>
+      <a href="greek-greetings.html">⑤ Приветствия</a>
+      <a href="greek-all.html">📱 Всё на одной странице</a>
+    </nav>
+    <p class="sub">Самые ходовые глаголы «выживания» — с ними можно заговорить в первую же неделю. У каждого: форма «я» в настоящем и, где надо, неправильное прошедшее, плюс частотные фразы. Словарная форма греческого глагола — это «я» (наст. время), а не инфинитив.</p>
+    <div class="legend">
+      <b>Как читать:</b> ударный слог подчёркнут <span class="stress">во́т так</span>.
+      <b>γ</b> («г») мягче русского; <b>χ</b> — «х»; <b>ð</b> — англ. <i>th</i> в <i>this</i>; <b>θ</b> — англ. <i>th</i> в <i>think</i>.
+      Итакизм: <b>η, ι, υ, ει, οι</b> → <b>[и]</b>.
+      Стрелка <b>→</b> показывает прошедшее время («я …»); у частотных глаголов оно часто <b>неправильное</b> — его стоит выучить отдельно.
+    </div>
+  </header>
+
+  <div class="controls">
+    <button class="btn" id="testBtn">🙈 Режим самопроверки</button>
+    <button class="btn" id="expandBtn">Свернуть всё</button>
+    <button class="btn" id="shuffleAllBtn">🔀 Перемешать всё</button>
+    <span class="hint" id="hintText">Кликни по строке, чтобы открыть перевод.</span>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</div>
+
+<footer>
+  Страница 3 из 3 · 12 глаголов. Прогресс не сохраняется между открытиями — это тренажёр для повторения.
+  <div class="tip">Совет: сначала выучи фразы целиком — так формы глагола запоминаются в живом контексте, а не списком.</div>
+</footer>
+
+<script>
+const NESTS = [
+  {
+    g:"λέω", tr:"[л|э|о]", mean:"говорить, сказать",
+    hook:"Прош.: <b>είπα</b> [|и|па] — я сказал (неправильное).",
+    words:[
+      ["λες / λέει","[лес / л|э|и]","ты говоришь / он говорит"],
+      ["λέγομαι","[л|э|гоме]","меня зовут (досл. «я называюсь»)"],
+      ["τα λέμε","[та л|э|ме]","«до связи» (досл. «поговорим»)"]
+    ],
+    phrases:[
+      ["Πώς σε λένε;","Как тебя зовут?"],
+      ["Με λένε Βίκτωρ.","Меня зовут Виктор."]
+    ]
+  },
+  {
+    g:"είμαι", tr:"[|и|ме]", mean:"быть",
+    hook:"Прош.: <b>ήμουν</b> [|и|мун] — я был. Спрягается особо.",
+    words:[
+      ["είσαι","[|и|се]","ты есть"],
+      ["είναι","[|и|не]","он/она/оно есть; они есть"],
+      ["είμαστε","[|и|месте]","мы есть"]
+    ],
+    phrases:[
+      ["Είμαι από τη Ρωσία.","Я из России."],
+      ["Πού είσαι;","Ты где?"]
+    ]
+  },
+  {
+    g:"έχω", tr:"[|э|хо]", mean:"иметь",
+    hook:"Прош.: <b>είχα</b> [|и|ха] — у меня было.",
+    words:[
+      ["έχεις","[|э|хис]","у тебя есть"],
+      ["έχει","[|э|хи]","у него/неё есть"],
+      ["δεν έχω","[ðен |э|хо]","у меня нет"]
+    ],
+    phrases:[
+      ["Έχεις χρόνο;","У тебя есть время?"],
+      ["Έχετε τσάι;","У вас есть чай? (в кафе)"]
+    ]
+  },
+  {
+    g:"κάνω", tr:"[к|а|но]", mean:"делать",
+    hook:"Прош.: <b>έκανα</b> [|э|кана]. Входит в кучу выражений.",
+    words:[
+      ["κάνεις","[к|а|нис]","ты делаешь"],
+      ["κάνει κρύο / ζέστη","[к|а|ни кр|и|о / з|э|сти]","холодно / жарко"],
+      ["τι κάνεις","[ти к|а|нис]","как дела (досл. «что делаешь»)"]
+    ],
+    phrases:[
+      ["Τι κάνεις;","Как дела?"],
+      ["Τι κάνετε;","Как вы? (вежл. / мн.)"]
+    ]
+  },
+  {
+    g:"πάω", tr:"[п|а|о]", mean:"идти, ехать",
+    hook:"Прош.: <b>πήγα</b> [п|и|га] — я пошёл. Второй вариант: πηγαίνω.",
+    words:[
+      ["πας","[пас]","ты идёшь"],
+      ["πάει","[п|а|и]","он идёт"],
+      ["πάμε","[п|а|ме]","идём / пошли"]
+    ],
+    phrases:[
+      ["Πού πας;","Куда идёшь?"],
+      ["Πάμε!","Пошли!"]
+    ]
+  },
+  {
+    g:"θέλω", tr:"[θ|э|ло]", mean:"хотеть",
+    hook:"Прош.: <b>ήθελα</b> [|и|θела]. Вежливо: θα ήθελα «я бы хотел».",
+    words:[
+      ["θέλεις","[θ|э|лис]","ты хочешь"],
+      ["θέλει","[θ|э|ли]","он хочет"],
+      ["θα ήθελα","[θа |и|θела]","я бы хотел (вежливо)"]
+    ],
+    phrases:[
+      ["Τι θέλεις;","Что ты хочешь?"],
+      ["Θα ήθελα έναν καφέ.","Я бы хотел кофе."]
+    ]
+  },
+  {
+    g:"μπορώ", tr:"[бор|о|]", mean:"мочь, быть в состоянии",
+    hook:"После μπορώ идёт <b>να</b> + глагол: «могу (что-то делать)».",
+    words:[
+      ["μπορείς","[бор|и|с]","ты можешь"],
+      ["μπορεί","[бор|и|]","можно; может быть"],
+      ["μπορώ να…","[бор|о| на]","я могу… (+ глагол)"]
+    ],
+    phrases:[
+      ["Μπορώ;","Можно?"],
+      ["Μπορείς να με βοηθήσεις;","Можешь мне помочь?"]
+    ]
+  },
+  {
+    g:"ξέρω", tr:"[кс|э|ро]", mean:"знать",
+    hook:"Прош.: <b>ήξερα</b> [|и|ксера]. Синоним: γνωρίζω.",
+    words:[
+      ["ξέρεις","[кс|э|рис]","ты знаешь"],
+      ["δεν ξέρω","[ðен кс|э|ро]","я не знаю"],
+      ["ποιος ξέρει","[пьос кс|э|ри]","кто знает"]
+    ],
+    phrases:[
+      ["Δεν ξέρω.","Я не знаю."],
+      ["Ξέρεις ελληνικά;","Ты знаешь греческий?"]
+    ]
+  },
+  {
+    g:"βλέπω", tr:"[вл|э|по]", mean:"видеть, смотреть",
+    hook:"Прош.: <b>είδα</b> [|и|ða] — я увидел (неправильное).",
+    words:[
+      ["βλέπεις","[вл|э|пис]","ты видишь / смотришь"],
+      ["η όραση","[|о|раси]","зрение (ср. τηλε-όραση)"],
+      ["θα σε δω","[θа се ðо]","увидимся (досл. «увижу тебя»)"]
+    ],
+    phrases:[
+      ["Βλέπω τηλεόραση.","Я смотрю телевизор."],
+      ["Τι βλέπεις;","Что ты смотришь?"]
+    ]
+  },
+  {
+    g:"τρώω", tr:"[тр|о|о]", mean:"есть (кушать)",
+    hook:"Прош.: <b>έφαγα</b> [|э|фага] — я поел (неправильное).",
+    words:[
+      ["τρως","[трос]","ты ешь"],
+      ["το φαγητό","[фаɣит|о|]","еда, блюдо"],
+      ["πάμε για φαγητό","[п|а|ме йа фаɣит|о|]","пойдём поедим"]
+    ],
+    phrases:[
+      ["Τι θέλεις να φας;","Что хочешь поесть?"],
+      ["Πεινάω.","Я голоден."]
+    ]
+  },
+  {
+    g:"πίνω", tr:"[п|и|но]", mean:"пить",
+    hook:"Прош.: <b>ήπια</b> [|и|пья] — я выпил.",
+    words:[
+      ["πίνεις","[п|и|нис]","ты пьёшь"],
+      ["το ποτό","[пот|о|]","напиток; выпивка"],
+      ["να πιω","[на пьо]","(чтобы) выпить"]
+    ],
+    phrases:[
+      ["Τι πίνεις;","Что будешь пить?"],
+      ["Θέλω να πιω νερό.","Хочу выпить воды."]
+    ]
+  },
+  {
+    g:"μιλάω / μιλώ", tr:"[мил|а|о / мил|о|]", mean:"говорить, разговаривать",
+    hook:"Прош.: <b>μίλησα</b> [м|и|лиса]. Тип глаголов на -άω.",
+    words:[
+      ["μιλάς","[мил|а|с]","ты говоришь"],
+      ["μιλάει","[мил|а|и]","он говорит"],
+      ["η ομιλία","[омил|и|а]","речь, выступление"]
+    ],
+    phrases:[
+      ["Μιλάς αγγλικά;","Ты говоришь по-английски?"],
+      ["Μιλάω λίγα ελληνικά.","Я немного говорю по-гречески."]
+    ]
+  }
+];
+
+const grid = document.getElementById('grid');
+function stressify(tr){ return tr.replace(/\|([^|]+)\|/g, '<span class="stress">$1</span>'); }
+NESTS.forEach((n)=>{
+  const card = document.createElement('div');
+  card.className = 'card';
+  let words = n.words.map(w=>`
+    <div class="w" onclick="this.classList.toggle('revealed')">
+      <span class="g">${w[0]}</span>
+      <span class="tr">${stressify(w[1])}</span>
+      <span class="ru">${w[2]}</span>
+    </div>`).join('');
+  let phrases = n.phrases.map(p=>`
+    <div class="ph" onclick="this.classList.toggle('revealed')">
+      <span class="g">${p[0]}</span>
+      <span class="ru">${p[1]}</span>
+    </div>`).join('');
+  card.innerHTML = `
+    <div class="chead" onclick="this.parentNode.classList.toggle('collapsed')">
+      <button class="shuf" title="Перемешать слова" onclick="event.stopPropagation(); shuffleCard(this)">🔀</button>
+      <span class="chev">▾</span>
+      <div class="root">
+        <span class="g">${n.g}</span>
+        <span class="tr">${stressify(n.tr)}</span>
+        <span class="mean">${n.mean}</span>
+      </div>
+      <div class="hook">${n.hook}</div>
+    </div>
+    <div class="cbody">
+      <div class="words">${words}</div>
+      <div class="phrases">
+        <div class="plabel">Частотные фразы</div>
+        ${phrases}
+      </div>
+    </div>`;
+  grid.appendChild(card);
+});
+
+const testBtn = document.getElementById('testBtn');
+const hintText = document.getElementById('hintText');
+testBtn.addEventListener('click', ()=>{
+  const on = document.body.classList.toggle('test');
+  testBtn.classList.toggle('on', on);
+  testBtn.textContent = on ? '👁 Показать переводы' : '🙈 Режим самопроверки';
+  hintText.textContent = on
+    ? 'Вспомни перевод — потом кликни, чтобы проверить себя.'
+    : 'Кликни по строке, чтобы открыть перевод.';
+  if(!on){ document.querySelectorAll('.revealed').forEach(el=>el.classList.remove('revealed')); }
+});
+const expandBtn = document.getElementById('expandBtn');
+let collapsed = false;
+expandBtn.addEventListener('click', ()=>{
+  collapsed = !collapsed;
+  document.querySelectorAll('.card').forEach(c=>c.classList.toggle('collapsed', collapsed));
+  expandBtn.textContent = collapsed ? 'Развернуть всё' : 'Свернуть всё';
+});
+
+function shuffle(el){
+  const items = Array.from(el.children);
+  for(let i=items.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [items[i],items[j]]=[items[j],items[i]]; }
+  items.forEach(it=>el.appendChild(it));
+}
+function shuffleCard(btn){
+  const c=btn.closest('.card'); const w=c && c.querySelector('.words'); if(w) shuffle(w);
+}
+document.getElementById('shuffleAllBtn').addEventListener('click', ()=>{
+  document.querySelectorAll('.words').forEach(shuffle);
+});
+</script>
+</body>
+</html>

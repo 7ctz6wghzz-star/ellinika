@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Греческий — всё на одной странице</title>
+<style>
+  :root{
+    --bg:#f6f4ee; --bg2:#fffdf8; --card:#ffffff; --ink:#20242b; --muted:#6b7280;
+    --line:#e6e1d6; --accent:#1466b3; --accent2:#0f4f8a; --gr:#b8862b; --gr-bg:#fbf4e2;
+    --ph-bg:#eef4fb; --ok:#2e7d5b; --shadow:0 1px 2px rgba(30,40,60,.05),0 8px 24px rgba(30,40,60,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#12151a; --bg2:#171b22; --card:#1b2029; --ink:#e7eaf0; --muted:#9aa3b2;
+      --line:#2a313d; --accent:#5aa9f0; --accent2:#8ec3f7; --gr:#e0b458; --gr-bg:#241f14;
+      --ph-bg:#18222f; --ok:#5fd0a0; --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:linear-gradient(180deg,var(--bg),var(--bg2));
+    color:var(--ink); font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5; -webkit-text-size-adjust:100%; padding-bottom:60px;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:22px 18px 0}
+  header.top{padding:14px 2px 4px}
+  h1{font-size:clamp(24px,4.5vw,34px);margin:0 0 6px;letter-spacing:-.01em}
+  h1 .gk{color:var(--gr)}
+  .sub{color:var(--muted);font-size:15px;margin:0 0 16px;max-width:70ch}
+  .nav{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 14px}
+  .nav a{font-size:13.5px;text-decoration:none;color:var(--accent2);background:var(--card);
+    border:1px solid var(--line);padding:6px 12px;border-radius:999px;box-shadow:var(--shadow)}
+  .nav a.cur{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .legend{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:12px 14px;font-size:13.5px;color:var(--muted);box-shadow:var(--shadow);margin-bottom:16px;
+  }
+  .legend b{color:var(--ink)}
+  .legend .stress{border-bottom:2px solid var(--accent);color:var(--ink);font-weight:600}
+  .controls{
+    display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+    position:sticky;top:0;z-index:20;padding:12px 0 14px;margin-bottom:6px;
+    background:linear-gradient(180deg,var(--bg) 70%,transparent);
+  }
+  .btn{
+    appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);
+    font-size:14px;font-weight:600;padding:9px 15px;border-radius:999px;cursor:pointer;
+    box-shadow:var(--shadow);transition:transform .05s ease,border-color .15s;
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .hint{font-size:12.5px;color:var(--muted);margin-left:2px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-top:4px}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    box-shadow:var(--shadow);display:flex;flex-direction:column;
+  }
+  .chead{padding:16px 18px 12px;border-bottom:1px dashed var(--line);cursor:pointer;position:relative}
+  .root{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .root .g{font-size:26px;font-weight:700;color:var(--accent2)}
+  .root .tr{font-size:13px;color:var(--muted)}
+  .root .mean{font-size:15px;font-weight:600}
+  .hook{margin-top:7px;font-size:13px;color:var(--muted)}
+  .hook b{color:var(--gr)}
+  .chev{position:absolute;right:16px;top:16px;color:var(--muted);transition:transform .2s;font-size:13px}
+  .card.collapsed .chev{transform:rotate(-90deg)}
+  .card.collapsed .cbody{display:none}
+  .shuf{position:absolute;right:40px;top:12px;border:1px solid var(--line);background:var(--bg2);
+    color:var(--muted);border-radius:8px;padding:2px 7px;font-size:14px;cursor:pointer;line-height:1.3}
+  .shuf:hover{color:var(--ink);border-color:var(--accent)}
+  .shuf:active{transform:translateY(1px)}
+  .cbody{padding:6px 10px 12px}
+  .w{display:flex;align-items:baseline;gap:10px;padding:8px 8px;border-radius:10px;cursor:pointer}
+  .w:hover{background:var(--bg2)}
+  .w .g{font-weight:600;color:var(--ink);white-space:nowrap}
+  .w .tr{font-size:12px;color:var(--muted);white-space:nowrap}
+  .w .ru{margin-left:auto;text-align:right;color:var(--ink);font-size:14px}
+  .phrases{margin:6px 8px 2px;padding:12px 14px;background:var(--ph-bg);border-radius:12px}
+  .phrases .plabel{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:7px}
+  .ph{padding:5px 0;cursor:pointer}
+  .ph .g{font-weight:600;color:var(--accent2)}
+  .ph .ru{display:block;font-size:13.5px;color:var(--muted);margin-top:1px}
+  body.test .ru{filter:blur(6px);opacity:.65;transition:filter .12s,opacity .12s;user-select:none;border-radius:5px}
+  body.test .revealed .ru{filter:none;opacity:1;user-select:auto}
+  body.test .w .ru,body.test .ph .ru{cursor:pointer}
+  .stress{border-bottom:2px solid var(--accent);padding-bottom:1px}
+  .letter{color:var(--accent);font-weight:700}
+  /* quiz */
+  .qtitle{font-size:21px;margin:32px 2px 4px}
+  .qintro{color:var(--muted);font-size:14px;margin:0 2px 12px;max-width:72ch}
+  .qbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
+  .qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;
+     box-shadow:var(--shadow);cursor:pointer}
+  .q .qru{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
+  .q .qword{font-size:19px;font-weight:600;color:var(--ink)}
+  .q .blank{display:inline-block;min-width:20px;text-align:center;color:var(--accent);
+     border-bottom:2px solid var(--accent);font-weight:700;margin:0 1px}
+  .q .qans{display:none;margin-top:8px;font-size:16px;color:var(--ok);font-weight:600}
+  .q.revealed .qans{display:block}
+  .q.revealed .qword{opacity:.5}
+  footer{max-width:1080px;margin:26px auto 0;padding:16px 20px;color:var(--muted);font-size:13px;text-align:center}
+  .tip{margin-top:10px;font-size:13px;color:var(--muted)}
+
+  /* ===== combined single-file, no-JS interactivity ===== */
+  .vh{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden}
+  .controls{position:static;background:none;padding:8px 0 6px;gap:10px}
+  .toc{position:sticky;top:0;z-index:30;padding:10px 0 10px;margin-bottom:2px;
+    background:linear-gradient(180deg,var(--bg) 82%,transparent)}
+  .sec{scroll-margin-top:66px}
+  .sec > h2{font-size:clamp(19px,3.5vw,24px);margin:30px 2px 6px;padding-top:16px;border-top:1px solid var(--line)}
+  .top2{color:var(--muted);font-size:13px;text-decoration:none;display:inline-block;margin:14px 2px 0}
+  /* details cards (native collapse, works without JS) */
+  details.card{display:block}
+  details.card > summary.chead{list-style:none;cursor:pointer}
+  details.card > summary.chead::-webkit-details-marker{display:none}
+  details.card > summary.chead::marker{content:""}
+  .card:not([open]) > .chead .chev{transform:rotate(-90deg)}
+  /* self-test toggle button (checkbox + label) */
+  #testToggle:checked + label.toggle{background:var(--accent);border-color:var(--accent);color:#fff}
+  label.toggle{user-select:none}
+  /* hide/reveal translations via CSS only */
+  .w{cursor:pointer}
+  .ph .ru2{display:block;font-size:13.5px;color:var(--muted);margin-top:1px}
+  body:has(#testToggle:checked) .w .ru{filter:blur(6px);opacity:.55;border-radius:5px;transition:filter .1s,opacity .1s}
+  body:has(#testToggle:checked) .w:has(.reveal:checked) .ru{filter:none;opacity:1}
+  /* quiz reveal via CSS only */
+  .q{cursor:pointer}
+  .q:has(.qreveal:checked) .qans{display:block}
+  .q:has(.qreveal:checked) .qword{opacity:.5}
+  .hintbox{background:var(--gr-bg);border:1px solid var(--line);border-radius:12px;padding:11px 14px;
+    font-size:13px;color:var(--muted);margin:2px 0 8px}
+  .hintbox b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap" id="top">
+  <header class="top">
+    <h1>Греческий <span class="gk">·</span> всё на одной странице</h1>
+    <p class="sub">Единый файл для телефона: все пять разделов сразу, всё работает прямо в предпросмотре — без интернета, без браузера и без приложений.</p>
+    <div class="hintbox">
+      <b>Как пользоваться на iPhone:</b> переходы между разделами — по ссылкам ниже (это один файл).
+      Коснись заголовка карточки, чтобы её <b>свернуть</b>.
+      Нажми <b>«Самопроверка»</b> — переводы спрячутся; коснись строки, чтобы открыть перевод и проверить себя.
+      В тренажёре коснись карточки, чтобы увидеть правильную букву.
+      (Перемешивание слов доступно в отдельных страницах на компьютере.)
+    </div>
+    <nav class="nav toc">
+      <a href="#roots">① Корни</a>
+      <a href="#prefixes">② Приставки</a>
+      <a href="#verbs">③ Глаголы</a>
+      <a href="#spelling">④ Правописание [и]</a>
+      <a href="#greetings">⑤ Приветствия</a>
+      <a href="greek-cards.html">🃏 Флешкарты</a>
+      <a href="greek-app.html">📲 Приложение</a>
+    </nav>
+    <div class="controls">
+      <input type="checkbox" id="testToggle" class="vh">
+      <label for="testToggle" class="btn toggle">🙈 Самопроверка (скрыть переводы)</label>
+    </div>
+  </header>
+
+    <section id="roots" class="sec">
+      <h2>① Корни · Греческие корни</h2>
+      <div class="grid">
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">σημ-</span><span class="tr">сим-</span><span class="mean">знак, значение</span></div>
+          <div class="hook">Уже знакомо: <b>семантика</b>, <b>семафор</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το σήμα</span><span class="tr">[с<span class="stress">и</span>ма]</span><span class="ru">знак, сигнал, логотип</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">σημαίνω</span><span class="tr">[сим<span class="stress">э</span>но]</span><span class="ru">значить, означать</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η σημασία</span><span class="tr">[симас<span class="stress">и</span>а]</span><span class="ru">значение, смысл</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η σημαία</span><span class="tr">[сим<span class="stress">э</span>а]</span><span class="ru">флаг</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το σημείο</span><span class="tr">[сим<span class="stress">и</span>о]</span><span class="ru">точка, место</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">σημειώνω</span><span class="tr">[сими<span class="stress">о</span>но]</span><span class="ru">отмечать, записывать</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η σημείωση</span><span class="tr">[сим<span class="stress">и</span>оси]</span><span class="ru">заметка, примечание</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">σήμερα</span><span class="tr">[с<span class="stress">и</span>мера]</span><span class="ru">сегодня</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Τι σημαίνει αυτό;</span><span class="ru2">Что это значит?</span></div><div class="ph"><span class="g">Δεν έχει σημασία.</span><span class="ru2">Неважно / не имеет значения.</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">γραφ-</span><span class="tr">граф-</span><span class="mean">писать</span></div>
+          <div class="hook">Уже знакомо: <b>графика</b>, <b>орфография</b>, <b>автограф</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">γράφω</span><span class="tr">[гр<span class="stress">а</span>фо]</span><span class="ru">пишу</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το γράμμα</span><span class="tr">[гр<span class="stress">а</span>ма]</span><span class="ru">буква; письмо</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">τα γράμματα</span><span class="tr">[гр<span class="stress">а</span>мата]</span><span class="ru">буквы; словесность</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η γραμματική</span><span class="tr">[граматик<span class="stress">и</span>]</span><span class="ru">грамматика</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η εγγραφή</span><span class="tr">[энграф<span class="stress">и</span>]</span><span class="ru">запись, регистрация</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">ο ζωγράφος</span><span class="tr">[зогр<span class="stress">а</span>фос]</span><span class="ru">художник</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Πώς γράφεται;</span><span class="ru2">Как это пишется?</span></div><div class="ph"><span class="g">Γράψε το, παρακαλώ.</span><span class="ru2">Запиши это, пожалуйста.</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">φων-</span><span class="tr">фон-</span><span class="mean">голос, звук</span></div>
+          <div class="hook">Уже знакомо: <b>телефон</b>, <b>фонетика</b>, <b>симфония</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η φωνή</span><span class="tr">[фон<span class="stress">и</span>]</span><span class="ru">голос</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το τηλέφωνο</span><span class="tr">[тил<span class="stress">э</span>фоно]</span><span class="ru">телефон</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το φωνήεν</span><span class="tr">[фон<span class="stress">и</span>эн]</span><span class="ru">гласный (звук)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το σύμφωνο</span><span class="tr">[с<span class="stress">и</span>мфоно]</span><span class="ru">согласный; также договор</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">φωνάζω</span><span class="tr">[фон<span class="stress">а</span>зо]</span><span class="ru">кричать, звать</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το μεγάφωνο</span><span class="tr">[мег<span class="stress">а</span>фоно]</span><span class="ru">мегафон (μεγα+φωνή)</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Μη φωνάζεις!</span><span class="ru2">Не кричи!</span></div><div class="ph"><span class="g">στο τηλέφωνο</span><span class="ru2">по телефону</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">λογ-</span><span class="tr">лог-</span><span class="mean">слово, речь; причина</span></div>
+          <div class="hook">Уже знакомо: <b>диалог</b>, <b>логика</b>, <b>каталог</b>, все «-логии».</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">ο λόγος</span><span class="tr">[л<span class="stress">о</span>гос]</span><span class="ru">слово, речь; причина</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">ο διάλογος</span><span class="tr">[ði<span class="stress">а</span>логос]</span><span class="ru">диалог</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">λογικός</span><span class="tr">[логик<span class="stress">о</span>с]</span><span class="ru">разумный, логичный</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">ο λογαριασμός</span><span class="tr">[логарьясм<span class="stress">о</span>с]</span><span class="ru">счёт (в кафе), счёт в банке</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Τον λογαριασμό, παρακαλώ.</span><span class="ru2">Счёт, пожалуйста.</span></div><div class="ph"><span class="g">Για ποιο λόγο;</span><span class="ru2">По какой причине? / Зачем?</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">φιλ-</span><span class="tr">фил-</span><span class="mean">друг; любящий</span></div>
+          <div class="hook">Уже знакомо: <b>философия</b>, <b>филология</b>, <b>филантроп</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">ο φίλος / η φίλη</span><span class="tr">[ф<span class="stress">и</span>лос / ф<span class="stress">и</span>ли]</span><span class="ru">друг / подруга</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η φιλία</span><span class="tr">[фил<span class="stress">и</span>а]</span><span class="ru">дружба</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">φιλώ</span><span class="tr">[фил<span class="stress">о</span>]</span><span class="ru">целовать</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το φιλί</span><span class="tr">[фил<span class="stress">и</span>]</span><span class="ru">поцелуй</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η φιλοξενία</span><span class="tr">[филоксен<span class="stress">и</span>а]</span><span class="ru">гостеприимство</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">φιλόξενος</span><span class="tr">[фил<span class="stress">о</span>ксенос]</span><span class="ru">гостеприимный</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">ο καλύτερός μου φίλος</span><span class="ru2">мой лучший друг</span></div><div class="ph"><span class="g">Φιλιά!</span><span class="ru2">Целую! (в конце сообщения)</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">τηλε-</span><span class="tr">тиле-</span><span class="mean">далеко, на расстоянии</span></div>
+          <div class="hook">Уже знакомо: <b>телефон</b>, <b>телевизор</b>, <b>телескоп</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το τηλέφωνο</span><span class="tr">[тил<span class="stress">э</span>фоно]</span><span class="ru">телефон</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η τηλεόραση</span><span class="tr">[тиле<span class="stress">о</span>раси]</span><span class="ru">телевидение, телевизор</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το τηλεχειριστήριο</span><span class="tr">[тилехирист<span class="stress">и</span>рио]</span><span class="ru">пульт</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η τηλεκάρτα</span><span class="tr">[тилек<span class="stress">а</span>рта]</span><span class="ru">телефонная карта</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">τηλεφωνώ</span><span class="tr">[тилефон<span class="stress">о</span>]</span><span class="ru">звонить</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Σου τηλεφωνώ αργότερα.</span><span class="ru2">Позвоню тебе позже.</span></div><div class="ph"><span class="g">στην τηλεόραση</span><span class="ru2">по телевизору</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">πολυ-</span><span class="tr">поли-</span><span class="mean">много</span></div>
+          <div class="hook">Уже знакомо: <b>полигон</b>, <b>поликлиника</b>, <b>полиглот</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">πολύς / πολλή / πολύ</span><span class="tr">[пол<span class="stress">и</span>с / пол<span class="stress">и</span> / пол<span class="stress">и</span>]</span><span class="ru">много(-ий)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">πολλοί</span><span class="tr">[пол<span class="stress">и</span>]</span><span class="ru">многие</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η πολυκατοικία</span><span class="tr">[поликатик<span class="stress">и</span>а]</span><span class="ru">многоквартирный дом (πολύ+κατοικία)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">πολύγλωσσος</span><span class="tr">[пол<span class="stress">и</span>глосос]</span><span class="ru">многоязычный</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η πολυθρόνα</span><span class="tr">[полиθр<span class="stress">о</span>на]</span><span class="ru">кресло</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Πολύ καλά!</span><span class="ru2">Очень хорошо!</span></div><div class="ph"><span class="g">Ευχαριστώ πολύ.</span><span class="ru2">Большое спасибо.</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">χρον-</span><span class="tr">хрон-</span><span class="mean">время; год</span></div>
+          <div class="hook">Уже знакомо: <b>хронология</b>, <b>хронометр</b>, <b>синхрон</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">ο χρόνος</span><span class="tr">[хр<span class="stress">о</span>нос]</span><span class="ru">время; год</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">τα χρόνια</span><span class="tr">[хр<span class="stress">о</span>нья]</span><span class="ru">годы</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">σύγχρονος</span><span class="tr">[с<span class="stress">и</span>нхронос]</span><span class="ru">современный</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">του χρόνου</span><span class="tr">[ту хр<span class="stress">о</span>ну]</span><span class="ru">в следующем году</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Χρόνια πολλά!</span><span class="ru2">С праздником! / С днём рождения! (досл. «многих лет»)</span></div><div class="ph"><span class="g">Καλή χρονιά!</span><span class="ru2">С Новым годом!</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">οικ-</span><span class="tr">ик-</span><span class="mean">дом, хозяйство</span></div>
+          <div class="hook">Уже знакомо: <b>экономика</b>, <b>экология</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η οικογένεια</span><span class="tr">[икой<span class="stress">э</span>ниа]</span><span class="ru">семья</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η οικονομία</span><span class="tr">[иконом<span class="stress">и</span>а]</span><span class="ru">экономика; экономия</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η οικολογία</span><span class="tr">[иколой<span class="stress">и</span>а]</span><span class="ru">экология</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η κατοικία</span><span class="tr">[катик<span class="stress">и</span>а]</span><span class="ru">жильё, место жительства</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">οικονομικός</span><span class="tr">[икономик<span class="stress">о</span>с]</span><span class="ru">экономичный; финансовый</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">η οικογένειά μου</span><span class="ru2">моя семья</span></div><div class="ph"><span class="g">οικονομική κρίση</span><span class="ru2">экономический кризис</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">μεγα- / μικρο-</span><span class="tr">мега- / микро-</span><span class="mean">большой / маленький</span></div>
+          <div class="hook">Уже знакомо: <b>мега-</b>, <b>макро-</b> и <b>микро-</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">μεγάλος</span><span class="tr">[мег<span class="stress">а</span>лос]</span><span class="ru">большой</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">μικρός</span><span class="tr">[микр<span class="stress">о</span>с]</span><span class="ru">маленький</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το μέγεθος</span><span class="tr">[м<span class="stress">э</span>геθос]</span><span class="ru">размер</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το μικρόφωνο</span><span class="tr">[микр<span class="stress">о</span>фоно]</span><span class="ru">микрофон (μικρο+φωνή)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το μεγάφωνο</span><span class="tr">[мег<span class="stress">а</span>фоно]</span><span class="ru">мегафон (μεγα+φωνή)</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Είναι πολύ μεγάλο.</span><span class="ru2">Оно очень большое.</span></div><div class="ph"><span class="g">ένα μικρό παιδί</span><span class="ru2">маленький ребёнок</span></div></div>
+        </div>
+      </details>
+      </div>
+      <a class="top2" href="#top">↑ Наверх / к разделам</a>
+    </section>
+    <section id="prefixes" class="sec">
+      <h2>② Приставки · Приставки</h2>
+      <div class="grid">
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">αντι-</span><span class="tr">анди-</span><span class="mean">против; противо-</span></div>
+          <div class="hook">Уже знакомо: <b>антибиотик</b>, <b>антитеза</b>, <b>антипатия</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">αντίθετος</span><span class="tr">[анд<span class="stress">и</span>θетос]</span><span class="ru">противоположный</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η αντίθεση</span><span class="tr">[анд<span class="stress">и</span>θеси]</span><span class="ru">контраст, противоположность</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">αντιγράφω</span><span class="tr">[андигр<span class="stress">а</span>фо]</span><span class="ru">копировать, списывать (+γράφω)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">ο αντίπαλος</span><span class="tr">[анд<span class="stress">и</span>палос]</span><span class="ru">противник, соперник</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">αντιπαθώ</span><span class="tr">[андипаθ<span class="stress">о</span>]</span><span class="ru">испытывать неприязнь</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Είμαι αντίθετος.</span><span class="ru2">Я против.</span></div><div class="ph"><span class="g">Μην αντιγράφεις!</span><span class="ru2">Не списывай!</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">συν- / συμ-</span><span class="tr">син- / сим-</span><span class="mean">с, вместе; со-</span></div>
+          <div class="hook">Уже знакомо: <b>синхрон</b>, <b>симфония</b>, <b>синтез</b>, <b>симметрия</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">συμφωνώ</span><span class="tr">[симфон<span class="stress">о</span>]</span><span class="ru">соглашаться (+φωνή)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η συμφωνία</span><span class="tr">[симфон<span class="stress">и</span>а]</span><span class="ru">согласие; соглашение; симфония</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">συνεργάζομαι</span><span class="tr">[синерг<span class="stress">а</span>зоме]</span><span class="ru">сотрудничать</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">ο συνάδελφος</span><span class="tr">[син<span class="stress">а</span>делфос]</span><span class="ru">коллега</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">συζητώ</span><span class="tr">[сизит<span class="stress">о</span>]</span><span class="ru">обсуждать</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Συμφωνώ μαζί σου.</span><span class="ru2">Я с тобой согласен.</span></div><div class="ph"><span class="g">Να το συζητήσουμε.</span><span class="ru2">Давай это обсудим.</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">προ-</span><span class="tr">про-</span><span class="mean">перед, до; про-</span></div>
+          <div class="hook">Уже знакомо: <b>программа</b>, <b>прогноз</b>, <b>пролог</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το πρόγραμμα</span><span class="tr">[пр<span class="stress">о</span>грама]</span><span class="ru">программа (+γράμμα)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">προτείνω</span><span class="tr">[прот<span class="stress">и</span>но]</span><span class="ru">предлагать</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η πρόταση</span><span class="tr">[пр<span class="stress">о</span>таси]</span><span class="ru">предложение</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">προτιμώ</span><span class="tr">[протим<span class="stress">о</span>]</span><span class="ru">предпочитать</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">προχθές</span><span class="tr">[прохθ<span class="stress">э</span>с]</span><span class="ru">позавчера</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Τι προτείνεις;</span><span class="ru2">Что предложишь?</span></div><div class="ph"><span class="g">Προτιμώ τσάι.</span><span class="ru2">Я предпочитаю чай.</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">μετα-</span><span class="tr">мета-</span><span class="mean">после; пере-, изменение</span></div>
+          <div class="hook">Уже знакомо: <b>метаморфоза</b>, <b>метод</b>, <b>метафора</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">μετά</span><span class="tr">[мет<span class="stress">а</span>]</span><span class="ru">после, потом</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">μεταφράζω</span><span class="tr">[метафр<span class="stress">а</span>зо]</span><span class="ru">переводить</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η μετάφραση</span><span class="tr">[мет<span class="stress">а</span>фраси]</span><span class="ru">перевод</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">μεταφέρω</span><span class="tr">[метаф<span class="stress">э</span>ро]</span><span class="ru">переносить, перевозить</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η μεταμόρφωση</span><span class="tr">[метам<span class="stress">о</span>рфоси]</span><span class="ru">превращение, метаморфоза</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Τα λέμε μετά.</span><span class="ru2">Поговорим позже.</span></div><div class="ph"><span class="g">Μπορείς να το μεταφράσεις;</span><span class="ru2">Можешь это перевести?</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">υπερ-</span><span class="tr">ипер-</span><span class="mean">сверх, над; гипер-</span></div>
+          <div class="hook">Уже знакомо: <b>гипербола</b>, <b>гипермаркет</b>, <b>супер-</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">υπέροχος</span><span class="tr">[ип<span class="stress">э</span>рохос]</span><span class="ru">превосходный, чудесный</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η υπερβολή</span><span class="tr">[ипервол<span class="stress">и</span>]</span><span class="ru">преувеличение, гипербола</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">υπερβολικός</span><span class="tr">[иперволик<span class="stress">о</span>с]</span><span class="ru">чрезмерный</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η υπεραγορά</span><span class="tr">[иперагор<span class="stress">а</span>]</span><span class="ru">супермаркет</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">υπερήφανος</span><span class="tr">[ипер<span class="stress">и</span>фанос]</span><span class="ru">гордый</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Είναι υπέροχο!</span><span class="ru2">Это чудесно!</span></div><div class="ph"><span class="g">Μην υπερβάλλεις.</span><span class="ru2">Не преувеличивай.</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">υπο-</span><span class="tr">ипо-</span><span class="mean">под; недо-</span></div>
+          <div class="hook">Уже знакомо: <b>гипотеза</b>, <b>гипотония</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">υπογράφω</span><span class="tr">[ипогр<span class="stress">а</span>фо]</span><span class="ru">подписывать (+γράφω)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η υπογραφή</span><span class="tr">[ипогр<span class="stress">а</span>фи]</span><span class="ru">подпись</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η υπόθεση</span><span class="tr">[ип<span class="stress">о</span>θеси]</span><span class="ru">предположение; дело</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">υπόσχομαι</span><span class="tr">[ип<span class="stress">о</span>схоме]</span><span class="ru">обещать</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">υποφέρω</span><span class="tr">[ипоф<span class="stress">э</span>ро]</span><span class="ru">страдать</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Υπογράψτε εδώ, παρακαλώ.</span><span class="ru2">Подпишите здесь, пожалуйста.</span></div><div class="ph"><span class="g">Σου υπόσχομαι.</span><span class="ru2">Я тебе обещаю.</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">δια-</span><span class="tr">диа-</span><span class="mean">через, сквозь; раз-</span></div>
+          <div class="hook">Уже знакомо: <b>диалог</b>, <b>диаметр</b>, <b>диагноз</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">διαβάζω</span><span class="tr">[ðиав<span class="stress">а</span>зо]</span><span class="ru">читать; заниматься</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">διαφορετικός</span><span class="tr">[ðиафоретик<span class="stress">о</span>с]</span><span class="ru">разный, другой</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η διαφορά</span><span class="tr">[ðиафор<span class="stress">а</span>]</span><span class="ru">разница</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">οι διακοπές</span><span class="tr">[ðиакоп<span class="stress">э</span>с]</span><span class="ru">каникулы, отпуск</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">ο διάδρομος</span><span class="tr">[ðи<span class="stress">а</span>ðромос]</span><span class="ru">коридор</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Διαβάζω ελληνικά.</span><span class="ru2">Я учу греческий.</span></div><div class="ph"><span class="g">Καλές διακοπές!</span><span class="ru2">Хорошего отдыха!</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">επι-</span><span class="tr">эпи-</span><span class="mean">на, над; при-</span></div>
+          <div class="hook">Уже знакомо: <b>эпицентр</b>, <b>эпидемия</b>, <b>эпилог</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">επίσης</span><span class="tr">[еп<span class="stress">и</span>сис]</span><span class="ru">также, тоже</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η επιστροφή</span><span class="tr">[епистроф<span class="stress">и</span>]</span><span class="ru">возвращение</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">επικίνδυνος</span><span class="tr">[епик<span class="stress">и</span>нðинос]</span><span class="ru">опасный</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">επισκέπτομαι</span><span class="tr">[еписк<span class="stress">э</span>птоме]</span><span class="ru">посещать</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">ο επισκέπτης</span><span class="tr">[еписк<span class="stress">э</span>птис]</span><span class="ru">посетитель, гость</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Επίσης!</span><span class="ru2">Взаимно! / И вам того же!</span></div><div class="ph"><span class="g">εισιτήριο με επιστροφή</span><span class="ru2">билет туда-обратно</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">κατα-</span><span class="tr">ката-</span><span class="mean">вниз; полностью</span></div>
+          <div class="hook">Уже знакомо: <b>катастрофа</b>, <b>каталог</b>, <b>категория</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">καταλαβαίνω</span><span class="tr">[каталав<span class="stress">э</span>но]</span><span class="ru">понимать</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">κατεβαίνω</span><span class="tr">[катев<span class="stress">э</span>но]</span><span class="ru">спускаться; выходить (из транспорта)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">ο κατάλογος</span><span class="tr">[кат<span class="stress">а</span>логос]</span><span class="ru">список; меню</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η κατάσταση</span><span class="tr">[кат<span class="stress">а</span>стаси]</span><span class="ru">ситуация, состояние</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">κατευθείαν</span><span class="tr">[катефθ<span class="stress">и</span>ан]</span><span class="ru">прямо, напрямую</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Δεν καταλαβαίνω.</span><span class="ru2">Я не понимаю.</span></div><div class="ph"><span class="g">Τον κατάλογο, παρακαλώ.</span><span class="ru2">Меню, пожалуйста.</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">περι-</span><span class="tr">пери-</span><span class="mean">вокруг, около</span></div>
+          <div class="hook">Уже знакомо: <b>периметр</b>, <b>период</b>, <b>перископ</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">περιμένω</span><span class="tr">[перим<span class="stress">э</span>но]</span><span class="ru">ждать</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η περιοχή</span><span class="tr">[периох<span class="stress">и</span>]</span><span class="ru">район, местность</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">περίπου</span><span class="tr">[пер<span class="stress">и</span>пу]</span><span class="ru">примерно, около</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το περιοδικό</span><span class="tr">[периоðик<span class="stress">о</span>]</span><span class="ru">журнал</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">περπατώ</span><span class="tr">[перпат<span class="stress">о</span>]</span><span class="ru">гулять, ходить пешком</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Περίμενε!</span><span class="ru2">Подожди!</span></div><div class="ph"><span class="g">περίπου δέκα λεπτά</span><span class="ru2">примерно десять минут</span></div></div>
+        </div>
+      </details>
+      </div>
+      <a class="top2" href="#top">↑ Наверх / к разделам</a>
+    </section>
+    <section id="verbs" class="sec">
+      <h2>③ Глаголы · Глаголы на каждый день</h2>
+      <div class="grid">
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">λέω</span><span class="tr">[л<span class="stress">э</span>о]</span><span class="mean">говорить, сказать</span></div>
+          <div class="hook">Прош.: <b>είπα</b> [|и|па] — я сказал (неправильное).</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">λες / λέει</span><span class="tr">[лес / л<span class="stress">э</span>и]</span><span class="ru">ты говоришь / он говорит</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">λέγομαι</span><span class="tr">[л<span class="stress">э</span>гоме]</span><span class="ru">меня зовут (досл. «я называюсь»)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">τα λέμε</span><span class="tr">[та л<span class="stress">э</span>ме]</span><span class="ru">«до связи» (досл. «поговорим»)</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Πώς σε λένε;</span><span class="ru2">Как тебя зовут?</span></div><div class="ph"><span class="g">Με λένε Βίκτωρ.</span><span class="ru2">Меня зовут Виктор.</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">είμαι</span><span class="tr">[<span class="stress">и</span>ме]</span><span class="mean">быть</span></div>
+          <div class="hook">Прош.: <b>ήμουν</b> [|и|мун] — я был. Спрягается особо.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">είσαι</span><span class="tr">[<span class="stress">и</span>се]</span><span class="ru">ты есть</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">είναι</span><span class="tr">[<span class="stress">и</span>не]</span><span class="ru">он/она/оно есть; они есть</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">είμαστε</span><span class="tr">[<span class="stress">и</span>месте]</span><span class="ru">мы есть</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Είμαι από τη Ρωσία.</span><span class="ru2">Я из России.</span></div><div class="ph"><span class="g">Πού είσαι;</span><span class="ru2">Ты где?</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">έχω</span><span class="tr">[<span class="stress">э</span>хо]</span><span class="mean">иметь</span></div>
+          <div class="hook">Прош.: <b>είχα</b> [|и|ха] — у меня было.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">έχεις</span><span class="tr">[<span class="stress">э</span>хис]</span><span class="ru">у тебя есть</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">έχει</span><span class="tr">[<span class="stress">э</span>хи]</span><span class="ru">у него/неё есть</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">δεν έχω</span><span class="tr">[ðен <span class="stress">э</span>хо]</span><span class="ru">у меня нет</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Έχεις χρόνο;</span><span class="ru2">У тебя есть время?</span></div><div class="ph"><span class="g">Έχετε τσάι;</span><span class="ru2">У вас есть чай? (в кафе)</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">κάνω</span><span class="tr">[к<span class="stress">а</span>но]</span><span class="mean">делать</span></div>
+          <div class="hook">Прош.: <b>έκανα</b> [|э|кана]. Входит в кучу выражений.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">κάνεις</span><span class="tr">[к<span class="stress">а</span>нис]</span><span class="ru">ты делаешь</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">κάνει κρύο / ζέστη</span><span class="tr">[к<span class="stress">а</span>ни кр<span class="stress">и</span>о / з<span class="stress">э</span>сти]</span><span class="ru">холодно / жарко</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">τι κάνεις</span><span class="tr">[ти к<span class="stress">а</span>нис]</span><span class="ru">как дела (досл. «что делаешь»)</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Τι κάνεις;</span><span class="ru2">Как дела?</span></div><div class="ph"><span class="g">Τι κάνετε;</span><span class="ru2">Как вы? (вежл. / мн.)</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">πάω</span><span class="tr">[п<span class="stress">а</span>о]</span><span class="mean">идти, ехать</span></div>
+          <div class="hook">Прош.: <b>πήγα</b> [п|и|га] — я пошёл. Второй вариант: πηγαίνω.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">πας</span><span class="tr">[пас]</span><span class="ru">ты идёшь</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">πάει</span><span class="tr">[п<span class="stress">а</span>и]</span><span class="ru">он идёт</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">πάμε</span><span class="tr">[п<span class="stress">а</span>ме]</span><span class="ru">идём / пошли</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Πού πας;</span><span class="ru2">Куда идёшь?</span></div><div class="ph"><span class="g">Πάμε!</span><span class="ru2">Пошли!</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">θέλω</span><span class="tr">[θ<span class="stress">э</span>ло]</span><span class="mean">хотеть</span></div>
+          <div class="hook">Прош.: <b>ήθελα</b> [|и|θела]. Вежливо: θα ήθελα «я бы хотел».</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">θέλεις</span><span class="tr">[θ<span class="stress">э</span>лис]</span><span class="ru">ты хочешь</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">θέλει</span><span class="tr">[θ<span class="stress">э</span>ли]</span><span class="ru">он хочет</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">θα ήθελα</span><span class="tr">[θа <span class="stress">и</span>θела]</span><span class="ru">я бы хотел (вежливо)</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Τι θέλεις;</span><span class="ru2">Что ты хочешь?</span></div><div class="ph"><span class="g">Θα ήθελα έναν καφέ.</span><span class="ru2">Я бы хотел кофе.</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">μπορώ</span><span class="tr">[бор<span class="stress">о</span>]</span><span class="mean">мочь, быть в состоянии</span></div>
+          <div class="hook">После μπορώ идёт <b>να</b> + глагол: «могу (что-то делать)».</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">μπορείς</span><span class="tr">[бор<span class="stress">и</span>с]</span><span class="ru">ты можешь</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">μπορεί</span><span class="tr">[бор<span class="stress">и</span>]</span><span class="ru">можно; может быть</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">μπορώ να…</span><span class="tr">[бор<span class="stress">о</span> на]</span><span class="ru">я могу… (+ глагол)</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Μπορώ;</span><span class="ru2">Можно?</span></div><div class="ph"><span class="g">Μπορείς να με βοηθήσεις;</span><span class="ru2">Можешь мне помочь?</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">ξέρω</span><span class="tr">[кс<span class="stress">э</span>ро]</span><span class="mean">знать</span></div>
+          <div class="hook">Прош.: <b>ήξερα</b> [|и|ксера]. Синоним: γνωρίζω.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">ξέρεις</span><span class="tr">[кс<span class="stress">э</span>рис]</span><span class="ru">ты знаешь</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">δεν ξέρω</span><span class="tr">[ðен кс<span class="stress">э</span>ро]</span><span class="ru">я не знаю</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">ποιος ξέρει</span><span class="tr">[пьос кс<span class="stress">э</span>ри]</span><span class="ru">кто знает</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Δεν ξέρω.</span><span class="ru2">Я не знаю.</span></div><div class="ph"><span class="g">Ξέρεις ελληνικά;</span><span class="ru2">Ты знаешь греческий?</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">βλέπω</span><span class="tr">[вл<span class="stress">э</span>по]</span><span class="mean">видеть, смотреть</span></div>
+          <div class="hook">Прош.: <b>είδα</b> [|и|ða] — я увидел (неправильное).</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">βλέπεις</span><span class="tr">[вл<span class="stress">э</span>пис]</span><span class="ru">ты видишь / смотришь</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η όραση</span><span class="tr">[<span class="stress">о</span>раси]</span><span class="ru">зрение (ср. τηλε-όραση)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">θα σε δω</span><span class="tr">[θа се ðо]</span><span class="ru">увидимся (досл. «увижу тебя»)</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Βλέπω τηλεόραση.</span><span class="ru2">Я смотрю телевизор.</span></div><div class="ph"><span class="g">Τι βλέπεις;</span><span class="ru2">Что ты смотришь?</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">τρώω</span><span class="tr">[тр<span class="stress">о</span>о]</span><span class="mean">есть (кушать)</span></div>
+          <div class="hook">Прош.: <b>έφαγα</b> [|э|фага] — я поел (неправильное).</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">τρως</span><span class="tr">[трос]</span><span class="ru">ты ешь</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το φαγητό</span><span class="tr">[фаɣит<span class="stress">о</span>]</span><span class="ru">еда, блюдо</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">πάμε για φαγητό</span><span class="tr">[п<span class="stress">а</span>ме йа фаɣит<span class="stress">о</span>]</span><span class="ru">пойдём поедим</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Τι θέλεις να φας;</span><span class="ru2">Что хочешь поесть?</span></div><div class="ph"><span class="g">Πεινάω.</span><span class="ru2">Я голоден.</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">πίνω</span><span class="tr">[п<span class="stress">и</span>но]</span><span class="mean">пить</span></div>
+          <div class="hook">Прош.: <b>ήπια</b> [|и|пья] — я выпил.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">πίνεις</span><span class="tr">[п<span class="stress">и</span>нис]</span><span class="ru">ты пьёшь</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το ποτό</span><span class="tr">[пот<span class="stress">о</span>]</span><span class="ru">напиток; выпивка</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">να πιω</span><span class="tr">[на пьо]</span><span class="ru">(чтобы) выпить</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Τι πίνεις;</span><span class="ru2">Что будешь пить?</span></div><div class="ph"><span class="g">Θέλω να πιω νερό.</span><span class="ru2">Хочу выпить воды.</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">μιλάω / μιλώ</span><span class="tr">[мил<span class="stress">а</span>о / мил<span class="stress">о</span>]</span><span class="mean">говорить, разговаривать</span></div>
+          <div class="hook">Прош.: <b>μίλησα</b> [м|и|лиса]. Тип глаголов на -άω.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">μιλάς</span><span class="tr">[мил<span class="stress">а</span>с]</span><span class="ru">ты говоришь</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">μιλάει</span><span class="tr">[мил<span class="stress">а</span>и]</span><span class="ru">он говорит</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η ομιλία</span><span class="tr">[омил<span class="stress">и</span>а]</span><span class="ru">речь, выступление</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Частотные фразы</div><div class="ph"><span class="g">Μιλάς αγγλικά;</span><span class="ru2">Ты говоришь по-английски?</span></div><div class="ph"><span class="g">Μιλάω λίγα ελληνικά.</span><span class="ru2">Я немного говорю по-гречески.</span></div></div>
+        </div>
+      </details>
+      </div>
+      <a class="top2" href="#top">↑ Наверх / к разделам</a>
+    </section>
+    <section id="spelling" class="sec">
+      <h2>④ Правописание [и] · Какую [и] писать</h2>
+      <div class="grid">
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">-η</span><span class="tr">[и]</span><span class="mean">женский род, ед. число</span></div>
+          <div class="hook">Женское «она» → пиши <b>η</b> (и артикль ж.р. — тоже η).</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η φωνή</span><span class="tr">[фон<span class="stress">и</span>]</span><span class="ru">голос (ж.р.)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η αγάπη</span><span class="tr">[аг<span class="stress">а</span>пи]</span><span class="ru">любовь</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η καλή φίλη</span><span class="tr">[кал<span class="stress">и</span> ф<span class="stress">и</span>ли]</span><span class="ru">хорошая подруга</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η κρίση</span><span class="tr">[кр<span class="stress">и</span>си]</span><span class="ru">кризис (корень κρισ- + окончание -η)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η νίκη</span><span class="tr">[н<span class="stress">и</span>ки]</span><span class="ru">победа</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Подсказка</div><div class="ph"><span class="g">Правило</span><span class="ru2">Слышишь [и] в конце слова женского рода → это -η.</span></div><div class="ph"><span class="g">Проверка</span><span class="ru2">Во мн. числе -η → -ες: η νίκη → οι νίκες.</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">-ι</span><span class="tr">[и]</span><span class="mean">средний род (часто уменьшительное)</span></div>
+          <div class="hook">«Маленькое» среднее слово (артикль <b>το</b>) → <b>ι</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το παιδί</span><span class="tr">[паиð<span class="stress">и</span>]</span><span class="ru">ребёнок</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το σπίτι</span><span class="tr">[сп<span class="stress">и</span>ти]</span><span class="ru">дом</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το κορίτσι</span><span class="tr">[кор<span class="stress">и</span>тси]</span><span class="ru">девочка</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το ψωμί</span><span class="tr">[псом<span class="stress">и</span>]</span><span class="ru">хлеб</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το κλειδί</span><span class="tr">[клиð<span class="stress">и</span>]</span><span class="ru">ключ</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Подсказка</div><div class="ph"><span class="g">Правило</span><span class="ru2">Средний род на [и] → -ι (артикль το).</span></div><div class="ph"><span class="g">Память</span><span class="ru2">Το + маленькая буква ι: το παιδί, το κλειδί.</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">-ει</span><span class="tr">[и]</span><span class="mean">глагол: «он/она делает»</span></div>
+          <div class="hook">3-е лицо ед.ч. настоящего → <b>-ει</b>; «ты» → -εις.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">γράφει</span><span class="tr">[гр<span class="stress">а</span>фи]</span><span class="ru">он пишет</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">θέλει</span><span class="tr">[θ<span class="stress">э</span>ли]</span><span class="ru">он хочет</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">μπορεί</span><span class="tr">[бор<span class="stress">и</span>]</span><span class="ru">он может; можно</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">γράφεις</span><span class="tr">[гр<span class="stress">а</span>фис]</span><span class="ru">ты пишешь</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η εικόνα</span><span class="tr">[ик<span class="stress">о</span>на]</span><span class="ru">икона (ει и в корне: εικ-)</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Подсказка</div><div class="ph"><span class="g">Правило</span><span class="ru2">Глагол в форме «он …» → окончание -ει.</span></div><div class="ph"><span class="g">Бонус</span><span class="ru2">Корень εικ- (εικόνα — икона) тоже с ει.</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">-οι</span><span class="tr">[и]</span><span class="mean">множ. число муж. рода</span></div>
+          <div class="hook">«Мальчики», мн.ч. м.р. и артикль <b>οι</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">οι φίλοι</span><span class="tr">[и ф<span class="stress">и</span>ли]</span><span class="ru">друзья</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">οι άνθρωποι</span><span class="tr">[и <span class="stress">а</span>нθропи]</span><span class="ru">люди</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">οι δρόμοι</span><span class="tr">[и ðр<span class="stress">о</span>ми]</span><span class="ru">улицы, дороги</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">οι δάσκαλοι</span><span class="tr">[и ð<span class="stress">а</span>скали]</span><span class="ru">учителя</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">οικο- → эко-</span><span class="tr">[ико]</span><span class="ru">οικονομία, οικολογία</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Подсказка</div><div class="ph"><span class="g">Правило</span><span class="ru2">Мн.ч. м.р.: -ος → -οι (ο φίλος → οι φίλοι).</span></div><div class="ph"><span class="g">Корень</span><span class="ru2">οικ- = «эко-»: οικονομία (экономика).</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">υ</span><span class="tr">[и]</span><span class="mean">корни «умных» слов (греч. y)</span></div>
+          <div class="hook">В интернац. слове стоит <b>y/и</b> → в греческом <b>υ</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το σύστημα</span><span class="tr">[с<span class="stress">и</span>стима]</span><span class="ru">система (system)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">το σύμβολο</span><span class="tr">[с<span class="stress">и</span>мволо]</span><span class="ru">символ (symbol)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η ψυχολογία</span><span class="tr">[психолой<span class="stress">и</span>а]</span><span class="ru">психология</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">ο μύθος</span><span class="tr">[м<span class="stress">и</span>θос]</span><span class="ru">миф (myth)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">η φυσική</span><span class="tr">[фисик<span class="stress">и</span>]</span><span class="ru">физика (physics)</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Подсказка</div><div class="ph"><span class="g">Правило</span><span class="ru2">English «y» в греко-слове → υ: type → τύπος, system → σύστημα.</span></div><div class="ph"><span class="g">Ещё</span><span class="ru2">τύπος (тип), μυστικό (секрет), γυμναστήριο (гимнастика).</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">Итого</span><span class="tr">шпаргалка</span><span class="mean">как выбрать [и]</span></div>
+          <div class="hook">Сначала спроси про <b>окончание</b>, потом про <b>корень</b>.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">ж.р., ед.ч.</span><span class="tr">→</span><span class="ru">-η (η νίκη)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">ср.р., «малыш»</span><span class="tr">→</span><span class="ru">-ι (το παιδί)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">глагол «он …»</span><span class="tr">→</span><span class="ru">-ει (γράφει)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">мн.ч. м.р.</span><span class="tr">→</span><span class="ru">-οι (οι φίλοι)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">y/и в интернац.</span><span class="tr">→</span><span class="ru">υ (σύστημα)</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Подсказка</div><div class="ph"><span class="g">Остаток</span><span class="ru2">«Простой» ι против η в корне — учи со словом: смотри написанным, пиши рукой, держись гнёзд.</span></div></div>
+        </div>
+      </details>
+      </div>
+      <h3 class="qtitle">Мини-тренажёр: какую [и]?</h3>
+      <p class="qintro">Вставь букву мысленно, потом коснись карточки — покажется ответ. Варианты: <b class="letter">η</b> · <b class="letter">ι</b> · <b class="letter">υ</b> · <b class="letter">ει</b> · <b class="letter">οι</b>.</p>
+      <div class="qgrid">
+        <label class="q"><input type="checkbox" class="qreveal vh"><span class="qru">голос</span><span class="qword">η φων<b class="blank">▢</b></span><span class="qans">η φωνή · <b class="letter">η</b></span></label>
+        <label class="q"><input type="checkbox" class="qreveal vh"><span class="qru">ребёнок</span><span class="qword">το παιδ<b class="blank">▢</b></span><span class="qans">το παιδί · <b class="letter">ι</b></span></label>
+        <label class="q"><input type="checkbox" class="qreveal vh"><span class="qru">экономика</span><span class="qword">η οικονομ<b class="blank">▢</b>α</span><span class="qans">η οικονομία · <b class="letter">ι</b></span></label>
+        <label class="q"><input type="checkbox" class="qreveal vh"><span class="qru">система</span><span class="qword">το σ<b class="blank">▢</b>στημα</span><span class="qans">το σύστημα · <b class="letter">υ</b></span></label>
+        <label class="q"><input type="checkbox" class="qreveal vh"><span class="qru">икона</span><span class="qword">η ε<b class="blank">▢</b>κόνα</span><span class="qans">η εικόνα · <b class="letter">ει</b></span></label>
+        <label class="q"><input type="checkbox" class="qreveal vh"><span class="qru">он пишет</span><span class="qword">γράφ<b class="blank">▢</b></span><span class="qans">γράφει · <b class="letter">ει</b></span></label>
+        <label class="q"><input type="checkbox" class="qreveal vh"><span class="qru">психология</span><span class="qword">η ψυχολογ<b class="blank">▢</b>α</span><span class="qans">η ψυχολογία · <b class="letter">ι</b></span></label>
+        <label class="q"><input type="checkbox" class="qreveal vh"><span class="qru">миф</span><span class="qword">ο μ<b class="blank">▢</b>θος</span><span class="qans">ο μύθος · <b class="letter">υ</b></span></label>
+        <label class="q"><input type="checkbox" class="qreveal vh"><span class="qru">дом</span><span class="qword">το σπίτ<b class="blank">▢</b></span><span class="qans">το σπίτι · <b class="letter">ι</b></span></label>
+        <label class="q"><input type="checkbox" class="qreveal vh"><span class="qru">кризис</span><span class="qword">η κρίσ<b class="blank">▢</b></span><span class="qans">η κρίση · <b class="letter">η</b></span></label>
+        <label class="q"><input type="checkbox" class="qreveal vh"><span class="qru">друзья</span><span class="qword">οι φίλ<b class="blank">▢</b></span><span class="qans">οι φίλοι · <b class="letter">οι</b></span></label>
+        <label class="q"><input type="checkbox" class="qreveal vh"><span class="qru">физика</span><span class="qword">η φ<b class="blank">▢</b>σική</span><span class="qans">η φυσική · <b class="letter">υ</b></span></label>
+        <label class="q"><input type="checkbox" class="qreveal vh"><span class="qru">музыка</span><span class="qword">η μουσ<b class="blank">▢</b>κή</span><span class="qans">η μουσική · <b class="letter">ι</b></span></label>
+        <label class="q"><input type="checkbox" class="qreveal vh"><span class="qru">символ</span><span class="qword">το σ<b class="blank">▢</b>μβολο</span><span class="qans">το σύμβολο · <b class="letter">υ</b></span></label>
+        <label class="q"><input type="checkbox" class="qreveal vh"><span class="qru">он может</span><span class="qword">μπορ<b class="blank">▢</b></span><span class="qans">μπορεί · <b class="letter">ει</b></span></label></div>
+      <a class="top2" href="#top">↑ Наверх / к разделам</a>
+    </section>
+    <section id="greetings" class="sec">
+      <h2>⑤ Приветствия · Приветствия и вежливые фразы</h2>
+      <div class="grid">
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">Приветствия</span><span class="mean">Γεια!</span></div>
+          <div class="hook">Первое при встрече — выбирай по времени суток и вежливости.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Γεια σου!</span><span class="tr">[йа су]</span><span class="ru">Привет! (одному, неформально)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Γεια σας!</span><span class="tr">[йа сас]</span><span class="ru">Здравствуйте! (вежливо / многим)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Καλημέρα</span><span class="tr">[калим<span class="stress">э</span>ра]</span><span class="ru">Доброе утро / добрый день</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Καλησπέρα</span><span class="tr">[калисп<span class="stress">э</span>ра]</span><span class="ru">Добрый вечер</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Καλώς ήρθες / ήρθατε</span><span class="tr">[кал<span class="stress">о</span>с <span class="stress">и</span>рθес / <span class="stress">и</span>рθате]</span><span class="ru">Добро пожаловать (ты / вы)</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Заметка</div><div class="ph"><span class="ru">γεια = «здоровье». По-дружески и одному — γεια σου; вежливо или многим — γεια σας.</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">Прощания</span><span class="mean">Αντίο</span></div>
+          <div class="hook">Как попрощаться — от дружеского до вечернего.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Γεια! / Γεια χαρά!</span><span class="tr">[йа / йа хар<span class="stress">а</span>]</span><span class="ru">Пока!</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Αντίο</span><span class="tr">[анд<span class="stress">и</span>о]</span><span class="ru">Прощай, до свидания</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Καληνύχτα</span><span class="tr">[калин<span class="stress">и</span>хта]</span><span class="ru">Спокойной ночи</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Τα λέμε!</span><span class="tr">[та л<span class="stress">э</span>ме]</span><span class="ru">Ещё увидимся / до связи</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Καλό βράδυ</span><span class="tr">[кал<span class="stress">о</span> вр<span class="stress">а</span>ði]</span><span class="ru">Хорошего вечера</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Заметка</div><div class="ph"><span class="ru">Αντίο звучит более «окончательно». Для «пока, скоро увидимся» — Γεια или Τα λέμε.</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">«Волшебные слова»</span><span class="mean">Ευχαριστώ</span></div>
+          <div class="hook">Спасибо, пожалуйста, извините — самое нужное.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Παρακαλώ</span><span class="tr">[паракал<span class="stress">о</span>]</span><span class="ru">Пожалуйста; не за что</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Ευχαριστώ</span><span class="tr">[эфхарист<span class="stress">о</span>]</span><span class="ru">Спасибо</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Ευχαριστώ πολύ</span><span class="tr">[эфхарист<span class="stress">о</span> пол<span class="stress">и</span>]</span><span class="ru">Большое спасибо</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Συγγνώμη</span><span class="tr">[сигн<span class="stress">о</span>ми]</span><span class="ru">Извините, простите</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Τίποτα</span><span class="tr">[т<span class="stress">и</span>пота]</span><span class="ru">Не за что (досл. «ничего»)</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Заметка</div><div class="ph"><span class="ru">Παρακαλώ универсально: и просьба «пожалуйста», и ответ на «спасибо», и «прошу» (подавая что-то).</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">Знакомство</span><span class="mean">Χαίρω πολύ</span></div>
+          <div class="hook">Представиться и спросить, как дела.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Πώς σε λένε;</span><span class="tr">[пос се л<span class="stress">э</span>не]</span><span class="ru">Как тебя зовут?</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Με λένε…</span><span class="tr">[ме л<span class="stress">э</span>не]</span><span class="ru">Меня зовут…</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Χαίρω πολύ</span><span class="tr">[х<span class="stress">э</span>ро пол<span class="stress">и</span>]</span><span class="ru">Очень приятно</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Τι κάνεις; / Τι κάνετε;</span><span class="tr">[ти к<span class="stress">а</span>нис / к<span class="stress">а</span>нете]</span><span class="ru">Как дела? (ты / вы)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Καλά, ευχαριστώ</span><span class="tr">[кал<span class="stress">а</span>, эфхарист<span class="stress">о</span>]</span><span class="ru">Хорошо, спасибо</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Заметка</div><div class="ph"><span class="ru">Неформально — σε и -εις; вежливо/многим — σας и -ετε. С незнакомыми и старшими бери форму на σας.</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">Да, нет, ок</span><span class="mean">Ναι / Όχι</span></div>
+          <div class="hook">База согласия — и главная ловушка для русскоговорящих.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Ναι</span><span class="tr">[нэ]</span><span class="ru">Да (звучит как рус. «нет», но значит ДА!)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Όχι</span><span class="tr">[<span class="stress">о</span>хи]</span><span class="ru">Нет</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Εντάξει</span><span class="tr">[энд<span class="stress">а</span>кси]</span><span class="ru">Хорошо, ладно, ок</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Ίσως</span><span class="tr">[<span class="stress">и</span>сос]</span><span class="ru">Может быть</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Βεβαίως</span><span class="tr">[вев<span class="stress">э</span>ос]</span><span class="ru">Конечно</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Заметка</div><div class="ph"><span class="ru">Запомни отдельно: Ναι = ДА, Όχι = НЕТ. Звучание Ναι обманчиво похоже на русское «нет».</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">В кафе и магазине</span><span class="mean">Παρακαλώ</span></div>
+          <div class="hook">Заказать, спросить цену, попросить счёт.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Έναν καφέ, παρακαλώ</span><span class="tr">[<span class="stress">э</span>нан каф<span class="stress">э</span>, паракал<span class="stress">о</span>]</span><span class="ru">Один кофе, пожалуйста</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Θα ήθελα…</span><span class="tr">[θа <span class="stress">и</span>θела]</span><span class="ru">Я бы хотел…</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Πόσο κάνει;</span><span class="tr">[п<span class="stress">о</span>со к<span class="stress">а</span>ни]</span><span class="ru">Сколько стоит?</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Τον λογαριασμό, παρακαλώ</span><span class="tr">[тон логарьясм<span class="stress">о</span>, паракал<span class="stress">о</span>]</span><span class="ru">Счёт, пожалуйста</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Έχετε…;</span><span class="tr">[<span class="stress">э</span>хете]</span><span class="ru">У вас есть…?</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Заметка</div><div class="ph"><span class="ru">Вежливее сказать θα ήθελα «я бы хотел», чем θέλω «хочу».</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">Если не понял</span><span class="mean">Δεν καταλαβαίνω</span></div>
+          <div class="hook">Попросить повторить, помедленнее, по-английски.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Δεν καταλαβαίνω</span><span class="tr">[ðен каталав<span class="stress">э</span>но]</span><span class="ru">Я не понимаю</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Μιλάτε αγγλικά;</span><span class="tr">[мил<span class="stress">а</span>те англик<span class="stress">а</span>]</span><span class="ru">Вы говорите по-английски?</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Πιο αργά, παρακαλώ</span><span class="tr">[пьо арг<span class="stress">а</span>, паракал<span class="stress">о</span>]</span><span class="ru">Помедленнее, пожалуйста</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Μιλάω λίγα ελληνικά</span><span class="tr">[мил<span class="stress">а</span>о л<span class="stress">и</span>га элиник<span class="stress">а</span>]</span><span class="ru">Я немного говорю по-гречески</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Τι σημαίνει αυτό;</span><span class="tr">[ти сим<span class="stress">э</span>ни афт<span class="stress">о</span>]</span><span class="ru">Что это значит?</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Заметка</div><div class="ph"><span class="ru">Знакомые корни: καταλαβαίνω (κατα-) и σημαίνει (σημ-) — из первых страниц набора.</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">Пожелания и тосты</span><span class="mean">Καλή όρεξη!</span></div>
+          <div class="hook">Пожелать хорошего — за столом и в дорогу.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Καλή όρεξη!</span><span class="tr">[кал<span class="stress">и</span> <span class="stress">о</span>рекси]</span><span class="ru">Приятного аппетита!</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Γεια μας! / Στην υγειά μας!</span><span class="tr">[йа мас / стин ий<span class="stress">а</span> мас]</span><span class="ru">За нас! / За здоровье! (тост)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Καλή τύχη!</span><span class="tr">[кал<span class="stress">и</span> т<span class="stress">и</span>хи]</span><span class="ru">Удачи!</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Περαστικά!</span><span class="tr">[перастик<span class="stress">а</span>]</span><span class="ru">Выздоравливай(те)!</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Καλό ταξίδι!</span><span class="tr">[кал<span class="stress">о</span> такс<span class="stress">и</span>ði]</span><span class="ru">Счастливого пути!</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Заметка</div><div class="ph"><span class="ru">Тост: Γεια μας! (за нас) или Στην υγειά μας! (за наше здоровье).</span></div></div>
+        </div>
+      </details>
+      <details class="card" open>
+        <summary class="chead">
+          <span class="chev">▾</span>
+          <div class="root"><span class="g">Мелкие любезности</span><span class="mean">Ορίστε;</span></div>
+          <div class="hook">Универсальные ответы на каждый день.</div>
+        </summary>
+        <div class="cbody">
+          <div class="words">
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Ορίστε;</span><span class="tr">[ор<span class="stress">и</span>сте]</span><span class="ru">Вот, пожалуйста; простите, что?; слушаю</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Με συγχωρείτε</span><span class="tr">[ме синхор<span class="stress">и</span>те]</span><span class="ru">Извините (привлечь внимание / пройти)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Δεν πειράζει</span><span class="tr">[ðен пир<span class="stress">а</span>зи]</span><span class="ru">Ничего страшного</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Παρακαλώ;</span><span class="tr">[паракал<span class="stress">о</span>]</span><span class="ru">Алло? / Да? (в ответ)</span></label>
+        <label class="w"><input type="checkbox" class="reveal vh"><span class="g">Καλή συνέχεια!</span><span class="tr">[кал<span class="stress">и</span> син<span class="stress">э</span>хья]</span><span class="ru">Хорошего дня дальше!</span></label>
+          </div>
+          <div class="phrases"><div class="plabel">Заметка</div><div class="ph"><span class="ru">Ορίστε — палочка-выручалочка: и «держите», и «простите, не расслышал», и «слушаю вас».</span></div></div>
+        </div>
+      </details>
+      </div>
+      <a class="top2" href="#top">↑ Наверх / к разделам</a>
+    </section>
+</div>
+<footer style="max-width:1080px;margin:26px auto 0;padding:16px 20px;color:var(--muted);font-size:13px;text-align:center">
+  Всё в одном файле · 5 разделов · интерактив без JavaScript. Открывается на iPhone в предпросмотре.
+</footer>
+</body>
+</html>

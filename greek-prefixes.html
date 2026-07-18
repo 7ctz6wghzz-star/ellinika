@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Греческие приставки — новогреческий через этимологию</title>
+<style>
+  :root{
+    --bg:#f6f4ee; --bg2:#fffdf8; --card:#ffffff; --ink:#20242b; --muted:#6b7280;
+    --line:#e6e1d6; --accent:#1466b3; --accent2:#0f4f8a; --gr:#b8862b; --gr-bg:#fbf4e2;
+    --ph-bg:#eef4fb; --ok:#2e7d5b; --shadow:0 1px 2px rgba(30,40,60,.05),0 8px 24px rgba(30,40,60,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#12151a; --bg2:#171b22; --card:#1b2029; --ink:#e7eaf0; --muted:#9aa3b2;
+      --line:#2a313d; --accent:#5aa9f0; --accent2:#8ec3f7; --gr:#e0b458; --gr-bg:#241f14;
+      --ph-bg:#18222f; --ok:#5fd0a0; --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:linear-gradient(180deg,var(--bg),var(--bg2));
+    color:var(--ink); font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5; -webkit-text-size-adjust:100%; padding-bottom:60px;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:22px 18px 0}
+  header.top{padding:14px 2px 4px}
+  h1{font-size:clamp(24px,4.5vw,34px);margin:0 0 6px;letter-spacing:-.01em}
+  h1 .gk{color:var(--gr)}
+  .sub{color:var(--muted);font-size:15px;margin:0 0 16px;max-width:70ch}
+  .nav{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 14px}
+  .nav a{font-size:13.5px;text-decoration:none;color:var(--accent2);background:var(--card);
+    border:1px solid var(--line);padding:6px 12px;border-radius:999px;box-shadow:var(--shadow)}
+  .nav a.cur{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .legend{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:12px 14px;font-size:13.5px;color:var(--muted);box-shadow:var(--shadow);margin-bottom:16px;
+  }
+  .legend b{color:var(--ink)}
+  .legend .stress{border-bottom:2px solid var(--accent);color:var(--ink);font-weight:600}
+  .controls{
+    display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+    position:sticky;top:0;z-index:20;padding:12px 0 14px;margin-bottom:6px;
+    background:linear-gradient(180deg,var(--bg) 70%,transparent);
+  }
+  .btn{
+    appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);
+    font-size:14px;font-weight:600;padding:9px 15px;border-radius:999px;cursor:pointer;
+    box-shadow:var(--shadow);transition:transform .05s ease,border-color .15s;
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .hint{font-size:12.5px;color:var(--muted);margin-left:2px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-top:4px}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    box-shadow:var(--shadow);display:flex;flex-direction:column;
+  }
+  .chead{padding:16px 18px 12px;border-bottom:1px dashed var(--line);cursor:pointer;position:relative}
+  .root{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .root .g{font-size:26px;font-weight:700;color:var(--accent2)}
+  .root .tr{font-size:13px;color:var(--muted)}
+  .root .mean{font-size:15px;font-weight:600}
+  .hook{margin-top:7px;font-size:13px;color:var(--muted)}
+  .hook b{color:var(--gr)}
+  .chev{position:absolute;right:16px;top:16px;color:var(--muted);transition:transform .2s;font-size:13px}
+  .card.collapsed .chev{transform:rotate(-90deg)}
+  .card.collapsed .cbody{display:none}
+  .shuf{position:absolute;right:40px;top:12px;border:1px solid var(--line);background:var(--bg2);
+    color:var(--muted);border-radius:8px;padding:2px 7px;font-size:14px;cursor:pointer;line-height:1.3}
+  .shuf:hover{color:var(--ink);border-color:var(--accent)}
+  .shuf:active{transform:translateY(1px)}
+  .cbody{padding:6px 10px 12px}
+  .w{display:flex;align-items:baseline;gap:10px;padding:8px 8px;border-radius:10px;cursor:pointer}
+  .w:hover{background:var(--bg2)}
+  .w .g{font-weight:600;color:var(--ink);white-space:nowrap}
+  .w .tr{font-size:12px;color:var(--muted);white-space:nowrap}
+  .w .ru{margin-left:auto;text-align:right;color:var(--ink);font-size:14px}
+  .phrases{margin:6px 8px 2px;padding:12px 14px;background:var(--ph-bg);border-radius:12px}
+  .phrases .plabel{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:7px}
+  .ph{padding:5px 0;cursor:pointer}
+  .ph .g{font-weight:600;color:var(--accent2)}
+  .ph .ru{display:block;font-size:13.5px;color:var(--muted);margin-top:1px}
+  body.test .ru{filter:blur(6px);opacity:.65;transition:filter .12s,opacity .12s;user-select:none;border-radius:5px}
+  body.test .revealed .ru{filter:none;opacity:1;user-select:auto}
+  body.test .w .ru,body.test .ph .ru{cursor:pointer}
+  .stress{border-bottom:2px solid var(--accent);padding-bottom:1px}
+  footer{max-width:1080px;margin:26px auto 0;padding:16px 20px;color:var(--muted);font-size:13px;text-align:center}
+  .tip{margin-top:10px;font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>Греческие приставки <span class="gk">·</span> собираем слова из деталей</h1>
+    <nav class="nav">
+      <a href="greek-roots.html">① Корни</a>
+      <a href="greek-prefixes.html" class="cur">② Приставки</a>
+      <a href="greek-verbs.html">③ Глаголы</a>
+      <a href="greek-spelling.html">④ Правописание [и]</a>
+      <a href="greek-greetings.html">⑤ Приветствия</a>
+      <a href="greek-all.html">📱 Всё на одной странице</a>
+    </nav>
+    <p class="sub">Приставка + знакомый корень = новое слово, смысл которого часто можно угадать. Здесь 10 самых рабочих приставок с живыми новогреческими словами и фразами. Многие слова тут — ходовые глаголы, которые встретишь в первый же день.</p>
+    <div class="legend">
+      <b>Как читать транскрипцию:</b> ударный слог подчёркнут <span class="stress">во́т так</span>.
+      <b>γ</b> («г») — мягче русского «г»; <b>χ</b> — как «х»;
+      <b>ð</b> — англ. <i>th</i> в <i>this</i>; <b>θ</b> — англ. <i>th</i> в <i>think</i>.
+      Итакизм: <b>η, ι, υ, ει, οι</b> → <b>[и]</b>.
+      Приставка перед некоторыми звуками меняется (напр. <b>συν-</b> → συμ-/συγ-) — это норма, ищи корень.
+    </div>
+  </header>
+
+  <div class="controls">
+    <button class="btn" id="testBtn">🙈 Режим самопроверки</button>
+    <button class="btn" id="expandBtn">Свернуть всё</button>
+    <button class="btn" id="shuffleAllBtn">🔀 Перемешать всё</button>
+    <span class="hint" id="hintText">Кликни по слову, чтобы открыть перевод.</span>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</div>
+
+<footer>
+  Страница 2 из 3 · 10 приставок. Прогресс не сохраняется между открытиями — это тренажёр для повторения.
+  <div class="tip">Совет: закрой перевод и попробуй угадать смысл слова по приставке + корню, прежде чем проверять себя.</div>
+</footer>
+
+<script>
+const NESTS = [
+  {
+    g:"αντι-", tr:"анди-", mean:"против; противо-",
+    hook:"Уже знакомо: <b>антибиотик</b>, <b>антитеза</b>, <b>антипатия</b>.",
+    words:[
+      ["αντίθετος","[анд|и|θетос]","противоположный"],
+      ["η αντίθεση","[анд|и|θеси]","контраст, противоположность"],
+      ["αντιγράφω","[андигр|а|фо]","копировать, списывать (+γράφω)"],
+      ["ο αντίπαλος","[анд|и|палос]","противник, соперник"],
+      ["αντιπαθώ","[андипаθ|о|]","испытывать неприязнь"]
+    ],
+    phrases:[
+      ["Είμαι αντίθετος.","Я против."],
+      ["Μην αντιγράφεις!","Не списывай!"]
+    ]
+  },
+  {
+    g:"συν- / συμ-", tr:"син- / сим-", mean:"с, вместе; со-",
+    hook:"Уже знакомо: <b>синхрон</b>, <b>симфония</b>, <b>синтез</b>, <b>симметрия</b>.",
+    words:[
+      ["συμφωνώ","[симфон|о|]","соглашаться (+φωνή)"],
+      ["η συμφωνία","[симфон|и|а]","согласие; соглашение; симфония"],
+      ["συνεργάζομαι","[синерг|а|зоме]","сотрудничать"],
+      ["ο συνάδελφος","[син|а|делфос]","коллега"],
+      ["συζητώ","[сизит|о|]","обсуждать"]
+    ],
+    phrases:[
+      ["Συμφωνώ μαζί σου.","Я с тобой согласен."],
+      ["Να το συζητήσουμε.","Давай это обсудим."]
+    ]
+  },
+  {
+    g:"προ-", tr:"про-", mean:"перед, до; про-",
+    hook:"Уже знакомо: <b>программа</b>, <b>прогноз</b>, <b>пролог</b>.",
+    words:[
+      ["το πρόγραμμα","[пр|о|грама]","программа (+γράμμα)"],
+      ["προτείνω","[прот|и|но]","предлагать"],
+      ["η πρόταση","[пр|о|таси]","предложение"],
+      ["προτιμώ","[протим|о|]","предпочитать"],
+      ["προχθές","[прохθ|э|с]","позавчера"]
+    ],
+    phrases:[
+      ["Τι προτείνεις;","Что предложишь?"],
+      ["Προτιμώ τσάι.","Я предпочитаю чай."]
+    ]
+  },
+  {
+    g:"μετα-", tr:"мета-", mean:"после; пере-, изменение",
+    hook:"Уже знакомо: <b>метаморфоза</b>, <b>метод</b>, <b>метафора</b>.",
+    words:[
+      ["μετά","[мет|а|]","после, потом"],
+      ["μεταφράζω","[метафр|а|зо]","переводить"],
+      ["η μετάφραση","[мет|а|фраси]","перевод"],
+      ["μεταφέρω","[метаф|э|ро]","переносить, перевозить"],
+      ["η μεταμόρφωση","[метам|о|рфоси]","превращение, метаморфоза"]
+    ],
+    phrases:[
+      ["Τα λέμε μετά.","Поговорим позже."],
+      ["Μπορείς να το μεταφράσεις;","Можешь это перевести?"]
+    ]
+  },
+  {
+    g:"υπερ-", tr:"ипер-", mean:"сверх, над; гипер-",
+    hook:"Уже знакомо: <b>гипербола</b>, <b>гипермаркет</b>, <b>супер-</b>.",
+    words:[
+      ["υπέροχος","[ип|э|рохос]","превосходный, чудесный"],
+      ["η υπερβολή","[ипервол|и|]","преувеличение, гипербола"],
+      ["υπερβολικός","[иперволик|о|с]","чрезмерный"],
+      ["η υπεραγορά","[иперагор|а|]","супермаркет"],
+      ["υπερήφανος","[ипер|и|фанос]","гордый"]
+    ],
+    phrases:[
+      ["Είναι υπέροχο!","Это чудесно!"],
+      ["Μην υπερβάλλεις.","Не преувеличивай."]
+    ]
+  },
+  {
+    g:"υπο-", tr:"ипо-", mean:"под; недо-",
+    hook:"Уже знакомо: <b>гипотеза</b>, <b>гипотония</b>.",
+    words:[
+      ["υπογράφω","[ипогр|а|фо]","подписывать (+γράφω)"],
+      ["η υπογραφή","[ипогр|а|фи]","подпись"],
+      ["η υπόθεση","[ип|о|θеси]","предположение; дело"],
+      ["υπόσχομαι","[ип|о|схоме]","обещать"],
+      ["υποφέρω","[ипоф|э|ро]","страдать"]
+    ],
+    phrases:[
+      ["Υπογράψτε εδώ, παρακαλώ.","Подпишите здесь, пожалуйста."],
+      ["Σου υπόσχομαι.","Я тебе обещаю."]
+    ]
+  },
+  {
+    g:"δια-", tr:"диа-", mean:"через, сквозь; раз-",
+    hook:"Уже знакомо: <b>диалог</b>, <b>диаметр</b>, <b>диагноз</b>.",
+    words:[
+      ["διαβάζω","[ðиав|а|зо]","читать; заниматься"],
+      ["διαφορετικός","[ðиафоретик|о|с]","разный, другой"],
+      ["η διαφορά","[ðиафор|а|]","разница"],
+      ["οι διακοπές","[ðиакоп|э|с]","каникулы, отпуск"],
+      ["ο διάδρομος","[ðи|а|ðромос]","коридор"]
+    ],
+    phrases:[
+      ["Διαβάζω ελληνικά.","Я учу греческий."],
+      ["Καλές διακοπές!","Хорошего отдыха!"]
+    ]
+  },
+  {
+    g:"επι-", tr:"эпи-", mean:"на, над; при-",
+    hook:"Уже знакомо: <b>эпицентр</b>, <b>эпидемия</b>, <b>эпилог</b>.",
+    words:[
+      ["επίσης","[еп|и|сис]","также, тоже"],
+      ["η επιστροφή","[епистроф|и|]","возвращение"],
+      ["επικίνδυνος","[епик|и|нðинос]","опасный"],
+      ["επισκέπτομαι","[еписк|э|птоме]","посещать"],
+      ["ο επισκέπτης","[еписк|э|птис]","посетитель, гость"]
+    ],
+    phrases:[
+      ["Επίσης!","Взаимно! / И вам того же!"],
+      ["εισιτήριο με επιστροφή","билет туда-обратно"]
+    ]
+  },
+  {
+    g:"κατα-", tr:"ката-", mean:"вниз; полностью",
+    hook:"Уже знакомо: <b>катастрофа</b>, <b>каталог</b>, <b>категория</b>.",
+    words:[
+      ["καταλαβαίνω","[каталав|э|но]","понимать"],
+      ["κατεβαίνω","[катев|э|но]","спускаться; выходить (из транспорта)"],
+      ["ο κατάλογος","[кат|а|логос]","список; меню"],
+      ["η κατάσταση","[кат|а|стаси]","ситуация, состояние"],
+      ["κατευθείαν","[катефθ|и|ан]","прямо, напрямую"]
+    ],
+    phrases:[
+      ["Δεν καταλαβαίνω.","Я не понимаю."],
+      ["Τον κατάλογο, παρακαλώ.","Меню, пожалуйста."]
+    ]
+  },
+  {
+    g:"περι-", tr:"пери-", mean:"вокруг, около",
+    hook:"Уже знакомо: <b>периметр</b>, <b>период</b>, <b>перископ</b>.",
+    words:[
+      ["περιμένω","[перим|э|но]","ждать"],
+      ["η περιοχή","[периох|и|]","район, местность"],
+      ["περίπου","[пер|и|пу]","примерно, около"],
+      ["το περιοδικό","[периоðик|о|]","журнал"],
+      ["περπατώ","[перпат|о|]","гулять, ходить пешком"]
+    ],
+    phrases:[
+      ["Περίμενε!","Подожди!"],
+      ["περίπου δέκα λεπτά","примерно десять минут"]
+    ]
+  }
+];
+
+const grid = document.getElementById('grid');
+function stressify(tr){ return tr.replace(/\|([^|]+)\|/g, '<span class="stress">$1</span>'); }
+NESTS.forEach((n)=>{
+  const card = document.createElement('div');
+  card.className = 'card';
+  let words = n.words.map(w=>`
+    <div class="w" onclick="this.classList.toggle('revealed')">
+      <span class="g">${w[0]}</span>
+      <span class="tr">${stressify(w[1])}</span>
+      <span class="ru">${w[2]}</span>
+    </div>`).join('');
+  let phrases = n.phrases.map(p=>`
+    <div class="ph" onclick="this.classList.toggle('revealed')">
+      <span class="g">${p[0]}</span>
+      <span class="ru">${p[1]}</span>
+    </div>`).join('');
+  card.innerHTML = `
+    <div class="chead" onclick="this.parentNode.classList.toggle('collapsed')">
+      <button class="shuf" title="Перемешать слова" onclick="event.stopPropagation(); shuffleCard(this)">🔀</button>
+      <span class="chev">▾</span>
+      <div class="root">
+        <span class="g">${n.g}</span>
+        <span class="tr">${n.tr}</span>
+        <span class="mean">${n.mean}</span>
+      </div>
+      <div class="hook">${n.hook}</div>
+    </div>
+    <div class="cbody">
+      <div class="words">${words}</div>
+      <div class="phrases">
+        <div class="plabel">Частотные фразы</div>
+        ${phrases}
+      </div>
+    </div>`;
+  grid.appendChild(card);
+});
+
+const testBtn = document.getElementById('testBtn');
+const hintText = document.getElementById('hintText');
+testBtn.addEventListener('click', ()=>{
+  const on = document.body.classList.toggle('test');
+  testBtn.classList.toggle('on', on);
+  testBtn.textContent = on ? '👁 Показать переводы' : '🙈 Режим самопроверки';
+  hintText.textContent = on
+    ? 'Угадай смысл по приставке — потом кликни, чтобы проверить.'
+    : 'Кликни по слову, чтобы открыть перевод.';
+  if(!on){ document.querySelectorAll('.revealed').forEach(el=>el.classList.remove('revealed')); }
+});
+const expandBtn = document.getElementById('expandBtn');
+let collapsed = false;
+expandBtn.addEventListener('click', ()=>{
+  collapsed = !collapsed;
+  document.querySelectorAll('.card').forEach(c=>c.classList.toggle('collapsed', collapsed));
+  expandBtn.textContent = collapsed ? 'Развернуть всё' : 'Свернуть всё';
+});
+
+function shuffle(el){
+  const items = Array.from(el.children);
+  for(let i=items.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [items[i],items[j]]=[items[j],items[i]]; }
+  items.forEach(it=>el.appendChild(it));
+}
+function shuffleCard(btn){
+  const c=btn.closest('.card'); const w=c && c.querySelector('.words'); if(w) shuffle(w);
+}
+document.getElementById('shuffleAllBtn').addEventListener('click', ()=>{
+  document.querySelectorAll('.words').forEach(shuffle);
+});
+</script>
+</body>
+</html>
