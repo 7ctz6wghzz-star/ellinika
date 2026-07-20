@@ -80,7 +80,13 @@
   .back .trb{font-size:15px;color:var(--muted)}
   .back .trb .stress{border-bottom:2px solid var(--accent);padding-bottom:1px}
   .back .rub{font-size:22px;font-weight:700;margin:2px 0 12px}
-  .back .exline{border-top:1px solid var(--line);padding-top:12px}
+  .back .exline{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;align-items:center}
+  .sound-ex{display:inline-flex;align-items:center;gap:5px;margin-top:10px;border:1px solid var(--line);
+    background:var(--bg2);color:var(--accent2);font-size:12.5px;font-weight:700;padding:6px 12px;border-radius:999px;
+    cursor:pointer;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+  .sound-ex:active{transform:translateY(1px)}
+  #sex{visibility:hidden}
+  .card.flipped #sex{visibility:visible}
   .back .exg{font-size:18px;font-weight:600}
   .back .exr{font-size:14px;color:var(--muted);margin-top:3px}
   .done{display:none;flex-direction:column;align-items:center;gap:14px;text-align:center;padding:20px}
@@ -134,7 +140,7 @@
         <div class="grb" id="b_gr"></div>
         <div class="trb" id="b_tr"></div>
         <div class="rub" id="b_ru"></div>
-        <div class="exline"><div class="exg" id="b_exg"></div><div class="exr" id="b_exr"></div></div>
+        <div class="exline"><div class="exg" id="b_exg"></div><div class="exr" id="b_exr"></div><button class="sound-ex" id="sex" type="button" aria-label="Озвучить пример">🔊 пример</button></div>
       </div>
     </div>
   </div>
@@ -200,20 +206,21 @@ function render(){
   $('counter').textContent = (pos+1)+' / '+list.length+(hideLearned?' (осталось)':'');
 }
 function step(n){ const list=visible(); if(!list.length)return; pos=(pos+n+list.length)%list.length; render(); }
-function speak(){
+function speakGreek(text){
   try{
-    const list=visible(); if(!list.length) return;
-    const g=deck().cards[list[pos]][0];
-    if(!('speechSynthesis' in window)) return;
-    const u=new SpeechSynthesisUtterance(g); u.lang='el-GR'; u.rate=0.9;
+    if(!text || !('speechSynthesis' in window)) return;
+    const u=new SpeechSynthesisUtterance(text); u.lang='el-GR'; u.rate=0.9;
     try{ const v=speechSynthesis.getVoices().find(x=>/^el/i.test(x.lang)); if(v) u.voice=v; }catch(e){}
     speechSynthesis.cancel(); speechSynthesis.speak(u);
   }catch(e){}
 }
-function soundTap(e){ e.stopPropagation(); e.preventDefault(); speak(); }
+function curCard(){ const list=visible(); return list.length ? deck().cards[list[pos]] : null; }
+function soundTap(e){ e.stopPropagation(); e.preventDefault(); const c=curCard(); if(c) speakGreek(c[0]); }
+function soundEx(e){ e.stopPropagation(); e.preventDefault(); const c=curCard(); if(c) speakGreek(c[3]); }
 
 $('card').addEventListener('click',()=>{ flipped=!flipped; $('card').classList.toggle('flipped',flipped); });
 ['sfront','sback'].forEach(id=>{ const el=$(id); if(el) el.addEventListener('click',soundTap); });
+$('sex').addEventListener('click',soundEx);
 $('next').addEventListener('click',()=>step(1));
 $('prev').addEventListener('click',()=>step(-1));
 $('shuffle').addEventListener('click',()=>{ order=shuffleArr([...Array(deck().cards.length).keys()]); Sv('gr_order_'+deckId,order); pos=0; render(); });
