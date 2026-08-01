@@ -1,5 +1,5 @@
 // Ελληνικά flashcards — service worker (network-first)
-const CACHE = 'ellinika-v7';
+const CACHE = 'ellinika-v8';
 self.addEventListener('install', e => { self.skipWaiting(); });
 self.addEventListener('activate', e => {
   e.waitUntil((async () => {
