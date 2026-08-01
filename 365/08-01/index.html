@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Η σοκολάτα — 1 августа · разбор</title>
+<style>
+  :root{
+    --bg:#f6f4ee; --bg2:#fffdf8; --card:#ffffff; --ink:#20242b; --muted:#6b7280;
+    --line:#e6e1d6; --accent:#1466b3; --accent2:#0f4f8a; --gr:#b8862b; --gr-bg:#fbf4e2;
+    --ph-bg:#eef4fb; --ok:#2e7d5b; --shadow:0 1px 2px rgba(30,40,60,.05),0 8px 24px rgba(30,40,60,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#12151a; --bg2:#171b22; --card:#1b2029; --ink:#e7eaf0; --muted:#9aa3b2;
+      --line:#2a313d; --accent:#5aa9f0; --accent2:#8ec3f7; --gr:#e0b458; --gr-bg:#241f14;
+      --ph-bg:#18222f; --ok:#5fd0a0; --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--ink);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;-webkit-text-size-adjust:100%;padding-bottom:70px}
+  .wrap{max-width:820px;margin:0 auto;padding:20px 16px 0}
+  h1{font-size:clamp(24px,5.5vw,34px);margin:0 0 4px;letter-spacing:-.01em}
+  h1 .gk{color:var(--gr)}
+  .sub{color:var(--muted);font-size:14.5px;margin:0 0 14px}
+  .nav{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 14px}
+  .nav a{font-size:13.5px;text-decoration:none;color:var(--accent2);background:var(--card);
+    border:1px solid var(--line);padding:6px 12px;border-radius:999px;box-shadow:var(--shadow)}
+  .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;position:sticky;top:0;z-index:20;
+    padding:10px 0 12px;background:linear-gradient(180deg,var(--bg) 72%,transparent)}
+  .btn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);
+    font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer;box-shadow:var(--shadow)}
+  .btn:active{transform:translateY(1px)}
+  .btn.off{opacity:.55}
+  details.full{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:12px 16px;box-shadow:var(--shadow);margin-bottom:18px}
+  details.full summary{cursor:pointer;font-weight:600;font-size:14.5px;color:var(--accent2)}
+  details.full .body{margin-top:10px;font-size:17px;line-height:1.75;color:var(--ink)}
+  .sent{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:14px 16px 12px;box-shadow:var(--shadow);margin-bottom:14px;position:relative}
+  .num{position:absolute;left:-2px;top:-10px;background:var(--accent);color:#fff;font-size:12px;
+    font-weight:700;border-radius:999px;min-width:24px;height:24px;display:flex;align-items:center;
+    justify-content:center;padding:0 7px;box-shadow:var(--shadow)}
+  .gr{font-size:19px;font-weight:600;color:var(--accent2);line-height:1.45;cursor:pointer;padding-right:4px}
+  .gr .spk{font-size:14px;margin-left:6px;opacity:.55}
+  .tr{font-size:13.5px;color:var(--muted);margin-top:5px;font-style:italic}
+  .ru{font-size:15.5px;margin-top:7px}
+  .an{font-size:14px;color:var(--ink);margin-top:10px;padding:10px 12px;background:var(--ph-bg);
+    border-radius:12px;line-height:1.62}
+  .an b{color:var(--accent2)}
+  .an i{color:var(--gr);font-style:normal;font-weight:600}
+  body.no-tr .tr{display:none}
+  body.no-ru .ru{display:none}
+  body.no-an .an{display:none}
+  h2{font-size:20px;margin:28px 0 10px}
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+    border-radius:16px;overflow:hidden;box-shadow:var(--shadow);font-size:14.5px}
+  td{padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  tr{cursor:pointer}
+  .vg{font-weight:600;color:var(--accent2);white-space:nowrap}
+  .vt{color:var(--muted);font-size:12.5px;white-space:nowrap}
+  .vr{text-align:right}
+  .gcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 15px;
+    box-shadow:var(--shadow);margin-bottom:10px}
+  .gcard h3{margin:0 0 6px;font-size:15.5px;color:var(--gr)}
+  .gcard p{margin:0;font-size:14px;line-height:1.6}
+  .gcard i{color:var(--accent2);font-style:normal;font-weight:600}
+  .foot{margin:26px 0 10px;font-size:12.5px;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1><span class="gk">Η σοκολάτα</span> — Шоколад</h1>
+  <p class="sub">1 Αυγούστου · 1 августа · с. 238 · 21 предложение</p>
+  <div class="nav">
+    <a href="../../index.html">карточки</a>
+    <a href="../../greek-all.html">все материалы</a>
+  </div>
+
+  <div class="controls">
+    <button class="btn" id="bAll" onclick="readAll()">🔊 весь рассказ</button>
+    <button class="btn" onclick="tog('no-ru',this)">перевод</button>
+    <button class="btn" onclick="tog('no-an',this)">разбор</button>
+  </div>
+
+  <article class="sent" id="s1">
+    <div class="num">1</div>
+    <div class="gr" onclick="speak(this)" data-t="Ένα κομμάτι λαχταριστή σοκολάτα βρίσκεται πάνω στο τραπέζι της κουζίνας.">Ένα κομμάτι λαχταριστή σοκολάτα βρίσκεται πάνω στο τραπέζι της κουζίνας.<span class="spk">🔊</span></div>
+    <div class="ru">Кусок аппетитного шоколада лежит на кухонном столе.</div>
+    <div class="an"><b>το κομμάτι</b> «кусок» ← <i>κόπτω</i> «резать» (ср. <b>синкопа</b>). <b>λαχταριστή</b> «манящий, аппетитный» ← <i>λαχταρώ</i> «страстно желать». <b>βρίσκεται</b> «находится» — отложительный глагол на <i>-εται</i>, от <i>βρίσκω</i> «находить». <b>της κουζίνας</b> — родительный: «кухонного». <b>η κουζίνα</b> ← итал. <i>cucina</i> / лат. <i>coquina</i>.</div>
+  </article>
+
+  <article class="sent" id="s2">
+    <div class="num">2</div>
+    <div class="gr" onclick="speak(this)" data-t="Ο Γιάννης πλησιάζει και το βλέπει.">Ο Γιάννης πλησιάζει και το βλέπει.<span class="spk">🔊</span></div>
+    <div class="ru">Яннис подходит и видит его.</div>
+    <div class="an"><b>πλησιάζω</b> «приближаться» ← <i>πλησίον</i> «близко». <b>το βλέπει</b> «видит его»; слабое местоимение <i>το</i> стоит ПЕРЕД глаголом.</div>
+  </article>
+
+  <article class="sent" id="s3">
+    <div class="num">3</div>
+    <div class="gr" onclick="speak(this)" data-t="Με μια γρήγορη κίνηση, το βάζει στην τσέπη του και τρέχει έξω.">Με μια γρήγορη κίνηση, το βάζει στην τσέπη του και τρέχει έξω.<span class="spk">🔊</span></div>
+    <div class="ru">Быстрым движением он кладёт его в карман и убегает наружу.</div>
+    <div class="an"><b>γρήγορη</b> «быстрая» (ср. имя Григорий «бодрствующий»). <b>η κίνηση</b> «движение» ← <i>κινώ</i> «двигать» → <b>кино, кинетика</b>. <b>η τσέπη</b> «карман» — из турецк. <i>cep</i>. <b>τρέχω</b> «бежать». <b>έξω</b> «наружу» ↔ <i>μέσα</i> «внутрь».</div>
+  </article>
+
+  <article class="sent" id="s4">
+    <div class="num">4</div>
+    <div class="gr" onclick="speak(this)" data-t="Στην αυλή, ο Αστρούλης παίζει με τη μπάλα.">Στην αυλή, ο Αστρούλης παίζει με τη μπάλα.<span class="spk">🔊</span></div>
+    <div class="ru">Во дворе Аструлис играет с мячом.</div>
+    <div class="an"><b>η αυλή</b> «двор». <b>Αστρούλης</b> — кличка, ласкат. от <i>άστρο</i> «звезда» (ср. <b>астрономия</b>). <b>παίζω</b> «играть» ← <i>παῖς</i> «ребёнок» (отсюда «педагог»). <b>η μπάλα</b> «мяч» ← итал. <i>palla</i>; <i>μπ</i> = [б].</div>
+  </article>
+
+  <article class="sent" id="s5">
+    <div class="num">5</div>
+    <div class="gr" onclick="speak(this)" data-t="Ο Γιάννης μένει για λίγο μαζί του και ξεχνάει τελείως τη σοκολάτα μέσα στην τσέπη του.">Ο Γιάννης μένει για λίγο μαζί του και ξεχνάει τελείως τη σοκολάτα μέσα στην τσέπη του.<span class="spk">🔊</span></div>
+    <div class="ru">Яннис задерживается ненадолго с ним и совсем забывает про шоколад в кармане.</div>
+    <div class="an"><b>μένω</b> «оставаться, задерживаться» (тот же корень, что в <i>περιμένω</i> «ждать»). <b>ξεχνάω</b> «забывать». <b>τελείως</b> «совершенно» ← <i>τέλος</i> «конец». <b>μέσα στην τσέπη</b> «внутри кармана».</div>
+  </article>
+
+  <article class="sent" id="s6">
+    <div class="num">6</div>
+    <div class="gr" onclick="speak(this)" data-t="Μισή ώρα αργότερα, η μαμά μπαίνει στην κουζίνα και προσέχει ότι η σοκολάτα έχει εξαφανισθεί.">Μισή ώρα αργότερα, η μαμά μπαίνει στην κουζίνα και προσέχει ότι η σοκολάτα έχει εξαφανισθεί.<span class="spk">🔊</span></div>
+    <div class="ru">Полчаса спустя мама заходит на кухню и замечает, что шоколад исчез.</div>
+    <div class="an"><b>μισή ώρα</b> «полчаса»: <i>μισός</i> «половина» + <i>ώρα</i> «час, пора» (тот же <i>ὥρα</i>, что в <i>ωραίος</i>). <b>προσέχω</b> «замечать» = <i>προς</i> «к» + <i>έχω</i> «держать». <b>έχει εξαφανισθεί</b> — перфект. <b>εξαφανίζομαι</b> «исчезать» = <i>εξ-</i> «из» + <i>αφανής</i> «невидимый» ← <i>φαίνομαι</i> «являться» (<b>феномен, фаза</b>).</div>
+  </article>
+
+  <article class="sent" id="s7">
+    <div class="num">7</div>
+    <div class="gr" onclick="speak(this)" data-t="«Μήπως έχει πέσει στο πάτωμα;» σκέφτεται.">«Μήπως έχει πέσει στο πάτωμα;» σκέφτεται.<span class="spk">🔊</span></div>
+    <div class="ru">«Уж не упал ли он на пол?» — думает она.</div>
+    <div class="an"><b>μήπως</b> — осторожный вопрос-догадка: «а вдруг, не…ли». <b>έχει πέσει</b> — перфект от <i>πέφτω</i> «падать» (ср. <b>птоз, симптом</b>). <b>το πάτωμα</b> «пол» ← <i>πατώ</i> «ступать». <b>σκέφτομαι</b> «думать» — отложительный, от <i>σκέπτομαι</i> (<b>скепсис, скептик</b>).</div>
+  </article>
+
+  <article class="sent" id="s8">
+    <div class="num">8</div>
+    <div class="gr" onclick="speak(this)" data-t="Με περιέργεια, σκύβει και κοιτάει κάτω απ' το τραπέζι, όμως δεν είναι ούτε εκεί.">Με περιέργεια, σκύβει και κοιτάει κάτω απ' το τραπέζι, όμως δεν είναι ούτε εκεί.<span class="spk">🔊</span></div>
+    <div class="ru">С любопытством она наклоняется и смотрит под стол, но и там его нет.</div>
+    <div class="an"><b>με περιέργεια</b> «с любопытством»: <i>περίεργος</i> = <i>περι-</i> «вокруг» + <i>έργο</i> «дело». <b>σκύβω</b> «наклоняться». <b>κοιτάω</b> «смотреть». <b>κάτω από</b> «под». <b>όμως</b> «однако». <b>ούτε</b> «даже не, ни».</div>
+  </article>
+
+  <article class="sent" id="s9">
+    <div class="num">9</div>
+    <div class="gr" onclick="speak(this)" data-t="«Περίεργο», λέει. «Ήταν εδώ πριν από λίγο»…">«Περίεργο», λέει. «Ήταν εδώ πριν από λίγο»…<span class="spk">🔊</span></div>
+    <div class="ru">«Странно, — говорит она. — Он был здесь только что»…</div>
+    <div class="an"><b>περίεργο</b> здесь «странно». <b>ήταν</b> — прош. вр. от <i>είμαι</i> «быть» (и «был», и «были»). <b>πριν από λίγο</b> «только что, недавно».</div>
+  </article>
+
+  <article class="sent" id="s10">
+    <div class="num">10</div>
+    <div class="gr" onclick="speak(this)" data-t="Η μητέρα βγαίνει έξω και φωνάζει τα παιδιά.">Η μητέρα βγαίνει έξω και φωνάζει τα παιδιά.<span class="spk">🔊</span></div>
+    <div class="ru">Мать выходит наружу и зовёт детей.</div>
+    <div class="an"><b>η μητέρα</b> «мать» (родня лат. <i>mater</i>). <b>βγαίνω</b> «выходить» ← <i>ἐκβαίνω</i>. <b>φωνάζω</b> «звать, кричать» ← <i>φωνή</i> «голос» (<b>фонетика, телефон</b>).</div>
+  </article>
+
+  <article class="sent" id="s11">
+    <div class="num">11</div>
+    <div class="gr" onclick="speak(this)" data-t="«Έχει δει κανείς από σας τη σοκολάτα που ήταν στην κουζίνα;» ρωτάει.">«Έχει δει κανείς από σας τη σοκολάτα που ήταν στην κουζίνα;» ρωτάει.<span class="spk">🔊</span></div>
+    <div class="ru">«Видел ли кто-нибудь из вас шоколад, что был на кухне?» — спрашивает она.</div>
+    <div class="an"><b>έχει δει</b> — перфект от <i>βλέπω</i> «видеть» (основа <i>δ-</i>). <b>κανείς</b> «кто-нибудь; никто». <b>που</b> «который». <b>ρωτάω</b> «спрашивать».</div>
+  </article>
+
+  <article class="sent" id="s12">
+    <div class="num">12</div>
+    <div class="gr" onclick="speak(this)" data-t="Η απάντηση και των δύο είναι αρνητική.">Η απάντηση και των δύο είναι αρνητική.<span class="spk">🔊</span></div>
+    <div class="ru">Ответ обоих — отрицательный.</div>
+    <div class="an"><b>η απάντηση</b> «ответ» ← <i>απαντώ</i> «отвечать». <b>και των δύο</b> «обоих». <b>αρνητική</b> «отрицательный» ← <i>άρνηση</i> «отрицание» ← <i>αρνούμαι</i>. Это то самое <b>Άρνηση</b> — название стихотворения Сефериса.</div>
+  </article>
+
+  <article class="sent" id="s13">
+    <div class="num">13</div>
+    <div class="gr" onclick="speak(this)" data-t="«Τι κρίμα», λέει εκείνη. «Και ήθελα να φτιάξω ένα γλύκισμα σοκολάτας».">«Τι κρίμα», λέει εκείνη. «Και ήθελα να φτιάξω ένα γλύκισμα σοκολάτας».<span class="spk">🔊</span></div>
+    <div class="ru">«Как жаль, — говорит она. — А я ведь хотела сделать шоколадный десерт».</div>
+    <div class="an"><b>Τι κρίμα</b> «как жаль»; <i>κρίμα</i> ← «приговор» ← <i>κρίνω</i> «судить» (<b>критерий</b>). <b>ήθελα</b> — имперфект от <i>θέλω</i>. <b>να φτιάξω</b> ← <i>φτιάχνω</i> «делать, готовить». <b>το γλύκισμα</b> «десерт» ← <i>γλυκός</i> «сладкий» (лат. <i>dulcis</i>, «глюкоза»).</div>
+  </article>
+
+  <article class="sent" id="s14">
+    <div class="num">14</div>
+    <div class="gr" onclick="speak(this)" data-t="«Γλύκισμα σοκολάτας;» Ο Γιάννης μένει και την κοιτάει ίσια στα μάτια.">«Γλύκισμα σοκολάτας;» Ο Γιάννης μένει και την κοιτάει ίσια στα μάτια.<span class="spk">🔊</span></div>
+    <div class="ru">«Шоколадный десерт?» Яннис застывает и смотрит ей прямо в глаза.</div>
+    <div class="an"><b>μένει</b> здесь «застывает, замирает». <b>ίσια στα μάτια</b> «прямо в глаза»; <b>το μάτι</b> «глаз» ← <i>ὀμμάτιον</i> (<b>офтальмология</b>).</div>
+  </article>
+
+  <article class="sent" id="s15">
+    <div class="num">15</div>
+    <div class="gr" onclick="speak(this)" data-t="«Ναι. Χωρίς αυτή δεν μπορώ».">«Ναι. Χωρίς αυτή δεν μπορώ».<span class="spk">🔊</span></div>
+    <div class="ru">«Да. Без него не могу».</div>
+    <div class="an"><b>χωρίς</b> «без». <b>αυτή</b> «неё» (<i>σοκολάτα</i> — ж. р., поэтому «без неё»). <b>δεν μπορώ</b> «не могу».</div>
+  </article>
+
+  <article class="sent" id="s16">
+    <div class="num">16</div>
+    <div class="gr" onclick="speak(this)" data-t="Ο Γιάννης θέλει να επιστρέψει την σοκολάτα, μα γρήγορα αποφασίζει να μην το κάνει και θέλει να την κρατήσει για τον εαυτό του.">Ο Γιάννης θέλει να επιστρέψει την σοκολάτα, μα γρήγορα αποφασίζει να μην το κάνει και θέλει να την κρατήσει για τον εαυτό του.<span class="spk">🔊</span></div>
+    <div class="ru">Яннис хочет вернуть шоколад, но быстро решает этого не делать и хочет оставить его себе.</div>
+    <div class="an"><b>να επιστρέψει</b> ← <i>επιστρέφω</i> «возвращать» = <i>επι-</i> + <i>στρέφω</i> «поворачивать» (<b>строфа, катастрофа</b>). <b>αποφασίζω</b> «решать». <b>να μην το κάνει</b> — отрицание в <i>να</i>-обороте всегда <i>μην</i>. <b>να την κρατήσει</b> ← <i>κρατώ</i> «держать». <b>για τον εαυτό του</b> «для себя».</div>
+  </article>
+
+  <article class="sent" id="s17">
+    <div class="num">17</div>
+    <div class="gr" onclick="speak(this)" data-t="Τρέχει και κρύβεται πίσω από την αποθήκη του κήπου.">Τρέχει και κρύβεται πίσω από την αποθήκη του κήπου.<span class="spk">🔊</span></div>
+    <div class="ru">Он бежит и прячется за садовым сараем.</div>
+    <div class="an"><b>κρύβομαι</b> «прятаться» ← <i>κρύβω</i> «прятать» (корень <i>κρυφ-</i>, как в <i>κρυφό</i> «тайный»; <b>крипто-</b>). <b>πίσω από</b> «за, позади». <b>η αποθήκη</b> «сарай, склад» = <i>από</i> + <i>θήκη</i> «хранилище» (<b>библиотека, аптека</b>). <b>ο κήπος</b> «сад».</div>
+  </article>
+
+  <article class="sent" id="s18">
+    <div class="num">18</div>
+    <div class="gr" onclick="speak(this)" data-t="Έπειτα, βγάζει τη σοκολάτα από την τσέπη του.">Έπειτα, βγάζει τη σοκολάτα από την τσέπη του.<span class="spk">🔊</span></div>
+    <div class="ru">Затем он достаёт шоколад из кармана.</div>
+    <div class="an"><b>έπειτα</b> «затем». <b>βγάζω</b> «вынимать» — пара к <i>βγαίνω</i> «выходить». <b>από</b> «из».</div>
+  </article>
+
+  <article class="sent" id="s19">
+    <div class="num">19</div>
+    <div class="gr" onclick="speak(this)" data-t="Μα τι γίνεται; Είναι επίπεδη και πολύ απαλή.">Μα τι γίνεται; Είναι επίπεδη και πολύ απαλή.<span class="spk">🔊</span></div>
+    <div class="ru">Но что такое? Он плоский и совсем мягкий.</div>
+    <div class="an"><b>τι γίνεται;</b> «что происходит?» ← <i>γίνομαι</i> «становиться». <b>επίπεδη</b> «плоская» ← <i>επίπεδο</i> «плоскость» (<i>επί</i> «на» + <i>πέδον</i> «земля»). <b>απαλή</b> «мягкая». Согласование в ж. р. — с <i>η σοκολάτα</i>.</div>
+  </article>
+
+  <article class="sent" id="s20">
+    <div class="num">20</div>
+    <div class="gr" onclick="speak(this)" data-t="«Ω, όχι. Η σοκολάτα έλιωσε απ' τη ζέστη. Τι ανόητος που είμαι», λέει στον εαυτό του.">«Ω, όχι. Η σοκολάτα έλιωσε απ' τη ζέστη. Τι ανόητος που είμαι», λέει στον εαυτό του.<span class="spk">🔊</span></div>
+    <div class="ru">«О нет. Шоколад растаял от жары. Какой же я глупый», — говорит он сам себе.</div>
+    <div class="an"><b>έλιωσε</b> — аорист от <i>λιώνω</i> «таять, плавиться». <b>η ζέστη</b> «жара» ← <i>ζεστός</i> «горячий». <b>ανόητος</b> «глупый» = <i>α-</i> «не» + <i>νους</i> «ум» (<b>паранойя</b>). <b>στον εαυτό του</b> «самому себе».</div>
+  </article>
+
+  <article class="sent" id="s21">
+    <div class="num">21</div>
+    <div class="gr" onclick="speak(this)" data-t="Τώρα δεν θα την πάρει κανείς. Και περισσότερο ο Γιάννης.">Τώρα δεν θα την πάρει κανείς. Και περισσότερο ο Γιάννης.<span class="spk">🔊</span></div>
+    <div class="ru">Теперь её (шоколадку) уже никто не возьмёт. И уж тем более — сам Яннис.</div>
+    <div class="an"><b>δεν θα πάρει</b> — отрицат. будущее от <i>παίρνω</i> «брать». <b>κανείς</b> «никто» (с отрицанием). <b>περισσότερο</b> «больше (всего), тем более» ← <i>περισσός</i> «лишний, чрезмерный»: «и Яннис — больше всех [не получит]». Ирония концовки: пожадничал, спрятал — и сам всё испортил.</div>
+  </article>
+
+  <h2>Словарик</h2>
+  <table>
+    <tr onclick="speakText('η σοκολάτα')"><td class="vg">η σοκολάτα</td><td class="vr">шоколад</td></tr>
+    <tr onclick="speakText('το κομμάτι')"><td class="vg">το κομμάτι</td><td class="vr">кусок, часть</td></tr>
+    <tr onclick="speakText('λαχταριστός')"><td class="vg">λαχταριστός</td><td class="vr">манящий, аппетитный</td></tr>
+    <tr onclick="speakText('το τραπέζι')"><td class="vg">το τραπέζι</td><td class="vr">стол</td></tr>
+    <tr onclick="speakText('η κουζίνα')"><td class="vg">η κουζίνα</td><td class="vr">кухня</td></tr>
+    <tr onclick="speakText('η τσέπη')"><td class="vg">η τσέπη</td><td class="vr">карман</td></tr>
+    <tr onclick="speakText('η κίνηση')"><td class="vg">η κίνηση</td><td class="vr">движение</td></tr>
+    <tr onclick="speakText('η αυλή')"><td class="vg">η αυλή</td><td class="vr">двор</td></tr>
+    <tr onclick="speakText('η μπάλα')"><td class="vg">η μπάλα</td><td class="vr">мяч</td></tr>
+    <tr onclick="speakText('το πάτωμα')"><td class="vg">το πάτωμα</td><td class="vr">пол</td></tr>
+    <tr onclick="speakText('η αποθήκη')"><td class="vg">η αποθήκη</td><td class="vr">склад, сарай</td></tr>
+    <tr onclick="speakText('ο κήπος')"><td class="vg">ο κήπος</td><td class="vr">сад</td></tr>
+    <tr onclick="speakText('το μάτι')"><td class="vg">το μάτι</td><td class="vr">глаз</td></tr>
+    <tr onclick="speakText('η ζέστη')"><td class="vg">η ζέστη</td><td class="vr">жара</td></tr>
+    <tr onclick="speakText('το γλύκισμα')"><td class="vg">το γλύκισμα</td><td class="vr">сладость, десерт</td></tr>
+    <tr onclick="speakText('η απάντηση')"><td class="vg">η απάντηση</td><td class="vr">ответ</td></tr>
+    <tr onclick="speakText('πλησιάζω')"><td class="vg">πλησιάζω</td><td class="vr">приближаться</td></tr>
+    <tr onclick="speakText('βρίσκομαι')"><td class="vg">βρίσκομαι</td><td class="vr">находиться</td></tr>
+    <tr onclick="speakText('βάζω')"><td class="vg">βάζω / βγάζω</td><td class="vr">класть / вынимать</td></tr>
+    <tr onclick="speakText('τρέχω')"><td class="vg">τρέχω</td><td class="vr">бежать</td></tr>
+    <tr onclick="speakText('ξεχνάω')"><td class="vg">ξεχνάω</td><td class="vr">забывать</td></tr>
+    <tr onclick="speakText('προσέχω')"><td class="vg">προσέχω</td><td class="vr">замечать</td></tr>
+    <tr onclick="speakText('εξαφανίζομαι')"><td class="vg">εξαφανίζομαι</td><td class="vr">исчезать</td></tr>
+    <tr onclick="speakText('πέφτω')"><td class="vg">πέφτω</td><td class="vr">падать</td></tr>
+    <tr onclick="speakText('σκέφτομαι')"><td class="vg">σκέφτομαι</td><td class="vr">думать</td></tr>
+    <tr onclick="speakText('σκύβω')"><td class="vg">σκύβω</td><td class="vr">наклоняться</td></tr>
+    <tr onclick="speakText('φωνάζω')"><td class="vg">φωνάζω</td><td class="vr">звать, кричать</td></tr>
+    <tr onclick="speakText('ρωτάω')"><td class="vg">ρωτάω</td><td class="vr">спрашивать</td></tr>
+    <tr onclick="speakText('επιστρέφω')"><td class="vg">επιστρέφω</td><td class="vr">возвращать</td></tr>
+    <tr onclick="speakText('αποφασίζω')"><td class="vg">αποφασίζω</td><td class="vr">решать</td></tr>
+    <tr onclick="speakText('κρατάω')"><td class="vg">κρατάω</td><td class="vr">держать, удерживать</td></tr>
+    <tr onclick="speakText('κρύβομαι')"><td class="vg">κρύβομαι</td><td class="vr">прятаться</td></tr>
+    <tr onclick="speakText('λιώνω')"><td class="vg">λιώνω</td><td class="vr">таять, плавиться</td></tr>
+    <tr onclick="speakText('αρνητικός')"><td class="vg">αρνητικός</td><td class="vr">отрицательный</td></tr>
+    <tr onclick="speakText('επίπεδος')"><td class="vg">επίπεδος</td><td class="vr">плоский</td></tr>
+    <tr onclick="speakText('απαλός')"><td class="vg">απαλός</td><td class="vr">мягкий, нежный</td></tr>
+    <tr onclick="speakText('ανόητος')"><td class="vg">ανόητος</td><td class="vr">глупый</td></tr>
+    <tr onclick="speakText('μήπως')"><td class="vg">μήπως</td><td class="vr">вдруг, не…ли</td></tr>
+    <tr onclick="speakText('όμως')"><td class="vg">όμως</td><td class="vr">однако</td></tr>
+    <tr onclick="speakText('έπειτα')"><td class="vg">έπειτα</td><td class="vr">затем, потом</td></tr>
+  </table>
+
+  <h2>Грамматика этого рассказа</h2>
+
+    <div class="gcard"><h3>Отложительные глаголы на -ομαι / -εται</h3><p><i>βρίσκεται</i> «находится», <i>σκέφτεται</i> «думает», <i>εξαφανίζεται</i> «исчезает», <i>κρύβεται</i> «прячется». У них нет активной формы — учи сразу как <i>-ομαι, -εσαι, -εται</i>.</p></div>
+    <div class="gcard"><h3>μήπως — осторожный вопрос-предположение</h3><p><i>«Μήπως έχει πέσει;»</i> «А вдруг он упал?». <i>μήπως</i> вводит догадку, сомнение.</p></div>
+    <div class="gcard"><h3>Перфект: έχω + застывшая форма</h3><p><i>έχει εξαφανισθεί</i> «исчез», <i>έχει πέσει</i> «упал», <i>έχει δει</i> «видел». Вторая часть не меняется по лицам.</p></div>
+    <div class="gcard"><h3>να + сослагательное (инфинитива нет), отрицание μην</h3><p><i>θέλει να επιστρέψει</i>, <i>αποφασίζει να μην το κάνει</i>, <i>ήθελα να φτιάξω</i>. Отрицание в <i>να</i>-обороте — <i>μην</i>, а не <i>δεν</i>.</p></div>
+    <div class="gcard"><h3>Слабые местоимения перед глаголом</h3><p><i>το βλέπει</i> «видит его», <i>την κοιτάει</i> «смотрит на неё», <i>να την κρατήσει</i> «оставить её», <i>δεν θα την πάρει</i> «не возьмёт её».</p></div>
+    <div class="gcard"><h3>θα + аористная основа = однократное будущее</h3><p><i>δεν θα την πάρει</i> «не возьмёт (один раз/вообще)». Основа настоящего (<i>θα παίρνει</i>) дала бы «будет брать регулярно».</p></div>
+
+  <div class="foot">Нажми на греческую строку — прозвучит вслух. Нажми на слово в словарике — тоже.</div>
+</div>
+<script>
+function speakText(t){
+  try{
+    if(!t || !('speechSynthesis' in window)) return;
+    var u=new SpeechSynthesisUtterance(t); u.lang='el-GR'; u.rate=0.9;
+    try{ var v=speechSynthesis.getVoices().find(function(x){return /^el/i.test(x.lang);}); if(v) u.voice=v; }catch(e){}
+    speechSynthesis.cancel(); speechSynthesis.speak(u);
+  }catch(e){}
+}
+function speak(el){ speakText(el.getAttribute('data-t')); }
+function tog(cls,btn){ document.body.classList.toggle(cls); btn.classList.toggle('off'); }
+var ALL=["Ένα κομμάτι λαχταριστή σοκολάτα βρίσκεται πάνω στο τραπέζι της κουζίνας.","Ο Γιάννης πλησιάζει και το βλέπει.","Με μια γρήγορη κίνηση, το βάζει στην τσέπη του και τρέχει έξω.","Στην αυλή, ο Αστρούλης παίζει με τη μπάλα.","Ο Γιάννης μένει για λίγο μαζί του και ξεχνάει τελείως τη σοκολάτα μέσα στην τσέπη του.","Μισή ώρα αργότερα, η μαμά μπαίνει στην κουζίνα και προσέχει ότι η σοκολάτα έχει εξαφανισθεί.","Μήπως έχει πέσει στο πάτωμα; σκέφτεται.","Με περιέργεια, σκύβει και κοιτάει κάτω απ' το τραπέζι, όμως δεν είναι ούτε εκεί.","Περίεργο, λέει. Ήταν εδώ πριν από λίγο.","Η μητέρα βγαίνει έξω και φωνάζει τα παιδιά.","Έχει δει κανείς από σας τη σοκολάτα που ήταν στην κουζίνα; ρωτάει.","Η απάντηση και των δύο είναι αρνητική.","Τι κρίμα, λέει εκείνη. Και ήθελα να φτιάξω ένα γλύκισμα σοκολάτας.","Γλύκισμα σοκολάτας; Ο Γιάννης μένει και την κοιτάει ίσια στα μάτια.","Ναι. Χωρίς αυτή δεν μπορώ.","Ο Γιάννης θέλει να επιστρέψει την σοκολάτα, μα γρήγορα αποφασίζει να μην το κάνει και θέλει να την κρατήσει για τον εαυτό του.","Τρέχει και κρύβεται πίσω από την αποθήκη του κήπου.","Έπειτα, βγάζει τη σοκολάτα από την τσέπη του.","Μα τι γίνεται; Είναι επίπεδη και πολύ απαλή.","Ω, όχι. Η σοκολάτα έλιωσε απ' τη ζέστη. Τι ανόητος που είμαι, λέει στον εαυτό του.","Τώρα δεν θα την πάρει κανείς. Και περισσότερο ο Γιάννης."];
+var reading=false;
+function readAll(){
+  var b=document.getElementById('bAll');
+  if(reading){ try{speechSynthesis.cancel();}catch(e){} reading=false; b.textContent='🔊 весь рассказ'; return; }
+  reading=true; b.textContent='⏹ стоп';
+  var i=0;
+  function next(){
+    if(!reading || i>=ALL.length){ reading=false; b.textContent='🔊 весь рассказ'; return; }
+    var u=new SpeechSynthesisUtterance(ALL[i]); u.lang='el-GR'; u.rate=0.9;
+    try{ var v=speechSynthesis.getVoices().find(function(x){return /^el/i.test(x.lang);}); if(v) u.voice=v; }catch(e){}
+    u.onend=function(){ i++; next(); };
+    u.onerror=function(){ i++; next(); };
+    speechSynthesis.speak(u);
+  }
+  try{ speechSynthesis.cancel(); }catch(e){}
+  next();
+}
+</script>
+</body>
+</html>
