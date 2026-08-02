@@ -247,5 +247,7 @@ loadDeck(); render();
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(function(){}); }
 
 </script>
+
+<div id="story365" style="max-width:520px;margin:10px auto 44px;padding:0 16px;text-align:center"><label for="storySel" style="display:block;font-size:13.5px;color:var(--muted,#6b7280);margin-bottom:6px">Разборы 365</label><select id="storySel" onchange="if(this.value)location.href=this.value" style="width:100%;max-width:360px;padding:9px 12px;font-size:14.5px;border-radius:12px;border:1px solid var(--line,#ccc);background:var(--card,#fff);color:var(--ink,#20242b)"><option value="">— выбери разбор —</option><option value="365/07-22/index.html">07-22 - Μεγάλη κοιλιά</option><option value="365/08-01/index.html">08-01 - Η σοκολάτα</option></select></div>
 </body>
 </html>
