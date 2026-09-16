@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Οι τηγανίτες — 16 сентября · разбор</title>
+<style>
+  :root{
+    --bg:#f6f4ee; --bg2:#fffdf8; --card:#ffffff; --ink:#20242b; --muted:#6b7280;
+    --line:#e6e1d6; --accent:#1466b3; --accent2:#0f4f8a; --gr:#b8862b; --gr-bg:#fbf4e2;
+    --ph-bg:#eef4fb; --ok:#2e7d5b; --shadow:0 1px 2px rgba(30,40,60,.05),0 8px 24px rgba(30,40,60,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#12151a; --bg2:#171b22; --card:#1b2029; --ink:#e7eaf0; --muted:#9aa3b2;
+      --line:#2a313d; --accent:#5aa9f0; --accent2:#8ec3f7; --gr:#e0b458; --gr-bg:#241f14;
+      --ph-bg:#18222f; --ok:#5fd0a0; --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--ink);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;-webkit-text-size-adjust:100%;padding-bottom:70px}
+  .wrap{max-width:820px;margin:0 auto;padding:20px 16px 0}
+  h1{font-size:clamp(24px,5.5vw,34px);margin:0 0 4px;letter-spacing:-.01em}
+  h1 .gk{color:var(--gr)}
+  .sub{color:var(--muted);font-size:14.5px;margin:0 0 14px}
+  .nav{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 14px}
+  .nav a{font-size:13.5px;text-decoration:none;color:var(--accent2);background:var(--card);
+    border:1px solid var(--line);padding:6px 12px;border-radius:999px;box-shadow:var(--shadow)}
+  .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;position:sticky;top:0;z-index:20;
+    padding:10px 0 12px;background:linear-gradient(180deg,var(--bg) 72%,transparent)}
+  .btn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);
+    font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer;box-shadow:var(--shadow)}
+  .btn:active{transform:translateY(1px)}
+  .btn.off{opacity:.55}
+  details.full{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:12px 16px;box-shadow:var(--shadow);margin-bottom:18px}
+  details.full summary{cursor:pointer;font-weight:600;font-size:14.5px;color:var(--accent2)}
+  details.full .body{margin-top:10px;font-size:17px;line-height:1.75;color:var(--ink)}
+  .sent{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:14px 16px 12px;box-shadow:var(--shadow);margin-bottom:14px;position:relative}
+  .num{position:absolute;left:-2px;top:-10px;background:var(--accent);color:#fff;font-size:12px;
+    font-weight:700;border-radius:999px;min-width:24px;height:24px;display:flex;align-items:center;
+    justify-content:center;padding:0 7px;box-shadow:var(--shadow)}
+  .gr{font-size:19px;font-weight:600;color:var(--accent2);line-height:1.45;cursor:pointer;padding-right:4px}
+  .gr .spk{font-size:14px;margin-left:6px;opacity:.55}
+  .tr{font-size:13.5px;color:var(--muted);margin-top:5px;font-style:italic}
+  .ru{font-size:15.5px;margin-top:7px}
+  .an{font-size:14px;color:var(--ink);margin-top:10px;padding:10px 12px;background:var(--ph-bg);
+    border-radius:12px;line-height:1.62}
+  .an b{color:var(--accent2)}
+  .an i{color:var(--gr);font-style:normal;font-weight:600}
+  body.no-tr .tr{display:none}
+  body.no-ru .ru{display:none}
+  body.no-an .an{display:none}
+  h2{font-size:20px;margin:28px 0 10px}
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+    border-radius:16px;overflow:hidden;box-shadow:var(--shadow);font-size:14.5px}
+  td{padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  tr{cursor:pointer}
+  .vg{font-weight:600;color:var(--accent2);white-space:nowrap}
+  .vt{color:var(--muted);font-size:12.5px;white-space:nowrap}
+  .vr{text-align:right}
+  .gcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 15px;
+    box-shadow:var(--shadow);margin-bottom:10px}
+  .gcard h3{margin:0 0 6px;font-size:15.5px;color:var(--gr)}
+  .gcard p{margin:0;font-size:14px;line-height:1.6}
+  .gcard i{color:var(--accent2);font-style:normal;font-weight:600}
+  .foot{margin:26px 0 10px;font-size:12.5px;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1><span class="gk">Οι τηγανίτες</span> — Блины</h1>
+  <p class="sub">16 Σεπτεμβρίου · 16 сентября · с. 290 · 17 предложений</p>
+  <div class="nav">
+    <a href="../../index.html">карточки</a>
+    <a href="../../greek-all.html">все материалы</a>
+  </div>
+
+  <div class="controls">
+    <button class="btn" id="bAll" onclick="readAll()">🔊 весь рассказ</button>
+    <button class="btn" onclick="tog('no-ru',this)">перевод</button>
+    <button class="btn" onclick="tog('no-an',this)">разбор</button>
+  </div>
+
+  <article class="sent" id="s1">
+    <div class="num">1</div>
+    <div class="gr" onclick="speak(this)" data-t="«Πολύ ωραία», λέει η Αναστασία. «Έχουμε τα πάντα;»">«Πολύ ωραία», λέει η Αναστασία. «Έχουμε τα πάντα;»<span class="spk">🔊</span></div>
+    <div class="ru">«Очень хорошо», — говорит Анастасия. «У нас всё есть?»</div>
+    <div class="an"><b>τα πάντα</b> «всё, решительно всё» — усиленное <i>όλα</i>, застывшая форма от древнего <i>πᾶς, πᾶσα, πᾶν</i> «весь». Живёт в оборотах <i>τα πάντα</i>, <i>πάνω απ' όλα</i> «превыше всего». Международное отсюда — <b>пан-</b>: панорама, пандемия, панацея.</div>
+  </article>
+
+  <article class="sent" id="s2">
+    <div class="num">2</div>
+    <div class="gr" onclick="speak(this)" data-t="Σήμερα τα παιδιά είναι μαζί της και φτιάχνουν τηγανήτες.">Σήμερα τα παιδιά είναι μαζί της και φτιάχνουν τηγανήτες.<span class="spk">🔊</span></div>
+    <div class="ru">Сегодня дети вместе с ней, и они пекут блины.</div>
+    <div class="an"><b>μαζί της</b> «вместе с ней»: <i>μαζί με</i> требует винительного, но со слабым местоимением — родительный (<i>μαζί μου, μαζί σου</i>). <b>φτιάχνω</b> «делать, готовить», аорист <i>έφτιαξα</i>. <b>η τηγανίτα</b> ← <i>το τηγάνι</i> «сковорода» ← древн. <i>τήγανον</i>; отсюда <i>τηγανητός</i> «жареный».</div>
+  </article>
+
+  <article class="sent" id="s3">
+    <div class="num">3</div>
+    <div class="gr" onclick="speak(this)" data-t="Προτού παντρευτεί με τον κυρ Πέτρο τον γεωργό, η κοπέλα τους είχε υποσχεθεί πως θα έφτιαχναν συχνά.">Προτού παντρευτεί με τον κυρ Πέτρο τον γεωργό, η κοπέλα τους είχε υποσχεθεί πως θα έφτιαχναν συχνά.<span class="spk">🔊</span></div>
+    <div class="ru">Ещё до того как выйти замуж за дядю Петроса, земледельца, девушка пообещала им, что они будут печь их часто.</div>
+    <div class="an">Три конструкции сразу. <b>προτού παντρευτεί</b> — союз <i>προτού</i> «прежде чем» требует сослагательного без <i>να</i>. <b>είχε υποσχεθεί</b> — плюсквамперфект: <i>είχα</i> + застывшая форма, действие раньше другого прошлого. <b>θα έφτιαχναν</b> — <i>θα</i> + паратат, здесь это будущее в прошедшем: «что будут печь». <b>ο κυρ</b> — усечённое <i>κύριος</i> перед именем. <b>ο γεωργός</b> = <i>γη</i> «земля» + <i>έργον</i> «работа»; отсюда имя <b>Γιώργος</b>, Георгий — «земледелец».</div>
+  </article>
+
+  <article class="sent" id="s4">
+    <div class="num">4</div>
+    <div class="gr" onclick="speak(this)" data-t="Τώρα κοιτάνε προσεκτικά για να δουν αν έχουν τα πάντα.">Τώρα κοιτάνε προσεκτικά για να δουν αν έχουν τα πάντα.<span class="spk">🔊</span></div>
+    <div class="ru">Теперь они внимательно смотрят, чтобы увидеть, всё ли у них есть.</div>
+    <div class="an"><b>για να δουν</b> — придаточное цели: <i>για να</i> + сослагательное. <b>δουν</b> — от <i>βλέπω</i> (<i>να δω, να δεις, να δει… να δουν</i>). <b>αν έχουν</b> — здесь <i>αν</i> значит не «если», а «ли»: косвенный вопрос. <b>προσεκτικά</b> ← <i>προσέχω</i> = <i>προς</i> + <i>έχω</i>.</div>
+  </article>
+
+  <article class="sent" id="s5">
+    <div class="num">5</div>
+    <div class="gr" onclick="speak(this)" data-t="Πάνω στο τραπέζι υπάρχουν τρία φρέσκα αυγά και φρέσκο γάλα.">Πάνω στο τραπέζι υπάρχουν τρία φρέσκα αυγά και φρέσκο γάλα.<span class="spk">🔊</span></div>
+    <div class="ru">На столе есть три свежих яйца и свежее молоко.</div>
+    <div class="an"><b>υπάρχουν</b> «имеются» = <i>υπό</i> + <i>άρχω</i>. <b>τρία</b> — числительное меняется по роду: <i>τρεις άντρες</i>, но <i>τρία αυγά</i>. <b>το αυγό</b> ← древн. <i>ᾠόν</i> (отсюда <b>оогенез</b>). <b>το γάλα</b>, род. <i>του γάλακτος</i> → <i>γαλαξίας</i> «Млечный Путь» = <b>галактика</b>; латинское <i>lac</i> дало <b>лактозу</b>. <b>φρέσκος</b> ← итал. <i>fresco</i> (ср. <b>фреска</b>).</div>
+  </article>
+
+  <article class="sent" id="s6">
+    <div class="num">6</div>
+    <div class="gr" onclick="speak(this)" data-t="Η Αναστασία βγάζει λίγο αλεύρι από ένα σακούλι.">Η Αναστασία βγάζει λίγο αλεύρι από ένα σακούλι.<span class="spk">🔊</span></div>
+    <div class="ru">Анастасия достаёт немного муки из мешочка.</div>
+    <div class="an"><b>βγάζω</b> «вынимать» ↔ <i>βάζω</i> «класть» — пару учить вместе. <b>το αλεύρι</b> ← древн. <i>ἄλευρον</i> ← <i>ἀλέω</i> «молоть»; в биологии <b>алейроновые</b> зёрна — то же слово. <b>το σακούλι</b> — уменьшительное от <i>σάκος</i> «мешок» (ср. <i>η σακούλα</i> «пакет»).</div>
+  </article>
+
+  <article class="sent" id="s7">
+    <div class="num">7</div>
+    <div class="gr" onclick="speak(this)" data-t="Η Λίζα σπάει τα τσόφλια και βάζει τα αυγά σε μια κούπα.">Η Λίζα σπάει τα τσόφλια και βάζει τα αυγά σε μια κούπα.<span class="spk">🔊</span></div>
+    <div class="ru">Лиза разбивает скорлупу и кладёт яйца в миску.</div>
+    <div class="an"><b>σπάω</b> «ломать, разбивать» — тот же корень, что в <i>ξεσπάω</i> «разразиться». <b>το τσόφλι</b> «скорлупа», слово разговорное, происхождение неясное. <b>η κούπα</b> «чашка, миска» ← итал. <i>coppa</i> ← лат. <i>cuppa</i>, родня русскому «кубок» и английскому <i>cup</i>.</div>
+  </article>
+
+  <article class="sent" id="s8">
+    <div class="num">8</div>
+    <div class="gr" onclick="speak(this)" data-t="Έπειτα η Αναστασία προσθέτει αλεύρι, γάλα και αφήνει τη ζύμη καλυμμένη για λίγο.">Έπειτα η Αναστασία προσθέτει αλεύρι, γάλα και αφήνει τη ζύμη καλυμμένη για λίγο.<span class="spk">🔊</span></div>
+    <div class="ru">Затем Анастасия добавляет муку, молоко и оставляет тесто накрытым ненадолго.</div>
+    <div class="an"><b>προσθέτω</b> «прибавлять» = <i>προς</i> + <i>τίθημι</i> «класть» (отсюда <b>тезис, тема, синтез</b>). <b>η ζύμη</b> «тесто, закваска» — из <i>ἐν</i> + <i>ζύμη</i> вышло <i>ἔνζυμον</i> → <b>энзим</b>; рядом <i>ζυμώνω</i> «месить», <i>τα ζυμαρικά</i> «макароны». <b>καλυμμένη</b> — пассивное причастие на <i>-μένος</i> от <i>καλύπτω</i> «покрывать» (отсюда <b>апокалипсис</b> «снятие покрова»).</div>
+  </article>
+
+  <article class="sent" id="s9">
+    <div class="num">9</div>
+    <div class="gr" onclick="speak(this)" data-t="Αμέσως μετά ρίχνει λίγο βούτυρο στο τηγάνι.">Αμέσως μετά ρίχνει λίγο βούτυρο στο τηγάνι.<span class="spk">🔊</span></div>
+    <div class="ru">Сразу после этого она бросает немного масла на сковороду.</div>
+    <div class="an"><b>αμέσως</b> «сразу» = <i>α-</i> + <i>μέσος</i> «средний»: без промежутка. <b>ρίχνω</b> «бросать», а на кухне «влить, всыпать»: <i>ρίξε λίγο αλάτι</i>. <b>το βούτυρο</b> = <i>βοῦς</i> «корова» + <i>τυρός</i> «сыр», то есть «коровий сыр»; латынь заимствовала <i>butyrum</i> → <b>butter</b>, а в химии осталась <b>масляная кислота</b>.</div>
+  </article>
+
+  <article class="sent" id="s10">
+    <div class="num">10</div>
+    <div class="gr" onclick="speak(this)" data-t="Η κοπέλα τηγανίζει τις τηγανήτες, έως ότου αυτές κοκκινίσουν για τα καλά από τη μία πλευρά.">Η κοπέλα τηγανίζει τις τηγανήτες, έως ότου αυτές κοκκινίσουν για τα καλά από τη μία πλευρά.<span class="spk">🔊</span></div>
+    <div class="ru">Девушка жарит блины, пока они как следует не подрумянятся с одной стороны.</div>
+    <div class="an"><b>έως ότου</b> «пока не» — книжноватый союз с сослагательным; в разговоре чаще <i>ώσπου να</i>, <i>μέχρι να</i>. <b>κοκκινίζω</b> ← <i>κόκκινος</i> «красный» ← <i>κόκκος</i> «зёрнышко» (краску добывали из кошенили) — отсюда микробиологические <b>кокки</b>: стрептококк, стафилококк. <b>για τα καλά</b> «как следует, окончательно». <b>η πλευρά</b> ← <i>πλευρόν</i> «ребро» → <b>плевра, плеврит</b>.</div>
+  </article>
+
+  <article class="sent" id="s11">
+    <div class="num">11</div>
+    <div class="gr" onclick="speak(this)" data-t="«Τώρα πρέπει να παρακολουθήσετε προσεκτικά», λέει.">«Τώρα πρέπει να παρακολουθήσετε προσεκτικά», λέει.<span class="spk">🔊</span></div>
+    <div class="ru">«Теперь вы должны внимательно следить», — говорит она.</div>
+    <div class="an"><b>πρέπει να</b> — безличное «нужно»; лицо несёт глагол после <i>να</i>: <i>πρέπει να φύγω</i> «мне надо уйти». <b>παρακολουθώ</b> «следить, посещать (курс)» = <i>παρά</i> «рядом» + <i>ἀκολουθέω</i> «следовать» ← <i>ἀκόλουθος</i> «спутник» (отсюда <b>аколит</b>, <b>анаколуф</b>).</div>
+  </article>
+
+  <article class="sent" id="s12">
+    <div class="num">12</div>
+    <div class="gr" onclick="speak(this)" data-t="Τις πετάει ψηλά στον αέρα και έπειτα τις γυρίζει μέσα στο τηγάνι.">Τις πετάει ψηλά στον αέρα και έπειτα τις γυρίζει μέσα στο τηγάνι.<span class="spk">🔊</span></div>
+    <div class="ru">Она подбрасывает их высоко в воздух, а потом переворачивает на сковороде.</div>
+    <div class="an"><b>τις</b> — слабое местоимение «их» (о блинах), и оно всегда ПЕРЕД глаголом: <i>τις πετάει, τις γυρίζει, τις τοποθετεί</i>. Назад оно уходит только в повелительном: <i>πέταξέ τις</i>. <b>πετάω</b> — и «бросать», и «летать» (<i>το πουλί πετάει</i>); от <i>πέτομαι</i> «лететь», отсюда <i>ο πετεινός</i> «петух», буквально «летучий». <b>γυρίζω</b> здесь «переворачивать».</div>
+  </article>
+
+  <article class="sent" id="s13">
+    <div class="num">13</div>
+    <div class="gr" onclick="speak(this)" data-t="«Ουρέι», αναφωνούν τα παιδιά.">«Ουρέι», αναφωνούν τα παιδιά.<span class="spk">🔊</span></div>
+    <div class="ru">«Ура!» — восклицают дети.</div>
+    <div class="an"><b>Ουρέι</b> — записанное по-гречески английское <i>hooray</i>; так же передают <i>Ουάου</i> «вау», <i>Ουπς</i> «упс». <b>αναφωνώ</b> «восклицать» = <i>ἀνά</i> «вверх» + <i>φωνή</i> «голос» (<b>фонетика, телефон, симфония</b>).</div>
+  </article>
+
+  <article class="sent" id="s14">
+    <div class="num">14</div>
+    <div class="gr" onclick="speak(this)" data-t="Όταν ψήνονται η Αναστασία τις τοποθετεί σε ένα πιάτο.">Όταν ψήνονται η Αναστασία τις τοποθετεί σε ένα πιάτο.<span class="spk">🔊</span></div>
+    <div class="ru">Когда они пропекутся, Анастасия кладёт их на тарелку.</div>
+    <div class="an"><b>ψήνονται</b> — медиопассив: «они пекутся». Бытовая, а не книжная форма: <i>ψήνεται το κρέας</i>. Разговорное <i>ψήνομαι</i> значит ещё «загореться идеей». <b>τοποθετώ</b> = <i>τόπος</i> «место» + <i>τίθημι</i> «класть» (<b>топография, утопия</b>). <b>το πιάτο</b> проделало круг: греч. <i>πλατύς</i> «плоский» → лат. <i>plattus</i> → итал. <i>piatto</i> → и вернулось в греческий.</div>
+  </article>
+
+  <article class="sent" id="s15">
+    <div class="num">15</div>
+    <div class="gr" onclick="speak(this)" data-t="«Δοκιμάστε», φωνάζει γελώντας.">«Δοκιμάστε», φωνάζει γελώντας.<span class="spk">🔊</span></div>
+    <div class="ru">«Попробуйте!» — кричит она, смеясь.</div>
+    <div class="an"><b>Δοκιμάστε</b> — повелительное мн. ч. от <i>δοκιμάζω</i> «пробовать»; корень <i>δοκέω</i> «казаться, полагать», тот же, что в <i>δόξα</i>. <b>γελώντας</b> — деепричастие на <i>-οντας</i>, единственная такая форма в языке, неизменяемая: <i>τρέχοντας, μιλώντας, χαμογελώντας</i>. Всегда описывает одновременное действие того же подлежащего.</div>
+  </article>
+
+  <article class="sent" id="s16">
+    <div class="num">16</div>
+    <div class="gr" onclick="speak(this)" data-t="«Είναι οι καλύτερες τηγανήτες που φάγαμε ποτέ», λένε ο Γιάννης και η Λίζα με το στόμα τους γεμάτο.">«Είναι οι καλύτερες τηγανήτες που φάγαμε ποτέ», λένε ο Γιάννης και η Λίζα με το στόμα τους γεμάτο.<span class="spk">🔊</span></div>
+    <div class="ru">«Это самые вкусные блины, какие мы когда-либо ели», — говорят Яннис и Лиза с полным ртом.</div>
+    <div class="an"><b>οι καλύτερες</b> — превосходная степень делается артиклем: без артикля <i>καλύτερος</i> значит «лучше», с артиклем — «самый лучший». <b>ποτέ</b> здесь не «никогда», а «когда-либо», как английское <i>ever</i>; «никогда» получилось бы только с <i>δεν</i>. <b>φάγαμε</b> — аорист от <i>τρώω</i> (супплетивный). <b>το στόμα</b> → <b>стоматолог</b>. <b>γεμάτος</b> ← <i>γεμίζω</i> «наполнять».</div>
+  </article>
+
+  <article class="sent" id="s17">
+    <div class="num">17</div>
+    <div class="gr" onclick="speak(this)" data-t="«Δεν είναι τηγανήτες, είναι τα γλυκίσματα της Αναστασίας», τονίζει αυτή γελώντας.">«Δεν είναι τηγανήτες, είναι τα γλυκίσματα της Αναστασίας», τονίζει αυτή γελώντας.<span class="spk">🔊</span></div>
+    <div class="ru">«Это не блины, это десерты Анастасии», — подчёркивает она со смехом.</div>
+    <div class="an"><b>το γλύκισμα</b> ← <i>γλυκός</i> «сладкий». <b>τονίζω</b> ← <i>ο τόνος</i> — слово живёт в двух мирах сразу: «ставить ударение в слове» и «подчеркнуть мысль» (<b>тон, интонация</b>). <b>της Αναστασίας</b> — родительный женских имён на <i>-ία</i>: <i>η Μαρία → της Μαρίας</i>. Само имя — <i>ἀνάστασις</i> «воскресение» = <i>ἀνά</i> «вверх» + <i>ἵστημι</i> «стоять».</div>
+  </article>
+
+  <h2>Словарик</h2>
+  <table>
+    <tr onclick="speakText('η τηγανίτα')"><td class="vg">η τηγανίτα</td><td class="vr">блин, оладья</td></tr>
+    <tr onclick="speakText('το τηγάνι')"><td class="vg">το τηγάνι</td><td class="vr">сковорода</td></tr>
+    <tr onclick="speakText('τηγανίζω')"><td class="vg">τηγανίζω</td><td class="vr">жарить на сковороде</td></tr>
+    <tr onclick="speakText('το αλεύρι')"><td class="vg">το αλεύρι</td><td class="vr">мука</td></tr>
+    <tr onclick="speakText('το αυγό')"><td class="vg">το αυγό</td><td class="vr">яйцо</td></tr>
+    <tr onclick="speakText('το γάλα')"><td class="vg">το γάλα</td><td class="vr">молоко</td></tr>
+    <tr onclick="speakText('το βούτυρο')"><td class="vg">το βούτυρο</td><td class="vr">сливочное масло</td></tr>
+    <tr onclick="speakText('η ζύμη')"><td class="vg">η ζύμη</td><td class="vr">тесто, закваска</td></tr>
+    <tr onclick="speakText('το τσόφλι')"><td class="vg">το τσόφλι</td><td class="vr">скорлупа</td></tr>
+    <tr onclick="speakText('η κούπα')"><td class="vg">η κούπα</td><td class="vr">чашка, миска</td></tr>
+    <tr onclick="speakText('το πιάτο')"><td class="vg">το πιάτο</td><td class="vr">тарелка</td></tr>
+    <tr onclick="speakText('το σακούλι')"><td class="vg">το σακούλι</td><td class="vr">мешочек</td></tr>
+    <tr onclick="speakText('το γλύκισμα')"><td class="vg">το γλύκισμα</td><td class="vr">десерт, сладость</td></tr>
+    <tr onclick="speakText('η κοπέλα')"><td class="vg">η κοπέλα</td><td class="vr">девушка</td></tr>
+    <tr onclick="speakText('ο γεωργός')"><td class="vg">ο γεωργός</td><td class="vr">земледелец, фермер</td></tr>
+    <tr onclick="speakText('το στόμα')"><td class="vg">το στόμα</td><td class="vr">рот</td></tr>
+    <tr onclick="speakText('η πλευρά')"><td class="vg">η πλευρά</td><td class="vr">сторона; ребро</td></tr>
+    <tr onclick="speakText('φρέσκος')"><td class="vg">φρέσκος</td><td class="vr">свежий</td></tr>
+    <tr onclick="speakText('γεμάτος')"><td class="vg">γεμάτος</td><td class="vr">полный</td></tr>
+    <tr onclick="speakText('καλυμμένος')"><td class="vg">καλυμμένος</td><td class="vr">накрытый</td></tr>
+    <tr onclick="speakText('σπάω')"><td class="vg">σπάω</td><td class="vr">ломать, разбивать</td></tr>
+    <tr onclick="speakText('προσθέτω')"><td class="vg">προσθέτω</td><td class="vr">добавлять</td></tr>
+    <tr onclick="speakText('ρίχνω')"><td class="vg">ρίχνω</td><td class="vr">бросать; влить, всыпать</td></tr>
+    <tr onclick="speakText('κοκκινίζω')"><td class="vg">κοκκινίζω</td><td class="vr">краснеть, румяниться</td></tr>
+    <tr onclick="speakText('πετάω')"><td class="vg">πετάω</td><td class="vr">бросать; летать</td></tr>
+    <tr onclick="speakText('γυρίζω')"><td class="vg">γυρίζω</td><td class="vr">переворачивать</td></tr>
+    <tr onclick="speakText('ψήνομαι')"><td class="vg">ψήνομαι</td><td class="vr">печься, жариться</td></tr>
+    <tr onclick="speakText('τοποθετώ')"><td class="vg">τοποθετώ</td><td class="vr">класть, размещать</td></tr>
+    <tr onclick="speakText('δοκιμάζω')"><td class="vg">δοκιμάζω</td><td class="vr">пробовать</td></tr>
+    <tr onclick="speakText('παρακολουθώ')"><td class="vg">παρακολουθώ</td><td class="vr">следить, наблюдать</td></tr>
+    <tr onclick="speakText('αναφωνώ')"><td class="vg">αναφωνώ</td><td class="vr">восклицать</td></tr>
+    <tr onclick="speakText('τονίζω')"><td class="vg">τονίζω</td><td class="vr">подчёркивать; ставить ударение</td></tr>
+    <tr onclick="speakText('υπόσχομαι')"><td class="vg">υπόσχομαι</td><td class="vr">обещать</td></tr>
+    <tr onclick="speakText('παντρεύομαι')"><td class="vg">παντρεύομαι</td><td class="vr">жениться, выходить замуж</td></tr>
+    <tr onclick="speakText('υπάρχω')"><td class="vg">υπάρχω</td><td class="vr">иметься, существовать</td></tr>
+    <tr onclick="speakText('προσεκτικά')"><td class="vg">προσεκτικά</td><td class="vr">внимательно</td></tr>
+    <tr onclick="speakText('ψηλά')"><td class="vg">ψηλά</td><td class="vr">высоко</td></tr>
+    <tr onclick="speakText('συχνά')"><td class="vg">συχνά</td><td class="vr">часто</td></tr>
+    <tr onclick="speakText('έπειτα')"><td class="vg">έπειτα</td><td class="vr">затем, потом</td></tr>
+    <tr onclick="speakText('τα πάντα')"><td class="vg">τα πάντα</td><td class="vr">всё, решительно всё</td></tr>
+    <tr onclick="speakText('προτού')"><td class="vg">προτού</td><td class="vr">прежде чем</td></tr>
+    <tr onclick="speakText('έως ότου')"><td class="vg">έως ότου</td><td class="vr">пока не</td></tr>
+    <tr onclick="speakText('για τα καλά')"><td class="vg">για τα καλά</td><td class="vr">как следует, окончательно</td></tr>
+  </table>
+
+  <h2>Грамматика этого рассказа</h2>
+
+    <div class="gcard"><h3>Плюсквамперфект: είχα + застывшая форма</h3><p><i>είχε υποσχεθεί</i> «пообещала (раньше всего остального)». Вспомогательный глагол в паратате, вторая часть не меняется: <i>είχα δει, είχες πει, είχαμε φάει</i>.</p></div>
+    <div class="gcard"><h3>θα + паратат = будущее в прошедшем</h3><p><i>πως θα έφτιαχναν</i> «что они будут печь». Та же форма может значить и «пекли бы» — различает контекст. Ср. <i>Είπε πως θα ερχόταν</i> «Он сказал, что придёт».</p></div>
+    <div class="gcard"><h3>Союзы времени с сослагательным</h3><p><i>προτού</i> «прежде чем», <i>πριν (να)</i>, <i>έως ότου</i> «пока не», <i>ώσπου να</i>, <i>μέχρι να</i>, <i>μόλις</i> «как только», <i>όταν</i> «когда». После них идёт форма сослагательного, а не изъявительного.</p></div>
+    <div class="gcard"><h3>αν в значении «ли»</h3><p><i>για να δουν αν έχουν τα πάντα</i> «чтобы посмотреть, всё ли у них есть». После глаголов «смотреть, спрашивать, знать» <i>αν</i> вводит косвенный вопрос, а не условие.</p></div>
+    <div class="gcard"><h3>Слабые местоимения перед глаголом</h3><p><i>τις πετάει</i>, <i>τις γυρίζει</i>, <i>τις τοποθετεί</i>, <i>τους είχε υποσχεθεί</i>. Назад местоимение уходит только в повелительном: <i>πέταξέ τις</i>, <i>δώσε μου</i>.</p></div>
+    <div class="gcard"><h3>Деепричастие на -οντας</h3><p><i>γελώντας</i> «смеясь». Единственная деепричастная форма языка, неизменяемая, от основы настоящего: <i>τρέχοντας, μιλώντας, περιμένοντας</i>.</p></div>
+    <div class="gcard"><h3>Пассивное причастие на -μένος</h3><p><i>καλυμμένη</i> «накрытая». Согласуется как прилагательное: <i>-μένος, -μένη, -μένο</i>. Ср. <i>κουρασμένος</i> «уставший», <i>χαμένος</i> «потерянный».</p></div>
+    <div class="gcard"><h3>Кухонные глаголы: чем отличаются</h3><p><i>τηγανίζω</i> «жарить на сковороде», <i>ψήνω</i> «печь, жарить в духовке», <i>βράζω</i> «варить», <i>μαγειρεύω</i> «готовить вообще», <i>ζυμώνω</i> «месить», <i>ανακατεύω</i> «перемешивать».</p></div>
+
+  <div class="foot">Нажми на греческую строку — прозвучит вслух. Нажми на слово в словарике — тоже.</div>
+</div>
+<script>
+function speakText(t){
+  try{
+    if(!t || !('speechSynthesis' in window)) return;
+    var u=new SpeechSynthesisUtterance(t); u.lang='el-GR'; u.rate=0.9;
+    try{ var v=speechSynthesis.getVoices().find(function(x){return /^el/i.test(x.lang);}); if(v) u.voice=v; }catch(e){}
+    speechSynthesis.cancel(); speechSynthesis.speak(u);
+  }catch(e){}
+}
+function speak(el){ speakText(el.getAttribute('data-t')); }
+function tog(cls,btn){ document.body.classList.toggle(cls); btn.classList.toggle('off'); }
+var ALL=["Πολύ ωραία, λέει η Αναστασία. Έχουμε τα πάντα;", "Σήμερα τα παιδιά είναι μαζί της και φτιάχνουν τηγανήτες.", "Προτού παντρευτεί με τον κυρ Πέτρο τον γεωργό, η κοπέλα τους είχε υποσχεθεί πως θα έφτιαχναν συχνά.", "Τώρα κοιτάνε προσεκτικά για να δουν αν έχουν τα πάντα.", "Πάνω στο τραπέζι υπάρχουν τρία φρέσκα αυγά και φρέσκο γάλα.", "Η Αναστασία βγάζει λίγο αλεύρι από ένα σακούλι.", "Η Λίζα σπάει τα τσόφλια και βάζει τα αυγά σε μια κούπα.", "Έπειτα η Αναστασία προσθέτει αλεύρι, γάλα και αφήνει τη ζύμη καλυμμένη για λίγο.", "Αμέσως μετά ρίχνει λίγο βούτυρο στο τηγάνι.", "Η κοπέλα τηγανίζει τις τηγανήτες, έως ότου αυτές κοκκινίσουν για τα καλά από τη μία πλευρά.", "Τώρα πρέπει να παρακολουθήσετε προσεκτικά, λέει.", "Τις πετάει ψηλά στον αέρα και έπειτα τις γυρίζει μέσα στο τηγάνι.", "Ουρέι, αναφωνούν τα παιδιά.", "Όταν ψήνονται η Αναστασία τις τοποθετεί σε ένα πιάτο.", "Δοκιμάστε, φωνάζει γελώντας.", "Είναι οι καλύτερες τηγανήτες που φάγαμε ποτέ, λένε ο Γιάννης και η Λίζα με το στόμα τους γεμάτο.", "Δεν είναι τηγανήτες, είναι τα γλυκίσματα της Αναστασίας, τονίζει αυτή γελώντας."];
+var reading=false;
+function readAll(){
+  var b=document.getElementById('bAll');
+  if(reading){ try{speechSynthesis.cancel();}catch(e){} reading=false; b.textContent='🔊 весь рассказ'; return; }
+  reading=true; b.textContent='⏹ стоп';
+  var i=0;
+  function next(){
+    if(!reading || i>=ALL.length){ reading=false; b.textContent='🔊 весь рассказ'; return; }
+    var u=new SpeechSynthesisUtterance(ALL[i]); u.lang='el-GR'; u.rate=0.9;
+    try{ var v=speechSynthesis.getVoices().find(function(x){return /^el/i.test(x.lang);}); if(v) u.voice=v; }catch(e){}
+    u.onend=function(){ i++; next(); };
+    u.onerror=function(){ i++; next(); };
+    speechSynthesis.speak(u);
+  }
+  try{ speechSynthesis.cancel(); }catch(e){}
+  next();
+}
+</script>
+</body>
+</html>
