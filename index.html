@@ -84,19 +84,24 @@
   #sex{visibility:hidden}
   .card.flipped #sex{visibility:visible}
   /* кнопки поверх карточки: не переворачиваются вместе с ней */
-  .cnav,.cfs{position:absolute;bottom:12px;z-index:3;appearance:none;width:56px;height:56px;border-radius:50%;padding:0;
-    border:1px solid var(--line);background:var(--bg2);color:var(--ink);font-size:30px;line-height:1;font-weight:700;
-    cursor:pointer;display:flex;align-items:center;justify-content:center;padding-bottom:3px}
+  .cnav{position:absolute;bottom:12px;z-index:3;appearance:none;width:56px;height:56px;border-radius:50%;padding:0 0 3px;
+    border:1px solid color-mix(in srgb,var(--accent) 55%,var(--line));background:color-mix(in srgb,var(--accent) 22%,var(--card));
+    color:var(--ink);font-size:30px;line-height:1;font-weight:700;
+    cursor:pointer;display:flex;align-items:center;justify-content:center}
   .cnav:active,.cfs:active,.cknow:active{transform:scale(.95)}
   #prev{left:12px}
   #next{right:12px}
-  .cfs{top:12px;bottom:auto;left:12px;width:46px;height:46px;padding:0;color:var(--muted)}
+  /* верхняя строка карточки: «на весь экран», «Знаю», счётчик; справа остаётся место для 🔊 */
+  .ctop{position:absolute;top:12px;left:12px;right:70px;height:46px;z-index:3;display:flex;align-items:center;gap:10px;pointer-events:none}
+  .ctop > button{pointer-events:auto}
+  .cfs{flex:none;appearance:none;width:46px;height:46px;padding:0;border-radius:50%;border:1px solid var(--line);
+    background:var(--bg2);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center}
   .cfs svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .cknow{position:absolute;bottom:12px;left:50%;translate:-50% 0;z-index:3;appearance:none;height:56px;
-    width:min(170px,calc(100% - 160px));border-radius:999px;border:1px solid color-mix(in srgb,var(--ok) 45%,var(--line));
-    background:var(--bg2);color:var(--ok);font-size:16px;font-weight:700;cursor:pointer;white-space:nowrap}
-  .counter{position:absolute;left:70px;right:70px;top:26px;z-index:3;text-align:center;font-size:12.5px;color:var(--muted);pointer-events:none}
-  .counter .known{color:var(--ok);display:none}
+  .cknow{flex:none;appearance:none;height:34px;padding:0 12px;border-radius:999px;
+    border:1px solid color-mix(in srgb,var(--ok) 45%,var(--line));background:var(--bg2);color:var(--ok);
+    font-size:13.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+  .cknow.on{background:var(--ok);border-color:var(--ok);color:var(--bg)}
+  .counter{font-size:12.5px;color:var(--muted);white-space:nowrap}
   .toast{position:absolute;left:50%;top:70px;translate:-50% 0;z-index:5;max-width:calc(100% - 40px);background:var(--ink);color:var(--bg);
     font-size:13.5px;line-height:1.4;padding:10px 14px;border-radius:12px;text-align:center;pointer-events:none;
     opacity:0;transition:opacity .25s}
@@ -168,11 +173,13 @@
         <div class="exline" id="exline"><div class="exg" id="b_exg"></div><div class="exr" id="b_exr"></div><button class="sound-ex" id="sex" type="button" aria-label="Озвучить пример">🔊 пример</button></div>
       </div>
     </div>
-    <button class="cfs" id="focusBtn" type="button" aria-label="Карточка на весь экран"><svg class="ic-in" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="ic-out" viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg></button>
-    <span class="counter"><span id="counter"></span><span class="known" id="known"> · ✓ знаю</span></span>
+    <div class="ctop">
+      <button class="cfs" id="focusBtn" type="button" aria-label="Карточка на весь экран"><svg class="ic-in" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="ic-out" viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg></button>
+      <button class="cknow" id="know" type="button">✓ Знаю</button>
+      <span class="counter" id="counter"></span>
+    </div>
     <div class="toast" id="toast"></div>
     <button class="cnav" id="prev" type="button" aria-label="Назад">‹</button>
-    <button class="cknow" id="know" type="button">✓ Знаю</button>
     <button class="cnav" id="next" type="button" aria-label="Вперёд">›</button>
   </div>
   <div class="done" id="done">
@@ -196,7 +203,7 @@
     <button class="mitem" id="hideToggle" type="button">Скрывать выученные: выкл</button>
     <button class="mitem danger" id="reset" type="button">Сбросить прогресс</button>
     <div id="storySlot"></div>
-    <div class="foot"><a href="greek-all.html">← все материалы</a> · <a href="greek-handwriting.html">прописи</a> · прогресс на этом устройстве · <span id="ver">v13</span></div>
+    <div class="foot"><a href="greek-all.html">← все материалы</a> · <a href="greek-handwriting.html">прописи</a> · прогресс на этом устройстве · <span id="ver">v14</span></div>
   </div>
 </div>
 
@@ -240,10 +247,10 @@ function render(){
   const c=d.cards[list[pos]];
   flipped=false; $('card').classList.remove('flipped');
   $('front').innerHTML = mode==='fwd' ? glueArt(c[0]) : c[2];
-  $('known').style.display = learned.has(list[pos]) ? 'inline':'none';
+  $('know').classList.toggle('on', learned.has(list[pos]));
   $('b_gr').textContent=glueArt(c[0]); $('b_tr').innerHTML=stressify(c[1]); $('b_tr').style.display=c[1]?'':'none'; $('b_ru').textContent=c[2];
   $('b_exg').textContent=c[3]; $('b_exr').textContent=c[4]; $('exline').style.display=c[3]?'':'none';
-  $('counter').textContent = (pos+1)+' / '+list.length+(hideLearned?' осталось':'');
+  $('counter').textContent = (pos+1)+' / '+list.length;
   fitCard();
 }
 // подбирает самый крупный шрифт, при котором текст ещё помещается в карточку
