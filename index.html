@@ -57,19 +57,13 @@
   .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;overflow:hidden;
     background:var(--card);border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow);
     display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:66px 22px 80px}
-  .sound{position:absolute;top:12px;right:12px;z-index:2;appearance:none;border:1px solid var(--line);
-    background:var(--bg2);color:var(--accent2);font-size:20px;line-height:1;width:46px;height:46px;border-radius:50%;
-    cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;
-    -webkit-backface-visibility:hidden;backface-visibility:hidden}
-  .sound:active{transform:scale(.92)}
-  .sound.speaking,.sound-ex.speaking{background:var(--accent);border-color:var(--accent);color:#fff}
-  #sback{visibility:hidden}
-  .card.flipped #sfront{visibility:hidden}
-  .card.flipped #sback{visibility:visible}
+  /* греческий текст озвучивается по тапу; тап мимо текста переворачивает карточку */
+  .say{cursor:pointer;border-radius:.2em;-webkit-box-decoration-break:clone;box-decoration-break:clone;transition:background .2s}
+  .say:active,.say.speaking{background:color-mix(in srgb,var(--accent) 22%,transparent)}
   .front .word{width:100%;font-size:48px;font-weight:800;color:var(--accent2);line-height:1.12}
   /* размер текста на обороте задаётся одной переменной --fs, её подбирает fitCard() */
   .back{transform:rotateY(180deg);--fs:22px;font-size:var(--fs);gap:.3em}
-  .back > :not(.sound){width:100%}
+  .back > *{width:100%}
   .back .grb{font-size:1.3em;font-weight:800;color:var(--accent2);line-height:1.15}
   .back .trb{font-size:.68em;color:var(--muted)}
   .back .trb .stress{border-bottom:2px solid var(--accent);padding-bottom:1px}
@@ -77,12 +71,6 @@
   .back .exline{border-top:1px solid var(--line);margin-top:.45em;padding-top:.6em;display:flex;flex-direction:column;align-items:center}
   .back .exg{font-size:.8em;font-weight:600;line-height:1.3}
   .back .exr{font-size:.64em;color:var(--muted);margin-top:.2em;line-height:1.3}
-  .sound-ex{display:inline-flex;align-items:center;gap:5px;margin-top:.7em;border:1px solid var(--line);
-    background:var(--bg2);color:var(--accent2);font-size:max(12.5px,.55em);font-weight:700;padding:6px 12px;border-radius:999px;
-    cursor:pointer;-webkit-backface-visibility:hidden;backface-visibility:hidden}
-  .sound-ex:active{transform:translateY(1px)}
-  #sex{visibility:hidden}
-  .card.flipped #sex{visibility:visible}
   /* кнопки поверх карточки: не переворачиваются вместе с ней */
   .cnav{position:absolute;bottom:12px;z-index:3;appearance:none;width:56px;height:56px;border-radius:50%;padding:0 0 3px;
     border:1px solid color-mix(in srgb,var(--accent) 55%,var(--line));background:color-mix(in srgb,var(--accent) 22%,var(--card));
@@ -164,15 +152,13 @@
   <div class="scene" id="scene">
     <div class="card" id="card">
       <div class="face front">
-        <button class="sound" id="sfront" type="button" aria-label="Озвучить">🔊</button>
         <div class="word" id="front"></div>
       </div>
       <div class="face back">
-        <button class="sound" id="sback" type="button" aria-label="Озвучить">🔊</button>
         <div class="grb" id="b_gr"></div>
         <div class="trb" id="b_tr"></div>
         <div class="rub" id="b_ru"></div>
-        <div class="exline" id="exline"><div class="exg" id="b_exg"></div><div class="exr" id="b_exr"></div><button class="sound-ex" id="sex" type="button" aria-label="Озвучить пример">🔊 пример</button></div>
+        <div class="exline" id="exline"><div class="exg" id="b_exg"></div><div class="exr" id="b_exr"></div></div>
       </div>
     </div>
     <div class="ctop">
@@ -207,7 +193,7 @@
     <button class="mitem" id="hideToggle" type="button">Скрывать выученные: выкл</button>
     <button class="mitem danger" id="reset" type="button">Сбросить прогресс</button>
     <div id="storySlot"></div>
-    <div class="foot"><a href="greek-all.html">← все материалы</a> · <a href="greek-handwriting.html">прописи</a> · прогресс на этом устройстве · <span id="ver">v17</span></div>
+    <div class="foot"><a href="greek-all.html">← все материалы</a> · <a href="greek-handwriting.html">прописи</a> · прогресс на этом устройстве · <span id="ver">v18</span></div>
   </div>
 </div>
 
@@ -216,6 +202,8 @@ const DECKS = [{"id": "basic", "name": "Начальная лексика", "car
 function stressify(t){return t.replace(/\|([^|]+)\|/g,'<span class="stress">$1</span>');}
 // артикль не отрывается от слова при переносе
 function glueArt(t){return t.replace(/^(ο|η|το|οι|τα|τον|την|τη|τους|τις) /i,'$1\u00a0');}
+function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function sayHTML(t){return '<span class="say">'+esc(t)+'</span>';}
 function Lg(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return d;}}
 function Sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
@@ -250,10 +238,10 @@ function render(){
   if(pos>=list.length) pos=0; if(pos<0) pos=list.length-1;
   const c=d.cards[list[pos]];
   flipped=false; $('card').classList.remove('flipped');
-  $('front').innerHTML = mode==='fwd' ? glueArt(c[0]) : c[2];
+  $('front').innerHTML = mode==='fwd' ? sayHTML(glueArt(c[0])) : esc(c[2]);
   $('know').classList.toggle('on', learned.has(list[pos]));
-  $('b_gr').textContent=glueArt(c[0]); $('b_tr').innerHTML=stressify(c[1]); $('b_tr').style.display=c[1]?'':'none'; $('b_ru').textContent=c[2];
-  $('b_exg').textContent=c[3]; $('b_exr').textContent=c[4]; $('exline').style.display=c[3]?'':'none';
+  $('b_gr').innerHTML=sayHTML(glueArt(c[0])); $('b_tr').innerHTML=stressify(c[1]); $('b_tr').style.display=c[1]?'':'none'; $('b_ru').textContent=c[2];
+  $('b_exg').innerHTML=sayHTML(c[3]); $('b_exr').textContent=c[4]; $('exline').style.display=c[3]?'':'none';
   $('counter').textContent = (pos+1)+' / '+list.length;
   fitCard();
 }
@@ -282,7 +270,7 @@ let voices=[];
 function loadVoices(){ try{ voices=speechSynthesis.getVoices(); }catch(e){} }
 if('speechSynthesis' in window){ loadVoices(); speechSynthesis.addEventListener?.('voiceschanged',loadVoices); }
 let curUtt=null; // держим ссылку: иначе iOS может выбросить фразу, не договорив
-function speakGreek(text,btn){
+function speakGreek(text,el){
   if(!text) return;
   if(!('speechSynthesis' in window) || !window.SpeechSynthesisUtterance){ toast('Озвучка недоступна в этом браузере'); return; }
   try{
@@ -291,8 +279,8 @@ function speakGreek(text,btn){
     const v=voices.find(x=>/^el/i.test(x.lang));
     if(voices.length && !v) toast('Нет греческого голоса: Настройки → Универсальный доступ → Устный контент → Голоса → Греческий');
     const u=new SpeechSynthesisUtterance(text); u.lang='el-GR'; u.rate=0.9; if(v) u.voice=v;
-    const off=()=>{ if(btn) btn.classList.remove('speaking'); };
-    u.onstart=()=>{ if(btn) btn.classList.add('speaking'); };
+    const off=()=>{ if(el) el.classList.remove('speaking'); };
+    u.onstart=()=>{ if(el) el.classList.add('speaking'); };
     u.onend=off;
     u.onerror=e=>{ off(); if(e.error && e.error!=='interrupted' && e.error!=='canceled') toast('Озвучка не сработала: '+e.error); };
     curUtt=u;
@@ -301,13 +289,12 @@ function speakGreek(text,btn){
     if(ss.paused) ss.resume();
   }catch(e){ toast('Озвучка не сработала: '+e.message); }
 }
-function curCard(){ const list=visible(); return list.length ? deck().cards[list[pos]] : null; }
-function soundTap(e){ e.stopPropagation(); e.preventDefault(); const c=curCard(); if(c) speakGreek(c[0],e.currentTarget); }
-function soundEx(e){ e.stopPropagation(); e.preventDefault(); const c=curCard(); if(c) speakGreek(c[3],e.currentTarget); }
 
-$('card').addEventListener('click',()=>{ flipped=!flipped; $('card').classList.toggle('flipped',flipped); });
-['sfront','sback'].forEach(id=>{ const el=$(id); if(el) el.addEventListener('click',soundTap); });
-$('sex').addEventListener('click',soundEx);
+$('card').addEventListener('click',e=>{
+  const say=e.target.closest('.say');
+  if(say){ speakGreek(say.textContent.replace(/\u00a0/g,' '),say); return; }
+  flipped=!flipped; $('card').classList.toggle('flipped',flipped);
+});
 $('next').addEventListener('click',()=>step(1));
 $('prev').addEventListener('click',()=>step(-1));
 $('shuffle').addEventListener('click',()=>{ closeMenu(); order=shuffleArr([...Array(deck().cards.length).keys()]); Sv('gr_order_'+deckId,order); pos=0; render(); });
