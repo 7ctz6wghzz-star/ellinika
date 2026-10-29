@@ -91,9 +91,11 @@
   .cnav:active,.cfs:active,.cknow:active{transform:scale(.95)}
   #prev{left:12px}
   #next{right:12px}
-  /* верхняя строка карточки: «на весь экран», «Знаю», счётчик; справа остаётся место для 🔊 */
-  .ctop{position:absolute;top:12px;left:12px;right:70px;height:46px;z-index:3;display:flex;align-items:center;gap:10px;pointer-events:none}
-  .ctop > button{pointer-events:auto}
+  /* верхняя строка карточки: «на весь экран» слева, «Знаю» и счётчик по центру; справа место для 🔊 */
+  .ctop{position:absolute;top:12px;left:12px;right:12px;height:46px;z-index:3;display:grid;grid-template-columns:46px 1fr 46px;
+    align-items:center;pointer-events:none}
+  .ctop button{pointer-events:auto}
+  .cmid{display:flex;align-items:center;justify-content:center;gap:10px;min-width:0}
   .cfs{flex:none;appearance:none;width:46px;height:46px;padding:0;border-radius:50%;border:1px solid var(--line);
     background:var(--bg2);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center}
   .cfs svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -175,8 +177,10 @@
     </div>
     <div class="ctop">
       <button class="cfs" id="focusBtn" type="button" aria-label="Карточка на весь экран"><svg class="ic-in" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="ic-out" viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg></button>
-      <button class="cknow" id="know" type="button">✓ Знаю</button>
-      <span class="counter" id="counter"></span>
+      <div class="cmid">
+        <button class="cknow" id="know" type="button">Знаю</button>
+        <span class="counter" id="counter"></span>
+      </div>
     </div>
     <div class="toast" id="toast"></div>
     <button class="cnav" id="prev" type="button" aria-label="Назад">‹</button>
@@ -203,7 +207,7 @@
     <button class="mitem" id="hideToggle" type="button">Скрывать выученные: выкл</button>
     <button class="mitem danger" id="reset" type="button">Сбросить прогресс</button>
     <div id="storySlot"></div>
-    <div class="foot"><a href="greek-all.html">← все материалы</a> · <a href="greek-handwriting.html">прописи</a> · прогресс на этом устройстве · <span id="ver">v14</span></div>
+    <div class="foot"><a href="greek-all.html">← все материалы</a> · <a href="greek-handwriting.html">прописи</a> · прогресс на этом устройстве · <span id="ver">v15</span></div>
   </div>
 </div>
 
