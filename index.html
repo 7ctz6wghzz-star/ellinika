@@ -207,7 +207,7 @@
     <button class="mitem" id="hideToggle" type="button">Скрывать выученные: выкл</button>
     <button class="mitem danger" id="reset" type="button">Сбросить прогресс</button>
     <div id="storySlot"></div>
-    <div class="foot"><a href="greek-all.html">← все материалы</a> · <a href="greek-handwriting.html">прописи</a> · прогресс на этом устройстве · <span id="ver">v15</span></div>
+    <div class="foot"><a href="greek-all.html">← все материалы</a> · <a href="greek-handwriting.html">прописи</a> · прогресс на этом устройстве · <span id="ver">v16</span></div>
   </div>
 </div>
 
@@ -311,7 +311,10 @@ $('sex').addEventListener('click',soundEx);
 $('next').addEventListener('click',()=>step(1));
 $('prev').addEventListener('click',()=>step(-1));
 $('shuffle').addEventListener('click',()=>{ closeMenu(); order=shuffleArr([...Array(deck().cards.length).keys()]); Sv('gr_order_'+deckId,order); pos=0; render(); });
-$('know').addEventListener('click',()=>{ const list=visible(); if(!list.length)return; learned.add(list[pos]); Sv('gr_learned_'+deckId,[...learned]); step(1); render(); });
+// «Знаю» — переключатель: отметить / снять отметку, без перехода к следующему слову
+$('know').addEventListener('click',()=>{ const list=visible(); if(!list.length)return; const i=list[pos];
+  if(learned.has(i)) learned.delete(i); else learned.add(i);
+  Sv('gr_learned_'+deckId,[...learned]); render(); });
 $('mFwd').addEventListener('click',()=>{ mode='fwd'; Sv('gr_mode',mode); render(); });
 $('mRev').addEventListener('click',()=>{ mode='rev'; Sv('gr_mode',mode); render(); });
 $('modeBtn').addEventListener('click',()=>{ mode=mode==='fwd'?'rev':'fwd'; Sv('gr_mode',mode); render(); });
